@@ -12,14 +12,13 @@ if not mt5.initialize():
 now_time = datetime.now()
 start_day = datetime.now().replace(hour = 0, minute = 0, second = 0)
 
-eurgbp_ticks = mt5.copy_ticks_range("EURGBP", start_day, now_time)
+eurgbp_ticks = mt5.copy_ticks_range("EURGBP", start_day, now_time, mt5.COPY_TICKS_INFO)
 
 # shut down connection to MetaTrader 5
 mt5.shutdown()
- 
-print('OUT HERE!')
 
-#DATA
-print('eurgbp_ticks(', len(eurgbp_ticks), ')')
-for val in eurgbp_ticks[-1]: print(val)
+ticks_frame = pd.DataFrame(eurgbp_ticks)
+
+# convert time in seconds into the datetime format
+ticks_frame['time']=pd.to_datetime(ticks_frame['time'], unit='s')
  
