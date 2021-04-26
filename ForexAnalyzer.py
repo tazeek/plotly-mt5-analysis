@@ -11,7 +11,7 @@ class ForexAnalyzer:
         self._time_style = {
             'Minute_1' : mt5.TIMEFRAME_M1,
             'Hour_1': mt5.TIMEFRAME_H1,
-            'Day 1': mt5.TIMEFRAME_D1
+            'Day_1': mt5.TIMEFRAME_D1
         }
 
         self._start_mt5()
@@ -59,7 +59,7 @@ class ForexAnalyzer:
             1
         )
 
-        rates_frame = pd.DataFrame(rates)
-        rates_frame['time'] = pd.to_datetime(rates_frame['time'], unit='s')
+        d1_rates = pd.DataFrame(d1_rates)
+        d1_rates['time'] = pd.to_datetime(d1_rates['time'], unit='s')
 
-        return rates_frame
+        return d1_rates
