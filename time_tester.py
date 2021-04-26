@@ -1,8 +1,12 @@
 from datetime import datetime
 
-today = datetime.today()
+current = datetime.today()
 
-utc_from = datetime(today.year, today.month, today.day)
+start_day = datetime(current.year, current.month, current.day)
 
-print(utc_from)
-print(today)
+time_delta = (current - start_day)
+minutes = int(time_delta.total_seconds()/60)
+
+print(start_day)
+print(current)
+print(minutes)
