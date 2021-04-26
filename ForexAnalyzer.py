@@ -59,7 +59,18 @@ class ForexAnalyzer:
             1
         )
 
-        d1_rates = pd.DataFrame(d1_rates)
-        d1_rates['time'] = pd.to_datetime(d1_rates['time'], unit='s')
+        stats_dict = pd.DataFrame(d1_rates).to_dict('records')[0]
 
-        return d1_rates
+        cleaned_stats = {}
+
+        cleaned_stats['high_price'] = stats_dict['high']
+        cleaned_stats['open_price'] = stats_dict['open']
+        cleaned_stats['low_price'] = stats_dict['low']
+        cleaned_stats['close_price'] = stats_dict['close']
+
+        cleaned_stats['width_candlestick'] = int((cleaned_stats['high_price'] - cleaned_stats['low_price']) * 10**5)
+        cleaned_stats['gap_open_high'] = int((cleaned_stats['high_price'] - cleaned_stats['open_price']) * 10**5)
+        cleaned_stats['gap_open_low'] = int((cleaned_stats['open_price'] - cleaned_stats['low_price']) * 10**5)
+        cleaned_stats['gap_open_close'] = int((cleaned_stats['open_price'] - cleaned_stats['close_price']) * 10**5)
+        
+        return cleaned_stats
