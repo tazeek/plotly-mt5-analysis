@@ -32,7 +32,7 @@ class ForexAnalyzer:
     
         return int(time_delta.total_seconds()/60)
 
-    def get_daily_stats(self, timeframe):
+    def get_daily_stats(self):
 
         rates = mt5.copy_rates_from(
             self._forex_pair, 
@@ -46,7 +46,7 @@ class ForexAnalyzer:
 
         return rates_frame.copy()
 
-    def get_d1_stats(self, timeframe):
+    def get_d1_stats(self):
 
         d1_rates = mt5.copy_rates_from(
             self._forex_pair,
@@ -68,3 +68,17 @@ class ForexAnalyzer:
         stats_dict['gap_open_close'] = int((stats_dict['open'] - stats_dict['close']) * 10**5)
         
         return stats_dict
+    
+    def get_month_stats(self):
+
+        d7_rates = mt5.copy_rates_from(
+            self._forex_pair,
+            mt5.TIMEFRAME_D1,
+            self.get_current_time(),
+            30
+        )
+
+        rates_frame = pd.DataFrame(d7_rates)
+        rates_frame['time'] = pd.to_datetime(rates_frame['time'], unit='s')
+
+        return rates_frame.copy()
