@@ -29,6 +29,8 @@ class ForexAnalyzer:
 
     def _find_minutes_elapsed(self):
 
+        self._start_mt5()
+
         current = self.get_current_time()
         start_day = datetime(current.year, current.month, current.day)
 
@@ -48,7 +50,7 @@ class ForexAnalyzer:
         rates_frame = pd.DataFrame(rates)
         rates_frame['time'] = pd.to_datetime(rates_frame['time'], unit='s')
 
-        return rates_frame
+        return rates_frame.copy()
 
     def get_d1_stats(self, timeframe):
 
@@ -61,16 +63,9 @@ class ForexAnalyzer:
 
         stats_dict = pd.DataFrame(d1_rates).to_dict('records')[0]
 
-        cleaned_stats = {}
-
-        cleaned_stats['high_price'] = stats_dict['high']
-        cleaned_stats['open_price'] = stats_dict['open']
-        cleaned_stats['low_price'] = stats_dict['low']
-        cleaned_stats['close_price'] = stats_dict['close']
-
-        cleaned_stats['width_candlestick'] = int((cleaned_stats['high_price'] - cleaned_stats['low_price']) * 10**5)
-        cleaned_stats['gap_open_high'] = int((cleaned_stats['high_price'] - cleaned_stats['open_price']) * 10**5)
-        cleaned_stats['gap_open_low'] = int((cleaned_stats['open_price'] - cleaned_stats['low_price']) * 10**5)
-        cleaned_stats['gap_open_close'] = int((cleaned_stats['open_price'] - cleaned_stats['close_price']) * 10**5)
+        stats_dict['width_candlestick'] = int((stats_dict['high'] - stats_dict['low']) * 10**5)
+        stats_dict['gap_open_high'] = int((stats_dict['high'] - stats_dict['open']) * 10**5)
+        stats_dict['gap_open_low'] = int((stats_dict['open'] - stats_dict['low']) * 10**5)
+        stats_dict['gap_open_close'] = int((stats_dict['open'] - stats_dict['close']) * 10**5)
         
-        return cleaned_stats
+        return stats_dict
