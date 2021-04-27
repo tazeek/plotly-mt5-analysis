@@ -11,7 +11,7 @@ class ForexAnalyzer:
         self._time_style = {
             'Minute_1' : mt5.TIMEFRAME_M1,
             'Hour_1': mt5.TIMEFRAME_H1,
-            'Day 1': mt5.TIMEFRAME_D1
+            'Day_1': mt5.TIMEFRAME_D1
         }
 
         self._start_mt5()
@@ -49,3 +49,28 @@ class ForexAnalyzer:
         rates_frame['time'] = pd.to_datetime(rates_frame['time'], unit='s')
 
         return rates_frame
+
+    def get_d1_stats(self, timeframe):
+
+        d1_rates = mt5.copy_rates_from(
+            self._forex_pair,
+            self._time_style[timeframe],
+            self.get_current_time(),
+            1
+        )
+
+        stats_dict = pd.DataFrame(d1_rates).to_dict('records')[0]
+
+        cleaned_stats = {}
+
+        cleaned_stats['high_price'] = stats_dict['high']
+        cleaned_stats['open_price'] = stats_dict['open']
+        cleaned_stats['low_price'] = stats_dict['low']
+        cleaned_stats['close_price'] = stats_dict['close']
+
+        cleaned_stats['width_candlestick'] = int((cleaned_stats['high_price'] - cleaned_stats['low_price']) * 10**5)
+        cleaned_stats['gap_open_high'] = int((cleaned_stats['high_price'] - cleaned_stats['open_price']) * 10**5)
+        cleaned_stats['gap_open_low'] = int((cleaned_stats['open_price'] - cleaned_stats['low_price']) * 10**5)
+        cleaned_stats['gap_open_close'] = int((cleaned_stats['open_price'] - cleaned_stats['close_price']) * 10**5)
+        
+        return cleaned_stats
