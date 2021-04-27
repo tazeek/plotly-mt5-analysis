@@ -63,6 +63,11 @@ class ForexAnalyzer:
 
         stats_dict = pd.DataFrame(d1_rates).to_dict('records')[0]
 
+        del stats_dict['time']
+        del stats_dict['tick_volume']
+        del stats_dict['spread']
+        del stats_dict['real_volume']
+
         stats_dict['width_candlestick'] = int((stats_dict['high'] - stats_dict['low']) * 10**5)
         stats_dict['gap_open_high'] = int((stats_dict['high'] - stats_dict['open']) * 10**5)
         stats_dict['gap_open_low'] = int((stats_dict['open'] - stats_dict['low']) * 10**5)
