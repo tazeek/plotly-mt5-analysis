@@ -8,12 +8,6 @@ class ForexAnalyzer:
     
         self._forex_pair = forex_pair
 
-        self._time_style = {
-            'Minute_1' : mt5.TIMEFRAME_M1,
-            'Hour_1': mt5.TIMEFRAME_H1,
-            'Day_1': mt5.TIMEFRAME_D1
-        }
-
         self._start_mt5()
 
     def __del__(self):
@@ -42,7 +36,7 @@ class ForexAnalyzer:
 
         rates = mt5.copy_rates_from(
             self._forex_pair, 
-            self._time_style[timeframe], 
+            mt5.TIMEFRAME_M1, 
             self.get_current_time(), 
             self._find_minutes_elapsed()
         )
@@ -56,7 +50,7 @@ class ForexAnalyzer:
 
         d1_rates = mt5.copy_rates_from(
             self._forex_pair,
-            self._time_style[timeframe],
+            mt5.TIMEFRAME_D1,
             self.get_current_time(),
             1
         )
