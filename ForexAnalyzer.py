@@ -1,5 +1,6 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 import MetaTrader5 as mt5
+import pytz
 import pandas as pd
 
 class ForexAnalyzer:
@@ -37,7 +38,7 @@ class ForexAnalyzer:
         rates = mt5.copy_rates_from(
             self._forex_pair, 
             mt5.TIMEFRAME_M1, 
-            self.get_current_time(), 
+            self.get_current_time() + timedelta(hours=3), # Local time is 3 hours behind
             self._find_minutes_elapsed()
         )
 
