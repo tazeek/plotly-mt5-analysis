@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date, time 
 import MetaTrader5 as mt5
 import pytz
 import pandas as pd
@@ -22,14 +22,12 @@ class ForexAnalyzer:
     def get_current_time(self):
         return datetime.today()
 
+    def get_start_day(self):
+        return datetime.combine(date.today(), time()) 
+
     def _find_minutes_elapsed(self):
 
-        self._start_mt5()
-
-        current = self.get_current_time()
-        start_day = datetime(current.year, current.month, current.day)
-
-        time_delta = (current - start_day)
+        time_delta = self.get_current_time() - self.get_start_day()
     
         return int(time_delta.total_seconds()/60)
 
