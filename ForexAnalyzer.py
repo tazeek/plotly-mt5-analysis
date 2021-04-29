@@ -37,7 +37,7 @@ class ForexAnalyzer:
             self._forex_pair, 
             mt5.TIMEFRAME_M1, 
             self.get_current_time() + timedelta(hours=3), # Local time is 3 hours behind
-            self._find_minutes_elapsed()
+            24 * 60 # Last 24 hours, every minute
         )
 
         rates_frame = pd.DataFrame(rates)
