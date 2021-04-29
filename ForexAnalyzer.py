@@ -25,19 +25,13 @@ class ForexAnalyzer:
     def get_start_day(self):
         return datetime.combine(date.today(), time()) 
 
-    def _find_minutes_elapsed(self):
-
-        time_delta = self.get_current_time() - self.get_start_day()
-    
-        return int(time_delta.total_seconds()/60)
-
     def get_daily_stats(self):
 
         rates = mt5.copy_rates_from(
             self._forex_pair, 
             mt5.TIMEFRAME_M1, 
             self.get_current_time() + timedelta(hours=3), # Local time is 3 hours behind
-            self._find_minutes_elapsed()
+            24 * 60 # Last 24 hours, every minute
         )
 
         rates_frame = pd.DataFrame(rates)
