@@ -30,3 +30,26 @@ class Graphs:
         )
 
         return candlestick_week_fig
+
+    def plot_histogram_fullday(self, data):
+
+        histogram_fig = go.Figure(
+            data=[
+                go.Histogram(
+                    x=data['close'],
+                    opacity=0.4,
+                    bingroup='bar'
+                )
+            ]
+        )
+
+        histogram_fig.update_layout(
+            width=800,
+            title=f"{self._currency} - Close price counts for the day",
+            xaxis_title="Price range",
+            yaxis_title="Counts",
+            hovermode='x',
+            yaxis_tickformat='k'
+        )
+
+        return histogram_fig
