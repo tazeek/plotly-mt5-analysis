@@ -27,7 +27,7 @@ class ForexAnalyzer:
 
     def get_hourly_stats(self):
 
-        ratse = mt5.copy_rates_from(
+        rates = mt5.copy_rates_from(
             self._forex_pair,
             mt5.TIMEFRAME_M30,
             self.get_current_time() + timedelta(hours=3),
