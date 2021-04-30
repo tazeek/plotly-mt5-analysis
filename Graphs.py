@@ -53,3 +53,29 @@ class Graphs:
         )
 
         return histogram_fig
+
+    def plot_tick_volume_fullday(self, data, start_time):
+
+        tick_vol_fig = go.Figure([
+            go.Scatter(
+                x=data['time'], 
+                y=data['tick_volume']
+            )
+        ])
+
+        tick_vol_fig.update_layout(
+            width=1000,
+            title=f"{self._currency} - Tick Volume for today",
+            xaxis_title="Time",
+            yaxis_title="Volume",
+            hovermode='x',
+            yaxis_tickformat='k'
+        )
+
+        tick_vol_fig.add_vline(
+            x=start_time,
+            line_dash="solid",
+            line_color="black"
+        )
+
+        return tick_vol_fig
