@@ -25,6 +25,25 @@ class ForexAnalyzer:
     def get_start_day(self):
         return datetime.combine(date.today(), time()) 
 
+    def get_hourly_stats(self):
+
+        rates = mt5.copy_rates_from(
+            self._forex_pair,
+            mt5.TIMEFRAME_M30,
+            self.get_current_time() + timedelta(hours=3),
+            24 * 2 # Last 24 hours, in 30-minute intervals
+        )
+
+        rates_frame = pd.DataFrame(rates)
+        rates_frame['time'] = pd.to_datetime(rates_frame['time'], unit='s')
+
+        pct_change_lambda = lambda a,b: ((b-a)/a) * 10000 # Numbers are too small, bigger multiplier
+        rates_frame['percentage_change'] = rates_frame.apply(
+            lambda x: pct_change_lambda(x['open'], x['close']), axis=1
+        )
+
+        return rates_frame
+
     def get_daily_stats(self):
 
         rates = mt5.copy_rates_from(
@@ -37,7 +56,7 @@ class ForexAnalyzer:
         rates_frame = pd.DataFrame(rates)
         rates_frame['time'] = pd.to_datetime(rates_frame['time'], unit='s')
 
-        return rates_frame.copy()
+        return rates_frame
 
     def get_d1_stats(self):
 
@@ -74,4 +93,4 @@ class ForexAnalyzer:
         rates_frame = pd.DataFrame(d7_rates)
         rates_frame['time'] = pd.to_datetime(rates_frame['time'], unit='s')
 
-        return rates_frame.copy()
+        return rates_frame
