@@ -79,3 +79,47 @@ class Graphs:
         )
 
         return tick_vol_fig
+
+    def plot_heatmap_fullday(self, data, start_time):
+
+        info_text = 'Time: %{x}<br><br>' + \
+            'Open price: %{customdata[0]:.5f}<br>' + \
+            'Close price: %{customdata[1]:.5f}<br>' + \
+            '% Change: %{z:.3f}<br><br>' + \
+            'High price: %{customdata[2]:.5f}<br>' + \
+            'Low price: %{customdata[3]:.5f}<br><extra></extra>'
+            
+        customdata_list = np.dstack(
+            (data['open'], data['close'], data['high'], data['low'])
+        )
+
+        heatmap_fig = go.Figure(
+            data=go.Heatmap(
+                customdata=customdata_list,
+                z=[data['percentage_change']],
+                y=None,
+                x=data['time'],
+                zmin=-30,
+                zmax=30,
+                colorscale='rdylgn',
+                hovertemplate= info_text
+            )
+        )
+
+        heatmap_fig.update_layout(
+            width=1000,
+            title=f"{self._currency} - Heatmap for price changes today",
+            xaxis_title="Time",
+            hovermode='x',
+        )
+
+        heatmap_fig.add_vline(
+            x=start_time,
+            line_dash="solid",
+            line_color="black"
+        )
+
+
+        heatmap_fig.update_yaxes(showticklabels=False)
+
+        return heatmap_fig
