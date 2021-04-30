@@ -37,7 +37,7 @@ class ForexAnalyzer:
         rates_frame = pd.DataFrame(rates)
         rates_frame['time'] = pd.to_datetime(rates_frame['time'], unit='s')
 
-        pct_change_lambda = lambda a,b: ((b-a)/a) * 10000
+        pct_change_lambda = lambda a,b: ((b-a)/a) * 10000 # Numbers are too small, bigger multiplier
         rates_frame['percentage_change'] = rates_frame.apply(
             lambda x: pct_change_lambda(x['open'], x['close']), axis=1
         )
