@@ -123,3 +123,68 @@ class Graphs:
         heatmap_fig.update_yaxes(showticklabels=False)
 
         return heatmap_fig
+
+    def plot_candlesticks_fullday(self, data_day, overall_day, start_time):
+
+        candlesticks_minute_fig = go.Figure(
+            data=[
+                go.Candlestick(
+                    x=data_day['time'],
+                    open=data_day['open'], 
+                    high=data_day['high'],
+                    low=data_day['low'], 
+                    close=data_day['close']
+                )
+            ]
+        )
+
+        candlesticks_minute_fig.add_hline(
+            y=overall_day['open'], 
+            line_dash="dot",
+            annotation_text=f"Open - {overall_day['open']}"
+        )
+
+        candlesticks_minute_fig.add_hline(
+            y=overall_day['high'], 
+            line_dash="dot",
+            annotation_text=f"High - {overall_day['high']}",
+            line_color='green'
+        )
+
+        candlesticks_minute_fig.add_hline(
+            y=overall_day['close'] + 0.00070, 
+            line_dash="dot",
+            annotation_text=f"Stop-loss (Sell) - {overall_day['close'] + 0.00070}",
+            line_color='purple'
+        )
+
+        candlesticks_minute_fig.add_hline(
+            y=overall_day['close'] - 0.00070, 
+            line_dash="dot",
+            annotation_text=f"Stop-loss (Buy) - {overall_day['close'] - 0.00070}",
+            line_color='purple'
+        )
+
+        candlesticks_minute_fig.add_hline(
+            y=overall_day['low'], 
+            line_dash="dot",
+            annotation_text=f"Low - {overall_day['low']}",
+            line_color='red'
+        )
+
+        candlesticks_minute_fig.add_vline(
+            x=start_time,
+            line_dash="solid",
+            line_color="black"
+        )
+
+        candlesticks_minute_fig.update_layout(
+            width=1000,
+            title=f"{self._currency} - Series for today",
+            xaxis_title="Time",
+            yaxis_title="Price",
+            hovermode='x',
+            yaxis_tickformat='k'
+        )
+
+        return candlesticks_minute_fig
