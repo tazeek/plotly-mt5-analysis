@@ -99,8 +99,8 @@ class Graphs:
                 z=[data['percentage_change']],
                 y=None,
                 x=data['time'],
-                zmin=-30,
-                zmax=30,
+                zmin=-25,
+                zmax=25,
                 colorscale='rdylgn',
                 hovertemplate= info_text
             )
