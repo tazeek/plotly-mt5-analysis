@@ -37,6 +37,11 @@ class ForexAnalyzer:
         rates_frame = pd.DataFrame(rates)
         rates_frame['time'] = pd.to_datetime(rates_frame['time'], unit='s')
 
+        pct_change_lambda = lambda a,b: ((b-a)/a) * 10000
+        rates_frame['percentage_change'] = rates_frame.apply(
+            lambda x: pct_change_lambda(x['open'], x['close']), axis=1
+        )
+
         return rates_frame
 
     def get_daily_stats(self):
