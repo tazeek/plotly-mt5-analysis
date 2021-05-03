@@ -31,7 +31,7 @@ class Graphs:
 
         return candlestick_week_fig
 
-    def plot_histogram_fullday(self, data):
+    def plot_histogram_fullday(self, data, close):
 
         histogram_fig = go.Figure(
             data=[
@@ -41,6 +41,12 @@ class Graphs:
                     bingroup='bar'
                 )
             ]
+        )
+
+        histogram_fig.add_vline(
+            x=close,
+            line_dash="solid",
+            line_color="black"
         )
 
         histogram_fig.update_layout(
