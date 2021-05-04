@@ -143,12 +143,22 @@ class Graphs:
         return heatmap_fig
 
     def plot_percentage_change(self, data):
+
         percentage_change_fig = go.Figure([
             go.Scatter(
                 x=data['time'], 
                 y=data['percentage_change']
             )
         ])
+
+        percentage_change_fig.update_layout(
+            width=1000,
+            title=f"{self._currency} - Tick Volume for today",
+            xaxis_title="Time",
+            yaxis_title="Percentage change",
+            hovermode='x',
+            yaxis_tickformat='k'
+        )
 
         percentage_change_fig.add_hline(
             y=0,
