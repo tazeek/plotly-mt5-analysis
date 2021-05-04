@@ -9,6 +9,8 @@ class ForexAnalyzer:
     
         self._forex_pair = forex_pair
 
+        self._timezone = pytz.timezone('Europe/Moscow') # MT5 timezone
+
         self._start_mt5()
 
     def __del__(self):
@@ -20,17 +22,17 @@ class ForexAnalyzer:
             quit()
 
     def get_current_time(self):
-        return datetime.today()
+        return datetime.now()  + timedelta(hours=3) # Local time is 3 hours behind
 
     def get_start_day(self):
-        return datetime.combine(date.today(), time()) 
+        return datetime.now(self._timezone).replace(hour=0,minute=0)
 
     def get_hourly_stats(self):
 
         rates = mt5.copy_rates_from(
             self._forex_pair,
             mt5.TIMEFRAME_M30,
-            self.get_current_time() + timedelta(hours=3),
+            self.get_current_time(),
             24 * 2 # Last 24 hours, in 30-minute intervals
         )
 
@@ -49,7 +51,7 @@ class ForexAnalyzer:
         rates = mt5.copy_rates_from(
             self._forex_pair, 
             mt5.TIMEFRAME_M1, 
-            self.get_current_time() + timedelta(hours=3), # Local time is 3 hours behind
+            self.get_current_time(),
             24 * 60 # Last 24 hours, every minute
         )
 

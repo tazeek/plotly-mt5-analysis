@@ -55,7 +55,8 @@ class Graphs:
             xaxis_title="Price range",
             yaxis_title="Counts",
             hovermode='x',
-            yaxis_tickformat='k'
+            yaxis_tickformat='k',
+            bargap=0.20
         )
 
         return histogram_fig
@@ -141,6 +142,38 @@ class Graphs:
         heatmap_fig.update_yaxes(showticklabels=False)
 
         return heatmap_fig
+
+    def plot_percentage_change(self, data, start_time):
+
+        percentage_change_fig = go.Figure([
+            go.Scatter(
+                x=data['time'], 
+                y=data['percentage_change']
+            )
+        ])
+
+        percentage_change_fig.update_layout(
+            width=1000,
+            title=f"{self._currency} - Tick Volume for today",
+            xaxis_title="Time",
+            yaxis_title="Percentage change",
+            hovermode='x',
+            yaxis_tickformat='.3f'
+        )
+
+        percentage_change_fig.add_hline(
+            y=0,
+            line_dash="solid",
+            line_color="black"
+        )
+
+        percentage_change_fig.add_vline(
+            x=start_time,
+            line_dash="solid",
+            line_color="black"
+        )
+
+        return percentage_change_fig
 
     def plot_candlesticks_fullday(self, data_day, overall_day, start_time):
 
