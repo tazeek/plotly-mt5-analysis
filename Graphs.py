@@ -157,7 +157,7 @@ class Graphs:
             xaxis_title="Time",
             yaxis_title="Percentage change",
             hovermode='x',
-            yaxis_tickformat='k'
+            yaxis_tickformat='.3f'
         )
 
         percentage_change_fig.add_hline(
