@@ -9,7 +9,7 @@ class ForexAnalyzer:
     
         self._forex_pair = forex_pair
 
-        self._timezone = pytz.timezone('Europe/Moscow')
+        self._timezone = pytz.timezone('Europe/Moscow') # MT5 timezone
 
         self._start_mt5()
 
@@ -25,7 +25,6 @@ class ForexAnalyzer:
         return datetime.now()  + timedelta(hours=3) # Local time is 3 hours behind
 
     def get_start_day(self):
-        #return datetime.combine(date.today(), time()) 
         return datetime.now(self._timezone).replace(hour=0,minute=0)
 
     def get_hourly_stats(self):

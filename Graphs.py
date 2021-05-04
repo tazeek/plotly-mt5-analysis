@@ -143,7 +143,7 @@ class Graphs:
 
         return heatmap_fig
 
-    def plot_percentage_change(self, data):
+    def plot_percentage_change(self, data, start_time):
 
         percentage_change_fig = go.Figure([
             go.Scatter(
@@ -163,6 +163,12 @@ class Graphs:
 
         percentage_change_fig.add_hline(
             y=0,
+            line_dash="solid",
+            line_color="black"
+        )
+
+        percentage_change_fig.add_vline(
+            x=start_time,
             line_dash="solid",
             line_color="black"
         )
