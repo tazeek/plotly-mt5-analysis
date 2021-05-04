@@ -55,7 +55,8 @@ class Graphs:
             xaxis_title="Price range",
             yaxis_title="Counts",
             hovermode='x',
-            yaxis_tickformat='k'
+            yaxis_tickformat='k',
+            bargap=0.20
         )
 
         return histogram_fig
