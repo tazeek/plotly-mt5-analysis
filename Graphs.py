@@ -142,6 +142,22 @@ class Graphs:
 
         return heatmap_fig
 
+    def plot_percentage_change(self, data):
+        percentage_change_fig = go.Figure([
+            go.Scatter(
+                x=data['time'], 
+                y=data['percentage_change']
+            )
+        ])
+
+        percentage_change_fig.add_hline(
+            y=0,
+            line_dash="solid",
+            line_color="black"
+        )
+
+        return percentage_change_fig
+
     def plot_candlesticks_fullday(self, data_day, overall_day, start_time):
 
         candlesticks_minute_fig = go.Figure(
