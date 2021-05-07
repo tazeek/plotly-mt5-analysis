@@ -155,7 +155,7 @@ class Graphs:
 
         percentage_change_fig.update_layout(
             width=1000,
-            title=f"{self._currency} - Tick Volume for today",
+            title=f"{self._currency} - Percentage Change for today",
             xaxis_title="Time",
             yaxis_title="Percentage change",
             hovermode='x',
