@@ -272,3 +272,6 @@ class Graphs:
         )
 
         return fig
+
+    def plot_bull_bears_graph(self, day_stats):
+        ...
