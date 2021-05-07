@@ -9,6 +9,8 @@ class ForexAnalyzer:
     
         self._forex_pair = forex_pair
 
+        self._forex_pair = 'JPY' in forex_pair ? 0.001 : 0.00001
+
         self._timezone = pytz.timezone('Europe/Moscow') # MT5 timezone
 
         self._start_mt5()
@@ -16,8 +18,13 @@ class ForexAnalyzer:
     def __del__(self):
         mt5.shutdown()
 
-    def _calculate_pip(open_close):
-        ...
+    def _calculate_pip(open, close):
+
+        pips = round((close - open) / self._forex_multiplier)
+        return int(pips)
+
+    pips = round((close - open) / multiplier)
+    return int(pips)
 
     def _start_mt5(self):
         if not mt5.initialize():
