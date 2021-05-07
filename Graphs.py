@@ -317,4 +317,15 @@ class Graphs:
         return bull_bear_power_fig
 
     def plot_pip_difference_graph(self, day_stats):
-        ...
+        
+        fig = go.Figure(
+            data=[
+                go.Bar(
+                    x=day_stats['time'],
+                    y=day_stats['pip_difference'],
+                    marker_color='blue'
+                )
+            ]
+        )
+
+        return fig
