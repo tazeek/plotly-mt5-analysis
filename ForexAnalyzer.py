@@ -9,12 +9,19 @@ class ForexAnalyzer:
     
         self._forex_pair = forex_pair
 
+        self._forex_multiplier = 0.001 if 'JPY' in forex_pair else 0.00001
+
         self._timezone = pytz.timezone('Europe/Moscow') # MT5 timezone
 
         self._start_mt5()
 
     def __del__(self):
         mt5.shutdown()
+
+    def _calculate_pip(self, open_price, close_price):
+
+        pips = round((close_price - open_price) / self._forex_multiplier)
+        return int(pips)
 
     def _start_mt5(self):
         if not mt5.initialize():
@@ -76,23 +83,23 @@ class ForexAnalyzer:
         del stats_dict['spread']
         del stats_dict['real_volume']
 
-        stats_dict['width_candlestick'] = int((stats_dict['high'] - stats_dict['low']) * 10**5)
-        stats_dict['gap_open_high'] = int((stats_dict['high'] - stats_dict['open']) * 10**5)
-        stats_dict['gap_open_low'] = int((stats_dict['open'] - stats_dict['low']) * 10**5)
-        stats_dict['gap_open_close'] = int((stats_dict['open'] - stats_dict['close']) * 10**5)
+        stats_dict['width_candlestick'] = self._calculate_pip(stats_dict['low'], stats_dict['high'])
+        stats_dict['gap_high_open'] = self._calculate_pip(stats_dict['open'],stats_dict['high'])
+        stats_dict['gap_open_low'] = self._calculate_pip(stats_dict['low'], stats_dict['open'])
+        stats_dict['gap_close_open'] = self._calculate_pip(stats_dict['open'], stats_dict['close'])
         
         return stats_dict
     
     def get_month_stats(self):
 
-        d7_rates = mt5.copy_rates_from(
+        d30_rates = mt5.copy_rates_from(
             self._forex_pair,
             mt5.TIMEFRAME_D1,
             self.get_current_time(),
             30
         )
 
-        rates_frame = pd.DataFrame(d7_rates)
+        rates_frame = pd.DataFrame(d30_rates)
         rates_frame['time'] = pd.to_datetime(rates_frame['time'], unit='s')
 
         return rates_frame
