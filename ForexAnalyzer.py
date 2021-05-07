@@ -21,7 +21,7 @@ class ForexAnalyzer:
     def _calculate_pip(self, open_price, close_price):
 
         pips = round((close_price - open_price) / self._forex_multiplier)
-        return int(pips)
+        return abs(int(pips))
 
     def _start_mt5(self):
         if not mt5.initialize():
