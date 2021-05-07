@@ -1,5 +1,6 @@
 import plotly.graph_objects as go
 import numpy as np
+import talib
 
 class Graphs:
 
@@ -239,3 +240,35 @@ class Graphs:
         )
 
         return candlesticks_minute_fig
+
+    def plot_rsi_figure(self, today_full):
+        rsi = talib.RSI(today_full["close"], timeperiod=14)
+
+        fig = go.Figure([
+            go.Scatter(
+                x=today_full['time'], 
+                y=rsi
+            )
+        ])
+
+        fig.add_hline(
+            y=30,
+            line_dash="solid",
+            line_color="black"
+        )
+
+        fig.add_hline(
+            y=70,
+            line_dash="solid",
+            line_color="black"
+        )
+
+        fig.update_layout(
+            width=1000,
+            xaxis_title="Time",
+            yaxis_title="RSI Value",
+            hovermode='x',
+            yaxis_tickformat='.2f'
+        )
+
+        return fig
