@@ -83,10 +83,10 @@ class ForexAnalyzer:
         del stats_dict['spread']
         del stats_dict['real_volume']
 
-        stats_dict['width_candlestick'] = self._calculate_pip(stats_dict['close'], stats_dict['high'])#int((stats_dict['high'] - stats_dict['low']) * 10**5)
-        stats_dict['gap_open_high'] = int((stats_dict['high'] - stats_dict['open']) * 10**5)
-        stats_dict['gap_open_low'] = int((stats_dict['open'] - stats_dict['low']) * 10**5)
-        stats_dict['gap_open_close'] = int((stats_dict['open'] - stats_dict['close']) * 10**5)
+        stats_dict['width_candlestick'] = self._calculate_pip(stats_dict['low'], stats_dict['high'])
+        stats_dict['gap_high_open'] = self._calculate_pip(stats_dict['open'],stats_dict['high'])
+        stats_dict['gap_open_low'] = self._calculate_pip(stats_dict['low'], stats_dict['open'])
+        stats_dict['gap_close_open'] = self._calculate_pip(stats_dict['open'], stats_dict['close'])
         
         return stats_dict
     
