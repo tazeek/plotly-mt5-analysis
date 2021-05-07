@@ -92,14 +92,14 @@ class ForexAnalyzer:
     
     def get_month_stats(self):
 
-        d7_rates = mt5.copy_rates_from(
+        d30_rates = mt5.copy_rates_from(
             self._forex_pair,
             mt5.TIMEFRAME_D1,
             self.get_current_time(),
             30
         )
 
-        rates_frame = pd.DataFrame(d7_rates)
+        rates_frame = pd.DataFrame(d30_rates)
         rates_frame['time'] = pd.to_datetime(rates_frame['time'], unit='s')
 
         return rates_frame
