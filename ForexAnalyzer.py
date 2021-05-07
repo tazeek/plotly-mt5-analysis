@@ -16,6 +16,9 @@ class ForexAnalyzer:
     def __del__(self):
         mt5.shutdown()
 
+    def _calculate_pip(open_close):
+        ...
+
     def _start_mt5(self):
         if not mt5.initialize():
             print("initialize() failed, error code =",mt5.last_error())
