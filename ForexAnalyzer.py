@@ -9,7 +9,7 @@ class ForexAnalyzer:
     
         self._forex_pair = forex_pair
 
-        self._forex_pair = 'JPY' in forex_pair ? 0.001 : 0.00001
+        self._forex_multiplier = 0.001 if 'JPY' in forex_pair else 0.00001
 
         self._timezone = pytz.timezone('Europe/Moscow') # MT5 timezone
 
@@ -18,13 +18,10 @@ class ForexAnalyzer:
     def __del__(self):
         mt5.shutdown()
 
-    def _calculate_pip(open, close):
+    def _calculate_pip(self, open_price, close_price):
 
-        pips = round((close - open) / self._forex_multiplier)
+        pips = round((close_price - open_price) / self._forex_multiplier)
         return int(pips)
-
-    pips = round((close - open) / multiplier)
-    return int(pips)
 
     def _start_mt5(self):
         if not mt5.initialize():
@@ -86,7 +83,7 @@ class ForexAnalyzer:
         del stats_dict['spread']
         del stats_dict['real_volume']
 
-        stats_dict['width_candlestick'] = int((stats_dict['high'] - stats_dict['low']) * 10**5)
+        stats_dict['width_candlestick'] = self._calculate_pip(stats_dict['close'], stats_dict['high'])#int((stats_dict['high'] - stats_dict['low']) * 10**5)
         stats_dict['gap_open_high'] = int((stats_dict['high'] - stats_dict['open']) * 10**5)
         stats_dict['gap_open_low'] = int((stats_dict['open'] - stats_dict['low']) * 10**5)
         stats_dict['gap_open_close'] = int((stats_dict['open'] - stats_dict['close']) * 10**5)
