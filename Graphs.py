@@ -1,3 +1,5 @@
+from tapy import Indicators
+
 import plotly.graph_objects as go
 import numpy as np
 import talib
@@ -274,4 +276,42 @@ class Graphs:
         return fig
 
     def plot_bull_bears_graph(self, day_stats):
-        ...
+        
+        day_stats.rename(
+            columns={
+                "close": "Close", 
+                "high": "High",
+                "low": "Low",
+                "open": "Open"
+            },
+            inplace=True
+        )
+
+        indicators = Indicators(day_stats)
+        indicators.bears_power(period=15, column_name='bears_power')
+        indicators.bulls_power(period=15, column_name='bulls_power')
+
+        indicators_df = indicators.df
+
+        bull_bear_power_fig = go.Figure(
+            data=[
+                go.Bar(
+                    x=indicators_df['time'],
+                    y=indicators_df['bears_power'],
+                    name='Bear Power',
+                    marker_color='red'
+                ),
+                go.Bar(
+                    x=indicators_df['time'],
+                    y=indicators_df['bulls_power'],
+                    name='Bull Power',
+                    marker_color='blue'
+                )
+            ]
+        )
+
+        bull_bear_power_fig.update_yaxes(range=[-0.0008, 0.0008])
+
+        bull_bear_power_fig.update_layout(template='simple_white')
+
+        return bull_bear_power_fig
