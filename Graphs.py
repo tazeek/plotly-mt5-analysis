@@ -315,3 +315,6 @@ class Graphs:
         bull_bear_power_fig.update_layout(template='simple_white')
 
         return bull_bear_power_fig
+
+    def plot_pip_difference_graph(self, day_stats):
+        ...
