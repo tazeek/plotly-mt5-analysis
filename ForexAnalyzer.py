@@ -65,6 +65,9 @@ class ForexAnalyzer:
         rates_frame = pd.DataFrame(rates)
         rates_frame['time'] = pd.to_datetime(rates_frame['time'], unit='s')
 
+        pip_lambda = lambda open_price, close_price: self._calculate_pip(open_price, close_price)
+        rates_frame['pip_difference'] = rates_frame.apply(lambda x: pip_lambda(x['open'], x['close']), axis=1)
+
         return rates_frame
 
     def get_d1_stats(self):
