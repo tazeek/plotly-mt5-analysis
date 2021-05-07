@@ -1,3 +1,5 @@
+from tapy import Indicators
+
 import plotly.graph_objects as go
 import numpy as np
 import talib
@@ -52,7 +54,7 @@ class Graphs:
 
         histogram_fig.update_layout(
             width=800,
-            title=f"{self._currency} - Close price counts for the day",
+            title=f"{self._currency} - Close price counts for the day (Current closing price: {close})",
             xaxis_title="Price range",
             yaxis_title="Counts",
             hovermode='x',
@@ -269,6 +271,61 @@ class Graphs:
             yaxis_title="RSI Value",
             hovermode='x',
             yaxis_tickformat='.2f'
+        )
+
+        return fig
+
+    def plot_bull_bears_graph(self, day_stats):
+        
+        day_stats.rename(
+            columns={
+                "close": "Close", 
+                "high": "High",
+                "low": "Low",
+                "open": "Open"
+            },
+            inplace=True
+        )
+
+        indicators = Indicators(day_stats)
+        indicators.bears_power(period=15, column_name='bears_power')
+        indicators.bulls_power(period=15, column_name='bulls_power')
+
+        indicators_df = indicators.df
+
+        bull_bear_power_fig = go.Figure(
+            data=[
+                go.Bar(
+                    x=indicators_df['time'],
+                    y=indicators_df['bears_power'],
+                    name='Bear Power',
+                    marker_color='red'
+                ),
+                go.Bar(
+                    x=indicators_df['time'],
+                    y=indicators_df['bulls_power'],
+                    name='Bull Power',
+                    marker_color='blue'
+                )
+            ]
+        )
+
+        bull_bear_power_fig.update_yaxes(range=[-0.0008, 0.0008])
+
+        bull_bear_power_fig.update_layout(template='simple_white')
+
+        return bull_bear_power_fig
+
+    def plot_pip_difference_graph(self, day_stats):
+        
+        fig = go.Figure(
+            data=[
+                go.Bar(
+                    x=day_stats['time'],
+                    y=day_stats['pip_difference'],
+                    marker_color='blue'
+                )
+            ]
         )
 
         return fig
