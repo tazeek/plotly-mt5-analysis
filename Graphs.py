@@ -69,7 +69,8 @@ class Graphs:
         tick_vol_fig = go.Figure([
             go.Scatter(
                 x=data['time'], 
-                y=data['tick_volume']
+                y=data['tick_volume'],
+                opacity=0.5
             )
         ])
 
@@ -86,6 +87,18 @@ class Graphs:
             x=start_time,
             line_dash="solid",
             line_color="black"
+        )
+
+        tick_vol_fig.add_hline(
+            y=35,
+            line_dash="dash",
+            line_color="red"
+        )
+
+        tick_vol_fig.add_hline(
+            y=70,
+            line_dash="dash",
+            line_color="green"
         )
 
         return tick_vol_fig
@@ -152,7 +165,8 @@ class Graphs:
             go.Scatter(
                 x=data['time'], 
                 y=data['percentage_change'],
-                mode='lines+markers'
+                mode='lines+markers',
+                opacity=0.5
             )
         ])
 
