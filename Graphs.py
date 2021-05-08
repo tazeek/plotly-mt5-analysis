@@ -28,7 +28,7 @@ class Graphs:
             xaxis_title="Date",
             yaxis_title="Price (Close)",
             hovermode='x',
-            yaxis_tickformat='k',
+            yaxis_tickformat='.3f',
             xaxis_rangeslider_visible=False
         )
 
@@ -90,13 +90,13 @@ class Graphs:
         )
 
         tick_vol_fig.add_hline(
-            y=35,
+            y=30,
             line_dash="dash",
             line_color="red"
         )
 
         tick_vol_fig.add_hline(
-            y=70,
+            y=60,
             line_dash="dash",
             line_color="green"
         )
@@ -277,7 +277,8 @@ class Graphs:
             xaxis_title="Time",
             yaxis_title="Price",
             hovermode='x',
-            yaxis_tickformat='k'
+            yaxis_tickformat='.5f',
+            xaxis_rangeslider_visible=False
         )
 
         return candlesticks_minute_fig
@@ -293,6 +294,12 @@ class Graphs:
         ])
 
         fig.add_hline(
+            y=20,
+            line_dash="dash",
+            line_color="green"
+        )
+
+        fig.add_hline(
             y=30,
             line_dash="solid",
             line_color="black"
@@ -302,6 +309,12 @@ class Graphs:
             y=70,
             line_dash="solid",
             line_color="black"
+        )
+
+        fig.add_hline(
+            y=80,
+            line_dash="dash",
+            line_color="green"
         )
 
         fig.update_layout(
