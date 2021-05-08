@@ -28,7 +28,7 @@ class Graphs:
             xaxis_title="Date",
             yaxis_title="Price (Close)",
             hovermode='x',
-            yaxis_tickformat='k',
+            yaxis_tickformat='.3f',
             xaxis_rangeslider_visible=False
         )
 
@@ -69,7 +69,8 @@ class Graphs:
         tick_vol_fig = go.Figure([
             go.Scatter(
                 x=data['time'], 
-                y=data['tick_volume']
+                y=data['tick_volume'],
+                opacity=0.5
             )
         ])
 
@@ -86,6 +87,18 @@ class Graphs:
             x=start_time,
             line_dash="solid",
             line_color="black"
+        )
+
+        tick_vol_fig.add_hline(
+            y=30,
+            line_dash="dash",
+            line_color="red"
+        )
+
+        tick_vol_fig.add_hline(
+            y=60,
+            line_dash="dash",
+            line_color="green"
         )
 
         return tick_vol_fig
@@ -151,7 +164,9 @@ class Graphs:
         percentage_change_fig = go.Figure([
             go.Scatter(
                 x=data['time'], 
-                y=data['percentage_change']
+                y=data['percentage_change'],
+                mode='lines+markers',
+                opacity=0.5
             )
         ])
 
@@ -162,6 +177,30 @@ class Graphs:
             yaxis_title="Percentage change",
             hovermode='x',
             yaxis_tickformat='.3f'
+        )
+
+        percentage_change_fig.add_hline(
+            y=3,
+            line_dash="dash",
+            line_color="red"
+        )
+
+        percentage_change_fig.add_hline(
+            y=-3,
+            line_dash="dash",
+            line_color="red"
+        )
+
+        percentage_change_fig.add_hline(
+            y=10,
+            line_dash="dash",
+            line_color="green"
+        )
+
+        percentage_change_fig.add_hline(
+            y=-10,
+            line_dash="dash",
+            line_color="green"
         )
 
         percentage_change_fig.add_hline(
@@ -238,7 +277,8 @@ class Graphs:
             xaxis_title="Time",
             yaxis_title="Price",
             hovermode='x',
-            yaxis_tickformat='k'
+            yaxis_tickformat='.5f',
+            xaxis_rangeslider_visible=False
         )
 
         return candlesticks_minute_fig
@@ -254,6 +294,12 @@ class Graphs:
         ])
 
         fig.add_hline(
+            y=20,
+            line_dash="dash",
+            line_color="green"
+        )
+
+        fig.add_hline(
             y=30,
             line_dash="solid",
             line_color="black"
@@ -263,6 +309,12 @@ class Graphs:
             y=70,
             line_dash="solid",
             line_color="black"
+        )
+
+        fig.add_hline(
+            y=80,
+            line_dash="dash",
+            line_color="green"
         )
 
         fig.update_layout(
