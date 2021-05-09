@@ -67,13 +67,13 @@ class ForexAnalyzer:
 
         return None
 
-    def _fetch_data_mt5(timeframe, bars_num):
+    def _fetch_data_mt5(self, timeframe, bars_num):
 
         rates = mt5.copy_rates_from(
             self._forex_pair,
             self._mt5_timeframe_dict[timeframe],
             self.get_current_time(),
-            24 * 2 # rates
+            bars_num
         )
 
         rates = pd.DataFrame(rates)
@@ -101,22 +101,16 @@ class ForexAnalyzer:
 
     def get_hourly_stats(self):
 
-        rates = mt5.copy_rates_from(
-            self._forex_pair,
-            mt5.TIMEFRAME_M30,
-            self.get_current_time(),
-            24 * 2 # Last 24 hours, in 30-minute intervals
-        )
+        # Last 24 hours, in 30-minute intervals
+        rates_df = self._fetch_data_mt5('30M', 24*2)
 
-        rates_frame = pd.DataFrame(rates)
-        rates_frame['time'] = pd.to_datetime(rates_frame['time'], unit='s')
-
-        pct_change_lambda = lambda a,b: ((b-a)/a) * 10000 # Numbers are too small, bigger multiplier
-        rates_frame['percentage_change'] = rates_frame.apply(
+        # Numbers are too small, bigger multiplier
+        pct_change_lambda = lambda a,b: ((b-a)/a) * 10000
+        rates_df['percentage_change'] = rates_df.apply(
             lambda x: pct_change_lambda(x['open'], x['close']), axis=1
         )
 
-        return rates_frame
+        return rates_df
 
     def get_daily_stats(self):
 
