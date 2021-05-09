@@ -2,7 +2,6 @@ from tapy import Indicators
 
 import plotly.graph_objects as go
 import numpy as np
-import talib
 
 class Graphs:
 
@@ -122,8 +121,8 @@ class Graphs:
                 z=[data['percentage_change']],
                 y=None,
                 x=data['time'],
-                zmin=-25,
-                zmax=25,
+                zmin=-0.25,
+                zmax=0.25,
                 colorscale='rdylgn',
                 hovertemplate= info_text
             )
@@ -170,6 +169,8 @@ class Graphs:
             )
         ])
 
+        percentage_change_fig.update_yaxes(range=[-1,1])
+
         percentage_change_fig.update_layout(
             width=1000,
             title=f"{self._currency} - Percentage Change for today",
@@ -180,25 +181,25 @@ class Graphs:
         )
 
         percentage_change_fig.add_hline(
-            y=3,
+            y=0.03,
             line_dash="dash",
             line_color="red"
         )
 
         percentage_change_fig.add_hline(
-            y=-3,
+            y=-0.03,
             line_dash="dash",
             line_color="red"
         )
 
         percentage_change_fig.add_hline(
-            y=10,
+            y=0.10,
             line_dash="dash",
             line_color="green"
         )
 
         percentage_change_fig.add_hline(
-            y=-10,
+            y=-0.10,
             line_dash="dash",
             line_color="green"
         )
@@ -217,24 +218,7 @@ class Graphs:
 
         return percentage_change_fig
 
-    def plot_candlesticks_fullday(self, data_day, overall_day, start_time):
-
-        copied_stats = data_day.copy()
-
-        copied_stats.rename(
-            columns={
-                "close": "Close", 
-                "high": "High",
-                "low": "Low",
-                "open": "Open"
-            },
-            inplace=True
-        )
-
-        indicators = Indicators(copied_stats)
-        indicators.sma(period=15, column_name='sma')
-
-        indicators_df = indicators.df
+    def plot_candlesticks_fullday(self, data_day, overall_day, start_time, indicators_df):
 
         candlesticks_minute_fig = go.Figure(
             data=[
@@ -246,8 +230,8 @@ class Graphs:
                     close=data_day['close']
                 ),
                 go.Scatter(
-                    x=copied_stats['time'], 
-                    y=copied_stats['sma'],
+                    x=indicators_df['time'], 
+                    y=indicators_df['sma'],
                     line=dict(color='black')
                 )
             ]
@@ -305,13 +289,12 @@ class Graphs:
 
         return candlesticks_minute_fig
 
-    def plot_rsi_figure(self, today_full):
-        rsi = talib.RSI(today_full["close"], timeperiod=14)
+    def plot_rsi_figure(self, rsi_today):
 
         fig = go.Figure([
             go.Scatter(
-                x=today_full['time'], 
-                y=rsi
+                x=rsi_today['time'], 
+                y=rsi_today['value']
             )
         ])
 
@@ -349,23 +332,7 @@ class Graphs:
 
         return fig
 
-    def plot_bull_bears_graph(self, day_stats):
-        
-        day_stats.rename(
-            columns={
-                "close": "Close", 
-                "high": "High",
-                "low": "Low",
-                "open": "Open"
-            },
-            inplace=True
-        )
-
-        indicators = Indicators(day_stats)
-        indicators.bears_power(period=15, column_name='bears_power')
-        indicators.bulls_power(period=15, column_name='bulls_power')
-
-        indicators_df = indicators.df
+    def plot_bull_bears_graph(self, indicators_df):
 
         bull_bear_power_fig = go.Figure(
             data=[
