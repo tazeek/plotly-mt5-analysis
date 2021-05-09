@@ -219,6 +219,23 @@ class Graphs:
 
     def plot_candlesticks_fullday(self, data_day, overall_day, start_time):
 
+        copied_stats = data_day.copy()
+
+        copied_stats.rename(
+            columns={
+                "close": "Close", 
+                "high": "High",
+                "low": "Low",
+                "open": "Open"
+            },
+            inplace=True
+        )
+
+        indicators = Indicators(copied_stats)
+        indicators.sma(period=15, column_name='sma')
+
+        indicators_df = indicators.df
+
         candlesticks_minute_fig = go.Figure(
             data=[
                 go.Candlestick(
@@ -227,6 +244,11 @@ class Graphs:
                     high=data_day['high'],
                     low=data_day['low'], 
                     close=data_day['close']
+                ),
+                go.Scatter(
+                    x=copied_stats['time'], 
+                    y=copied_stats['sma'],
+                    line=dict(color='black')
                 )
             ]
         )
