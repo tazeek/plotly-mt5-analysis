@@ -27,10 +27,9 @@ class ForexAnalyzer:
 
         self._indicators_stats_df = None
 
-        self._start_mt5()
-
-    def __del__(self):
-        mt5.shutdown()
+        if not mt5.initialize():
+            print("initialize() failed, error code =",mt5.last_error())
+            quit()
 
     def _calculate_pip(self, open_price, close_price):
 
@@ -80,12 +79,6 @@ class ForexAnalyzer:
         rates['time'] = pd.to_datetime(rates['time'], unit='s')
 
         return rates
-
-
-    def _start_mt5(self):
-        if not mt5.initialize():
-            print("initialize() failed, error code =",mt5.last_error())
-            quit()
 
     def get_current_time(self):
         return datetime.now()  + timedelta(hours=3) # Local time is 3 hours behind
