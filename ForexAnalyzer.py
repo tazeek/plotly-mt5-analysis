@@ -10,6 +10,12 @@ import talib
 class ForexAnalyzer:
 
     def __init__(self, forex_pair):
+
+        self._mt5_timeframe_dict = {
+            '1M': mt5.TIMEFRAME_M1,
+            '30M': mt5.TIMEFRAME_M30,
+            '1D': mt5.TIMEFRAME_D1,
+        }
     
         self._forex_pair = forex_pair
 
@@ -61,15 +67,19 @@ class ForexAnalyzer:
 
         return None
 
-    def _fetch_data_mt5():
-        ...
+    def _fetch_data_mt5(timeframe, bars_num):
 
         rates = mt5.copy_rates_from(
             self._forex_pair,
-            mt5.TIMEFRAME_M30,
+            self._mt5_timeframe_dict[timeframe],
             self.get_current_time(),
-            24 * 2 # Last 24 hours, in 30-minute intervals
+            24 * 2 # rates
         )
+
+        rates = pd.DataFrame(rates)
+        rates['time'] = pd.to_datetime(rates['time'], unit='s')
+
+        return rates
 
 
     def _start_mt5(self):
