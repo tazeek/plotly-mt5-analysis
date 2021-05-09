@@ -19,6 +19,8 @@ class ForexAnalyzer:
 
         self._rsi_today = None
 
+        self._indicators_stats_df = None
+
         self._start_mt5()
 
     def __del__(self):
@@ -35,6 +37,27 @@ class ForexAnalyzer:
             'time': day_stats['time'],
             'value': talib.RSI(day_stats["close"], timeperiod=14)
         })
+
+        return None
+    
+    def _create_indicators(self, day_stats):
+
+        day_stats.rename(
+            columns={
+                "close": "Close", 
+                "high": "High",
+                "low": "Low",
+                "open": "Open"
+            },
+            inplace=True
+        )
+
+        indicators = Indicators(day_stats)
+        indicators.sma(period=15, column_name='sma')
+        indicators.bears_power(period=15, column_name='bears_power')
+        indicators.bulls_power(period=15, column_name='bulls_power')
+
+        self._indicators_stats_df = indicators.df
 
         return None
 
