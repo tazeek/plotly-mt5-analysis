@@ -31,7 +31,14 @@ class ForexAnalyzer:
 
     def _calculate_rsi(self, day_stats):
 
-        self._rsi_today = talib.RSI(today_full["close"], timeperiod=14)
+        rsi_val = talib.RSI(day_stats["close"], timeperiod=14)
+
+        self._rsi_df = pd.DataFrame({
+            'time': day_stats['time'],
+            'value': rsi_val
+        })
+
+        return None
 
     def _start_mt5(self):
         if not mt5.initialize():
@@ -45,7 +52,7 @@ class ForexAnalyzer:
         return datetime.now(self._timezone).replace(hour=0,minute=0)
 
     def get_rsi_today(self):
-        return self._rsi_today
+        return self._rsi_df
 
     def get_hourly_stats(self):
 
