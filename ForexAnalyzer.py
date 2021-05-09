@@ -61,6 +61,17 @@ class ForexAnalyzer:
 
         return None
 
+    def _fetch_data_mt5():
+        ...
+
+        rates = mt5.copy_rates_from(
+            self._forex_pair,
+            mt5.TIMEFRAME_M30,
+            self.get_current_time(),
+            24 * 2 # Last 24 hours, in 30-minute intervals
+        )
+
+
     def _start_mt5(self):
         if not mt5.initialize():
             print("initialize() failed, error code =",mt5.last_error())
