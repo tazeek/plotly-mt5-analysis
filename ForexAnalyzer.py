@@ -125,11 +125,6 @@ class ForexAnalyzer:
 
         stats_dict = pd.DataFrame(rates_df).to_dict('records')[0]
 
-        del stats_dict['time']
-        del stats_dict['tick_volume']
-        del stats_dict['spread']
-        del stats_dict['real_volume']
-
         stats_dict['width_candlestick'] = self._calculate_pip(stats_dict['low'], stats_dict['high'])
         stats_dict['gap_high_open'] = self._calculate_pip(stats_dict['open'],stats_dict['high'])
         stats_dict['gap_open_low'] = self._calculate_pip(stats_dict['low'], stats_dict['open'])
