@@ -2,7 +2,6 @@ from tapy import Indicators
 
 import plotly.graph_objects as go
 import numpy as np
-import talib
 
 class Graphs:
 
