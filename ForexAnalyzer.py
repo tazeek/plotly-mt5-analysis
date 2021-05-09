@@ -1,7 +1,11 @@
 from datetime import datetime, timedelta, date, time 
+from tapy import Indicators
+
 import MetaTrader5 as mt5
-import pytz
 import pandas as pd
+
+import pytz
+import talib
 
 class ForexAnalyzer:
 
@@ -13,6 +17,8 @@ class ForexAnalyzer:
 
         self._timezone = pytz.timezone('Europe/Moscow') # MT5 timezone
 
+        self._rsi_today = None
+
         self._start_mt5()
 
     def __del__(self):
@@ -22,6 +28,10 @@ class ForexAnalyzer:
 
         pips = round((close_price - open_price) / self._forex_multiplier)
         return abs(int(pips))
+
+    def _calculate_rsi(self, day_stats):
+
+        self._rsi_today = talib.RSI(today_full["close"], timeperiod=14)
 
     def _start_mt5(self):
         if not mt5.initialize():
@@ -33,6 +43,9 @@ class ForexAnalyzer:
 
     def get_start_day(self):
         return datetime.now(self._timezone).replace(hour=0,minute=0)
+
+    def get_rsi_today(self):
+        return self._rsi_today
 
     def get_hourly_stats(self):
 
@@ -64,6 +77,8 @@ class ForexAnalyzer:
 
         rates_frame = pd.DataFrame(rates)
         rates_frame['time'] = pd.to_datetime(rates_frame['time'], unit='s')
+
+        self._calculate_rsi(rates_frame)
 
         pip_lambda = lambda open_price, close_price: self._calculate_pip(open_price, close_price)
         rates_frame['pip_difference'] = rates_frame.apply(lambda x: pip_lambda(x['open'], x['close']), axis=1)
