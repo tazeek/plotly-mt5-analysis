@@ -216,24 +216,7 @@ class Graphs:
 
         return percentage_change_fig
 
-    def plot_candlesticks_fullday(self, data_day, overall_day, start_time):
-
-        copied_stats = data_day.copy()
-
-        copied_stats.rename(
-            columns={
-                "close": "Close", 
-                "high": "High",
-                "low": "Low",
-                "open": "Open"
-            },
-            inplace=True
-        )
-
-        indicators = Indicators(copied_stats)
-        indicators.sma(period=15, column_name='sma')
-
-        indicators_df = indicators.df
+    def plot_candlesticks_fullday(self, data_day, overall_day, start_time, indicators_df):
 
         candlesticks_minute_fig = go.Figure(
             data=[
@@ -245,8 +228,8 @@ class Graphs:
                     close=data_day['close']
                 ),
                 go.Scatter(
-                    x=copied_stats['time'], 
-                    y=copied_stats['sma'],
+                    x=indicators_df['time'], 
+                    y=indicators_df['sma'],
                     line=dict(color='black')
                 )
             ]
@@ -347,23 +330,7 @@ class Graphs:
 
         return fig
 
-    def plot_bull_bears_graph(self, day_stats):
-        
-        day_stats.rename(
-            columns={
-                "close": "Close", 
-                "high": "High",
-                "low": "Low",
-                "open": "Open"
-            },
-            inplace=True
-        )
-
-        indicators = Indicators(day_stats)
-        indicators.bears_power(period=15, column_name='bears_power')
-        indicators.bulls_power(period=15, column_name='bulls_power')
-
-        indicators_df = indicators.df
+    def plot_bull_bears_graph(self, indicators_df):
 
         bull_bear_power_fig = go.Figure(
             data=[

@@ -110,7 +110,7 @@ class ForexAnalyzer:
         rates_frame['time'] = pd.to_datetime(rates_frame['time'], unit='s')
 
         self._calculate_rsi(rates_frame)
-        self. _create_indicators(rates_frame.copy())
+        self._create_indicators(rates_frame.copy())
 
         pip_lambda = lambda open_price, close_price: self._calculate_pip(open_price, close_price)
         rates_frame['pip_difference'] = rates_frame.apply(lambda x: pip_lambda(x['open'], x['close']), axis=1)
