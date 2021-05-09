@@ -305,13 +305,12 @@ class Graphs:
 
         return candlesticks_minute_fig
 
-    def plot_rsi_figure(self, today_full):
-        rsi = talib.RSI(today_full["close"], timeperiod=14)
+    def plot_rsi_figure(self, rsi_today):
 
         fig = go.Figure([
             go.Scatter(
-                x=today_full['time'], 
-                y=rsi
+                x=rsi_today['time'], 
+                y=rsi_today['value']
             )
         ])
 
