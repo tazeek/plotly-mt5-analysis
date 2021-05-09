@@ -121,8 +121,8 @@ class Graphs:
                 z=[data['percentage_change']],
                 y=None,
                 x=data['time'],
-                zmin=-25,
-                zmax=25,
+                zmin=-0.25,
+                zmax=0.25,
                 colorscale='rdylgn',
                 hovertemplate= info_text
             )
@@ -165,7 +165,9 @@ class Graphs:
                 x=data['time'], 
                 y=data['percentage_change'],
                 mode='lines+markers',
-                opacity=0.5
+                opacity=0.5,
+                ymax=0.25,
+                ymin=-0.25
             )
         ])
 
@@ -179,25 +181,25 @@ class Graphs:
         )
 
         percentage_change_fig.add_hline(
-            y=3,
+            y=0.03,
             line_dash="dash",
             line_color="red"
         )
 
         percentage_change_fig.add_hline(
-            y=-3,
+            y=-0.03,
             line_dash="dash",
             line_color="red"
         )
 
         percentage_change_fig.add_hline(
-            y=10,
+            y=0.10,
             line_dash="dash",
             line_color="green"
         )
 
         percentage_change_fig.add_hline(
-            y=-10,
+            y=-0.10,
             line_dash="dash",
             line_color="green"
         )

@@ -98,7 +98,7 @@ class ForexAnalyzer:
         rates_df = self._fetch_data_mt5('30M', 24*2)
 
         # Numbers are too small, bigger multiplier
-        pct_change_lambda = lambda a,b: ((b-a)/a) * 10000
+        pct_change_lambda = lambda a,b: ((b-a)/a) * 100
         rates_df['percentage_change'] = rates_df.apply(
             lambda x: pct_change_lambda(x['open'], x['close']), axis=1
         )
