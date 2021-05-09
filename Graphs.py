@@ -165,11 +165,11 @@ class Graphs:
                 x=data['time'], 
                 y=data['percentage_change'],
                 mode='lines+markers',
-                opacity=0.5,
-                ymax=0.25,
-                ymin=-0.25
+                opacity=0.5
             )
         ])
+
+        percentage_change_fig.update_yaxes(range=[-1,1])
 
         percentage_change_fig.update_layout(
             width=1000,
