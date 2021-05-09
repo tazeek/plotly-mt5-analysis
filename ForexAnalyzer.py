@@ -114,34 +114,23 @@ class ForexAnalyzer:
 
     def get_daily_stats(self):
 
-        rates = mt5.copy_rates_from(
-            self._forex_pair, 
-            mt5.TIMEFRAME_M1, 
-            self.get_current_time(),
-            24 * 60 # Last 24 hours, every minute
-        )
+        # Last 24 hours, in 1-minute intervals
+        rates_df = self._fetch_data_mt5('1M', 24*60)
 
-        rates_frame = pd.DataFrame(rates)
-        rates_frame['time'] = pd.to_datetime(rates_frame['time'], unit='s')
-
-        self._calculate_rsi(rates_frame)
-        self._create_indicators(rates_frame.copy())
+        self._calculate_rsi(rates_df)
+        self._create_indicators(rates_df.copy())
 
         pip_lambda = lambda open_price, close_price: self._calculate_pip(open_price, close_price)
-        rates_frame['pip_difference'] = rates_frame.apply(lambda x: pip_lambda(x['open'], x['close']), axis=1)
+        rates_df['pip_difference'] = rates_df.apply(lambda x: pip_lambda(x['open'], x['close']), axis=1)
 
-        return rates_frame
+        return rates_df
 
     def get_d1_stats(self):
 
-        d1_rates = mt5.copy_rates_from(
-            self._forex_pair,
-            mt5.TIMEFRAME_D1,
-            self.get_current_time(),
-            1
-        )
+        # Last 24 hours, in 1-minute intervals
+        rates_df = self._fetch_data_mt5('1D', 1)
 
-        stats_dict = pd.DataFrame(d1_rates).to_dict('records')[0]
+        stats_dict = pd.DataFrame(rates_df).to_dict('records')[0]
 
         del stats_dict['time']
         del stats_dict['tick_volume']
@@ -157,14 +146,4 @@ class ForexAnalyzer:
     
     def get_month_stats(self):
 
-        d30_rates = mt5.copy_rates_from(
-            self._forex_pair,
-            mt5.TIMEFRAME_D1,
-            self.get_current_time(),
-            30
-        )
-
-        rates_frame = pd.DataFrame(d30_rates)
-        rates_frame['time'] = pd.to_datetime(rates_frame['time'], unit='s')
-
-        return rates_frame
+        return self._fetch_data_mt5('1D', 30)
