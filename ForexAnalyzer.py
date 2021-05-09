@@ -31,11 +31,9 @@ class ForexAnalyzer:
 
     def _calculate_rsi(self, day_stats):
 
-        rsi_val = talib.RSI(day_stats["close"], timeperiod=14)
-
         self._rsi_df = pd.DataFrame({
             'time': day_stats['time'],
-            'value': rsi_val
+            'value': talib.RSI(day_stats["close"], timeperiod=14)
         })
 
         return None
