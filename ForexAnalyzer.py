@@ -75,6 +75,9 @@ class ForexAnalyzer:
     def get_rsi_today(self):
         return self._rsi_df
 
+    def get_indicator_stats(self):
+        return self._indicators_stats_df
+
     def get_hourly_stats(self):
 
         rates = mt5.copy_rates_from(
@@ -107,6 +110,7 @@ class ForexAnalyzer:
         rates_frame['time'] = pd.to_datetime(rates_frame['time'], unit='s')
 
         self._calculate_rsi(rates_frame)
+        self. _create_indicators(rates_frame.copy())
 
         pip_lambda = lambda open_price, close_price: self._calculate_pip(open_price, close_price)
         rates_frame['pip_difference'] = rates_frame.apply(lambda x: pip_lambda(x['open'], x['close']), axis=1)
