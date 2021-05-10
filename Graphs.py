@@ -240,10 +240,10 @@ class Graphs:
             )
         ])
 
-        self._draw_hline(fig, 20, "dash", "green")
-        self._draw_hline(fig, 80, "dash", "green")
-        self._draw_hline(fig, 30, "solid", "black")
-        self._draw_hline(fig, 70, "solid", "black")
+        self._draw_hline(fig, 20, "dash", "green", "Ideal - Buy")
+        self._draw_hline(fig, 80, "dash", "green", "Ideal - Sell")
+        self._draw_hline(fig, 30, "solid", "black", "Oversold")
+        self._draw_hline(fig, 70, "solid", "black", "Overbought")
 
         fig.update_layout(
             width=1000,
