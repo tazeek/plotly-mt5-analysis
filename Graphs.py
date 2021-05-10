@@ -8,6 +8,16 @@ class Graphs:
     def __init__(self, currency):
         self._currency = currency
 
+    def _draw_hline(self, fig, y_val, line_dash, line_col):
+
+        fig.add_hline(
+            y=y_val,
+            line_dash=line_dash,
+            line_color=line_col
+        )
+        
+        return None
+
     def plot_candlesticks_weekly(self, data):
 
         candlestick_week_fig = go.Figure(
@@ -94,11 +104,7 @@ class Graphs:
             line_color="black"
         )
 
-        tick_vol_fig.add_hline(
-            y=30,
-            line_dash="dash",
-            line_color="red"
-        )
+        self._draw_hline(tick_vol_fig, 30, "dash", "red")
 
         tick_vol_fig.add_hline(
             y=60,
