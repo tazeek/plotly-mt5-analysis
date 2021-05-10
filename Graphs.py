@@ -323,7 +323,7 @@ class Graphs:
 
     def plot_pip_difference_graph(self, day_stats):
         
-        fig = go.Figure(
+        return go.Figure(
             data=[
                 go.Bar(
                     x=day_stats['time'],
@@ -332,5 +332,3 @@ class Graphs:
                 )
             ]
         )
-
-        return fig
