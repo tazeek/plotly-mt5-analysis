@@ -200,18 +200,22 @@ class Graphs:
             ]
         )
 
-        candlesticks_minute_fig.add_hline(
-            y=overall_day['high'], 
-            line_dash="dot",
-            annotation_text=f"High - {overall_day['high']}",
-            line_color='green'
+        #self._draw_hline(fig, 20, "dash", "green")
+
+        self._draw_hline(
+            candlesticks_minute_fig,
+            overall_day['high'],
+            "dot",
+            'green',
+            f"High - {overall_day['high']}"
         )
 
-        candlesticks_minute_fig.add_hline(
-            y=overall_day['low'], 
-            line_dash="dot",
-            annotation_text=f"Low - {overall_day['low']}",
-            line_color='red'
+        self._draw_hline(
+            candlesticks_minute_fig,
+            overall_day['low'],
+            "dot",
+            'red',
+            f"Low - {overall_day['low']}"
         )
 
         self._draw_vline(candlesticks_minute_fig, start_time, "solid", "black")
