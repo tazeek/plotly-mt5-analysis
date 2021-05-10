@@ -175,11 +175,7 @@ class Graphs:
         self._draw_hline(percentage_change_fig, -0.10, "dash", "green")
         self._draw_hline(percentage_change_fig, 0, "solid", "black")
 
-        percentage_change_fig.add_vline(
-            x=start_time,
-            line_dash="solid",
-            line_color="black"
-        )
+        self._draw_vline(percentage_change_fig, start_time, "solid", "black")
 
         return percentage_change_fig
 
