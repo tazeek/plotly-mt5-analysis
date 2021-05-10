@@ -18,6 +18,16 @@ class Graphs:
         
         return None
 
+    def _draw_vline(self, fig, x_val, line_dash, line_col):
+        
+        fig.add_hline(
+            y=y_val,
+            line_dash=line_dash,
+            line_color=line_col
+        )
+        
+        return None
+
     def plot_candlesticks_weekly(self, data):
 
         candlestick_week_fig = go.Figure(
@@ -55,17 +65,8 @@ class Graphs:
             ]
         )
 
-        histogram_fig.add_vline(
-            x=day_stats['close'],
-            line_dash="solid",
-            line_color="black"
-        )
-
-        histogram_fig.add_vline(
-            x=day_stats['open'],
-            line_dash="dash",
-            line_color="green"
-        )
+        self._draw_vline(self, histogram_fig, day_stats['close'], "solid", "black")
+        self._draw_vline(self, histogram_fig, day_stats['open'], "dash", "green")
 
         histogram_fig.update_layout(
             width=800,
