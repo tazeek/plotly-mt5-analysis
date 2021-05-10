@@ -33,7 +33,7 @@ class Graphs:
 
         return candlestick_week_fig
 
-    def plot_histogram_fullday(self, data, close):
+    def plot_histogram_fullday(self, data, day_stats):
 
         histogram_fig = go.Figure(
             data=[
@@ -46,14 +46,20 @@ class Graphs:
         )
 
         histogram_fig.add_vline(
-            x=close,
+            x=day_stats['close'],
             line_dash="solid",
             line_color="black"
         )
 
+        histogram_fig.add_vline(
+            x=day_stats['open'],
+            line_dash="dash",
+            line_color="green"
+        )
+
         histogram_fig.update_layout(
             width=800,
-            title=f"{self._currency} - Close price counts for the day (Current closing price: {close})",
+            title=f"{self._currency} - Close price counts for the day (Current closing price: {day_stats['close']})",
             xaxis_title="Price range",
             yaxis_title="Counts",
             hovermode='x',
