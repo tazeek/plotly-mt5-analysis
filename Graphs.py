@@ -8,6 +8,26 @@ class Graphs:
     def __init__(self, currency):
         self._currency = currency
 
+    def _draw_hline(self, fig, y_val, line_dash, line_col):
+
+        fig.add_hline(
+            y=y_val,
+            line_dash=line_dash,
+            line_color=line_col
+        )
+        
+        return None
+
+    def _draw_vline(self, fig, x_val, line_dash, line_col):
+        
+        fig.add_vline(
+            x=x_val,
+            line_dash=line_dash,
+            line_color=line_col
+        )
+        
+        return None
+
     def plot_candlesticks_weekly(self, data):
 
         candlestick_week_fig = go.Figure(
@@ -45,17 +65,8 @@ class Graphs:
             ]
         )
 
-        histogram_fig.add_vline(
-            x=day_stats['close'],
-            line_dash="solid",
-            line_color="black"
-        )
-
-        histogram_fig.add_vline(
-            x=day_stats['open'],
-            line_dash="dash",
-            line_color="green"
-        )
+        self._draw_vline(histogram_fig, day_stats['close'], "solid", "black")
+        self._draw_vline(histogram_fig, day_stats['open'], "dash", "green")
 
         histogram_fig.update_layout(
             width=800,
@@ -88,23 +99,10 @@ class Graphs:
             yaxis_tickformat='k'
         )
 
-        tick_vol_fig.add_vline(
-            x=start_time,
-            line_dash="solid",
-            line_color="black"
-        )
+        self._draw_vline(tick_vol_fig, start_time, "solid", "black")
 
-        tick_vol_fig.add_hline(
-            y=30,
-            line_dash="dash",
-            line_color="red"
-        )
-
-        tick_vol_fig.add_hline(
-            y=60,
-            line_dash="dash",
-            line_color="green"
-        )
+        self._draw_hline(tick_vol_fig, 30, "dash", "red")
+        self._draw_hline(tick_vol_fig, 60, "dash", "green")
 
         return tick_vol_fig
 
@@ -141,24 +139,9 @@ class Graphs:
             hovermode='x',
         )
 
-        heatmap_fig.add_vline(
-            x=start_time,
-            line_dash="solid",
-            line_color="black"
-        )
-
-        heatmap_fig.add_vline(
-            x=high_price_time,
-            line_dash="dash",
-            line_color="green"
-        )
-
-        heatmap_fig.add_vline(
-            x=low_price_time,
-            line_dash="dash",
-            line_color="red"
-        )
-
+        self._draw_vline(heatmap_fig, start_time, "solid", "black")
+        self._draw_vline(heatmap_fig, high_price_time, "dash", "green")
+        self._draw_vline(heatmap_fig, low_price_time, "dash", "red")
 
         heatmap_fig.update_yaxes(showticklabels=False)
 
@@ -186,41 +169,13 @@ class Graphs:
             yaxis_tickformat='.3f'
         )
 
-        percentage_change_fig.add_hline(
-            y=0.03,
-            line_dash="dash",
-            line_color="red"
-        )
+        self._draw_hline(percentage_change_fig, 0.03, "dash", "red")
+        self._draw_hline(percentage_change_fig, -0.03, "dash", "red")
+        self._draw_hline(percentage_change_fig, 0.10, "dash", "green")
+        self._draw_hline(percentage_change_fig, -0.10, "dash", "green")
+        self._draw_hline(percentage_change_fig, 0, "solid", "black")
 
-        percentage_change_fig.add_hline(
-            y=-0.03,
-            line_dash="dash",
-            line_color="red"
-        )
-
-        percentage_change_fig.add_hline(
-            y=0.10,
-            line_dash="dash",
-            line_color="green"
-        )
-
-        percentage_change_fig.add_hline(
-            y=-0.10,
-            line_dash="dash",
-            line_color="green"
-        )
-
-        percentage_change_fig.add_hline(
-            y=0,
-            line_dash="solid",
-            line_color="black"
-        )
-
-        percentage_change_fig.add_vline(
-            x=start_time,
-            line_dash="solid",
-            line_color="black"
-        )
+        self._draw_vline(percentage_change_fig, start_time, "solid", "black")
 
         return percentage_change_fig
 
@@ -244,30 +199,10 @@ class Graphs:
         )
 
         candlesticks_minute_fig.add_hline(
-            y=overall_day['open'], 
-            line_dash="dot",
-            annotation_text=f"Open - {overall_day['open']}"
-        )
-
-        candlesticks_minute_fig.add_hline(
             y=overall_day['high'], 
             line_dash="dot",
             annotation_text=f"High - {overall_day['high']}",
             line_color='green'
-        )
-
-        candlesticks_minute_fig.add_hline(
-            y=overall_day['close'] + 0.00070, 
-            line_dash="dot",
-            annotation_text=f"Stop-loss (Sell) - {overall_day['close'] + 0.00070}",
-            line_color='purple'
-        )
-
-        candlesticks_minute_fig.add_hline(
-            y=overall_day['close'] - 0.00070, 
-            line_dash="dot",
-            annotation_text=f"Stop-loss (Buy) - {overall_day['close'] - 0.00070}",
-            line_color='purple'
         )
 
         candlesticks_minute_fig.add_hline(
@@ -277,11 +212,7 @@ class Graphs:
             line_color='red'
         )
 
-        candlesticks_minute_fig.add_vline(
-            x=start_time,
-            line_dash="solid",
-            line_color="black"
-        )
+        self._draw_vline(candlesticks_minute_fig, start_time, "solid", "black")
 
         candlesticks_minute_fig.update_layout(
             width=1000,
@@ -304,29 +235,10 @@ class Graphs:
             )
         ])
 
-        fig.add_hline(
-            y=20,
-            line_dash="dash",
-            line_color="green"
-        )
-
-        fig.add_hline(
-            y=30,
-            line_dash="solid",
-            line_color="black"
-        )
-
-        fig.add_hline(
-            y=70,
-            line_dash="solid",
-            line_color="black"
-        )
-
-        fig.add_hline(
-            y=80,
-            line_dash="dash",
-            line_color="green"
-        )
+        self._draw_hline(fig, 20, "dash", "green")
+        self._draw_hline(fig, 80, "dash", "green")
+        self._draw_hline(fig, 30, "solid", "black")
+        self._draw_hline(fig, 70, "solid", "black")
 
         fig.update_layout(
             width=1000,
@@ -365,7 +277,7 @@ class Graphs:
 
     def plot_pip_difference_graph(self, day_stats):
         
-        fig = go.Figure(
+        return go.Figure(
             data=[
                 go.Bar(
                     x=day_stats['time'],
@@ -374,5 +286,3 @@ class Graphs:
                 )
             ]
         )
-
-        return fig
