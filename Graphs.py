@@ -105,12 +105,7 @@ class Graphs:
         )
 
         self._draw_hline(tick_vol_fig, 30, "dash", "red")
-
-        tick_vol_fig.add_hline(
-            y=60,
-            line_dash="dash",
-            line_color="green"
-        )
+        self._draw_hline(tick_vol_fig, 60, "dash", "green")
 
         return tick_vol_fig
 
