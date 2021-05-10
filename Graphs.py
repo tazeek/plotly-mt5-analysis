@@ -199,30 +199,10 @@ class Graphs:
         )
 
         candlesticks_minute_fig.add_hline(
-            y=overall_day['open'], 
-            line_dash="dot",
-            annotation_text=f"Open - {overall_day['open']}"
-        )
-
-        candlesticks_minute_fig.add_hline(
             y=overall_day['high'], 
             line_dash="dot",
             annotation_text=f"High - {overall_day['high']}",
             line_color='green'
-        )
-
-        candlesticks_minute_fig.add_hline(
-            y=overall_day['close'] + 0.00070, 
-            line_dash="dot",
-            annotation_text=f"Stop-loss (Sell) - {overall_day['close'] + 0.00070}",
-            line_color='purple'
-        )
-
-        candlesticks_minute_fig.add_hline(
-            y=overall_day['close'] - 0.00070, 
-            line_dash="dot",
-            annotation_text=f"Stop-loss (Buy) - {overall_day['close'] - 0.00070}",
-            line_color='purple'
         )
 
         candlesticks_minute_fig.add_hline(
@@ -232,11 +212,7 @@ class Graphs:
             line_color='red'
         )
 
-        candlesticks_minute_fig.add_vline(
-            x=start_time,
-            line_dash="solid",
-            line_color="black"
-        )
+        self._draw_vline(candlesticks_minute_fig, start_time, "solid", "black")
 
         candlesticks_minute_fig.update_layout(
             width=1000,
