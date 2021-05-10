@@ -20,8 +20,8 @@ class Graphs:
 
     def _draw_vline(self, fig, x_val, line_dash, line_col):
         
-        fig.add_hline(
-            y=y_val,
+        fig.add_vline(
+            x=x_val,
             line_dash=line_dash,
             line_color=line_col
         )
@@ -65,8 +65,8 @@ class Graphs:
             ]
         )
 
-        self._draw_vline(self, histogram_fig, day_stats['close'], "solid", "black")
-        self._draw_vline(self, histogram_fig, day_stats['open'], "dash", "green")
+        self._draw_vline(histogram_fig, day_stats['close'], "solid", "black")
+        self._draw_vline(histogram_fig, day_stats['open'], "dash", "green")
 
         histogram_fig.update_layout(
             width=800,
@@ -99,11 +99,7 @@ class Graphs:
             yaxis_tickformat='k'
         )
 
-        tick_vol_fig.add_vline(
-            x=start_time,
-            line_dash="solid",
-            line_color="black"
-        )
+        self._draw_vline(tick_vol_fig, start_time, "solid", "black")
 
         self._draw_hline(tick_vol_fig, 30, "dash", "red")
         self._draw_hline(tick_vol_fig, 60, "dash", "green")
@@ -143,24 +139,9 @@ class Graphs:
             hovermode='x',
         )
 
-        heatmap_fig.add_vline(
-            x=start_time,
-            line_dash="solid",
-            line_color="black"
-        )
-
-        heatmap_fig.add_vline(
-            x=high_price_time,
-            line_dash="dash",
-            line_color="green"
-        )
-
-        heatmap_fig.add_vline(
-            x=low_price_time,
-            line_dash="dash",
-            line_color="red"
-        )
-
+        self._draw_vline(heatmap_fig, start_time, "solid", "black")
+        self._draw_vline(heatmap_fig, high_price_time, "dash", "green")
+        self._draw_vline(heatmap_fig, low_price_time, "dash", "red")
 
         heatmap_fig.update_yaxes(showticklabels=False)
 
