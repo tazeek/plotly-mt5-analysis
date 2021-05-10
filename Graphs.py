@@ -281,29 +281,10 @@ class Graphs:
             )
         ])
 
-        fig.add_hline(
-            y=20,
-            line_dash="dash",
-            line_color="green"
-        )
-
-        fig.add_hline(
-            y=30,
-            line_dash="solid",
-            line_color="black"
-        )
-
-        fig.add_hline(
-            y=70,
-            line_dash="solid",
-            line_color="black"
-        )
-
-        fig.add_hline(
-            y=80,
-            line_dash="dash",
-            line_color="green"
-        )
+        self._draw_hline(fig, 20, "dash", "green")
+        self._draw_hline(fig, 80, "dash", "green")
+        self._draw_hline(fig, 30, "solid", "black")
+        self._draw_hline(fig, 70, "solid", "black")
 
         fig.update_layout(
             width=1000,
