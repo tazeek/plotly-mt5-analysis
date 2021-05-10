@@ -34,7 +34,7 @@ class ForexAnalyzer:
     def _calculate_pip(self, open_price, close_price):
 
         pips = round((close_price - open_price) / self._forex_multiplier)
-        return abs(int(pips))
+        return int(pips)
 
     def _calculate_rsi(self, day_stats):
 
