@@ -187,35 +187,11 @@ class Graphs:
             yaxis_tickformat='.3f'
         )
 
-        percentage_change_fig.add_hline(
-            y=0.03,
-            line_dash="dash",
-            line_color="red"
-        )
-
-        percentage_change_fig.add_hline(
-            y=-0.03,
-            line_dash="dash",
-            line_color="red"
-        )
-
-        percentage_change_fig.add_hline(
-            y=0.10,
-            line_dash="dash",
-            line_color="green"
-        )
-
-        percentage_change_fig.add_hline(
-            y=-0.10,
-            line_dash="dash",
-            line_color="green"
-        )
-
-        percentage_change_fig.add_hline(
-            y=0,
-            line_dash="solid",
-            line_color="black"
-        )
+        self._draw_hline(percentage_change_fig, 0.03, "dash", "red")
+        self._draw_hline(percentage_change_fig, -0.03, "dash", "red")
+        self._draw_hline(percentage_change_fig, 0.10, "dash", "green")
+        self._draw_hline(percentage_change_fig, -0.10, "dash", "green")
+        self._draw_hline(percentage_change_fig, 0, "solid", "black")
 
         percentage_change_fig.add_vline(
             x=start_time,
