@@ -200,8 +200,6 @@ class Graphs:
             ]
         )
 
-        #self._draw_hline(fig, 20, "dash", "green")
-
         self._draw_hline(
             candlesticks_minute_fig,
             overall_day['high'],
