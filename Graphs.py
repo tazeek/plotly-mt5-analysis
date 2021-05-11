@@ -14,7 +14,8 @@ class Graphs:
             y=y_val,
             line_dash=line_dash,
             line_color=line_col,
-            annotation_text=annotation or ''
+            annotation_text=annotation or '',
+            line_width=0.5
         )
         
         return None
@@ -24,7 +25,8 @@ class Graphs:
         fig.add_vline(
             x=x_val,
             line_dash=line_dash,
-            line_color=line_col
+            line_color=line_col,
+            line_width=0.75
         )
         
         return None
@@ -46,9 +48,9 @@ class Graphs:
         candlestick_week_fig.update_layout(
             title=f"{self._currency} - Series for last 30 working days",
             xaxis_title="Date",
-            yaxis_title="Price (Close)",
+            yaxis_title="Price",
             hovermode='x',
-            yaxis_tickformat='.3f',
+            yaxis_tickformat='.5f',
             xaxis_rangeslider_visible=False,
             showlegend=False
         )
@@ -88,7 +90,8 @@ class Graphs:
             go.Scatter(
                 x=data['time'], 
                 y=data['tick_volume'],
-                opacity=0.5
+                opacity=0.5,
+                line=dict(width=1)
             )
         ])
 
@@ -190,12 +193,14 @@ class Graphs:
                     open=data_day['open'], 
                     high=data_day['high'],
                     low=data_day['low'], 
-                    close=data_day['close']
+                    close=data_day['close'],
+                    name=""
                 ),
                 go.Scatter(
                     x=indicators_df['time'], 
                     y=indicators_df['sma'],
-                    line=dict(color='black')
+                    line=dict(color='black', width=5),
+                    name=""
                 )
             ]
         )
@@ -212,7 +217,7 @@ class Graphs:
             candlesticks_minute_fig,
             overall_day['open'],
             "dot",
-            'green',
+            'darkmagenta',
             f"Open"
         )
 
@@ -244,7 +249,8 @@ class Graphs:
         fig = go.Figure([
             go.Scatter(
                 x=rsi_today['time'], 
-                y=rsi_today['value']
+                y=rsi_today['value'],
+                line=dict(width=0.5)
             )
         ])
 
@@ -290,12 +296,26 @@ class Graphs:
 
     def plot_pip_difference_graph(self, day_stats):
         
-        return go.Figure(
+        histogram_fig = go.Figure(
             data=[
-                go.Bar(
-                    x=day_stats['time'],
-                    y=day_stats['pip_difference'],
-                    marker_color='blue'
+                go.Histogram(
+                    x=day_stats['pip_difference'],
+                    opacity=0.4,
+                    bingroup='bar'
                 )
             ]
         )
+
+        histogram_fig.update_layout(
+            width=800,
+            title=f"{self._currency} - Pip size counts",
+            xaxis_title="Pip size",
+            yaxis_title="Counts",
+            hovermode='x',
+            yaxis_tickformat='k',
+            bargap=0.20
+        )
+
+        self._draw_vline(histogram_fig, day_stats['pip_difference'].iloc[-1], "solid", "black")
+
+        return histogram_fig
