@@ -48,7 +48,7 @@ class Graphs:
             xaxis_title="Date",
             yaxis_title="Price (Close)",
             hovermode='x',
-            yaxis_tickformat='.3f',
+            yaxis_tickformat='.5f',
             xaxis_rangeslider_visible=False,
             showlegend=False
         )
@@ -313,5 +313,7 @@ class Graphs:
             yaxis_tickformat='k',
             bargap=0.20
         )
+
+        self._draw_vline(histogram_fig, day_stats['pip_difference'].iloc[-1], "solid", "black")
 
         return histogram_fig
