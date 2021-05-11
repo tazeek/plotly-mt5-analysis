@@ -244,7 +244,8 @@ class Graphs:
         fig = go.Figure([
             go.Scatter(
                 x=rsi_today['time'], 
-                y=rsi_today['value']
+                y=rsi_today['value'],
+                line=dict(width=0.5)
             )
         ])
 
