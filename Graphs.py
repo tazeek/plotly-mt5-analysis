@@ -14,7 +14,8 @@ class Graphs:
             y=y_val,
             line_dash=line_dash,
             line_color=line_col,
-            annotation_text=annotation or ''
+            annotation_text=annotation or '',
+            line_width=0.5
         )
         
         return None
@@ -24,7 +25,8 @@ class Graphs:
         fig.add_vline(
             x=x_val,
             line_dash=line_dash,
-            line_color=line_col
+            line_color=line_col,
+            line_width=0.75
         )
         
         return None
