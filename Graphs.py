@@ -217,7 +217,7 @@ class Graphs:
             candlesticks_minute_fig,
             overall_day['open'],
             "dot",
-            'green',
+            'darkmagenta',
             f"Open"
         )
 
