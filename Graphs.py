@@ -205,7 +205,15 @@ class Graphs:
             overall_day['high'],
             "dot",
             'green',
-            f"High - {overall_day['high']}"
+            f"High"
+        )
+
+        self._draw_hline(
+            candlesticks_minute_fig,
+            overall_day['open'],
+            "dot",
+            'green',
+            f"Open"
         )
 
         self._draw_hline(
@@ -213,7 +221,7 @@ class Graphs:
             overall_day['low'],
             "dot",
             'red',
-            f"Low - {overall_day['low']}"
+            f"Low"
         )
 
         self._draw_vline(candlesticks_minute_fig, start_time, "solid", "black")

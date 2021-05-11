@@ -114,7 +114,7 @@ class ForexAnalyzer:
         self._create_indicators(rates_df.copy())
 
         pip_lambda = lambda open_price, close_price: self._calculate_pip(open_price, close_price)
-        rates_df['pip_difference'] = rates_df.apply(lambda x: pip_lambda(x['open'], x['close']), axis=1)
+        rates_df['pip_difference'] = rates_df.apply(lambda x: pip_lambda(x['low'], x['high']), axis=1)
 
         return rates_df
 
