@@ -191,12 +191,14 @@ class Graphs:
                     open=data_day['open'], 
                     high=data_day['high'],
                     low=data_day['low'], 
-                    close=data_day['close']
+                    close=data_day['close'],
+                    name=""
                 ),
                 go.Scatter(
                     x=indicators_df['time'], 
                     y=indicators_df['sma'],
-                    line=dict(color='black', width=5)
+                    line=dict(color='black', width=5),
+                    name=""
                 )
             ]
         )
@@ -292,12 +294,24 @@ class Graphs:
 
     def plot_pip_difference_graph(self, day_stats):
         
-        return go.Figure(
+        histogram_fig = go.Figure(
             data=[
-                go.Bar(
-                    x=day_stats['time'],
-                    y=day_stats['pip_difference'],
-                    marker_color='blue'
+                go.Histogram(
+                    x=day_stats['pip_difference'],
+                    opacity=0.4,
+                    bingroup='bar'
                 )
             ]
         )
+
+        histogram_fig.update_layout(
+            width=800,
+            title=f"{self._currency} - Pip size counts",
+            xaxis_title="Pip size",
+            yaxis_title="Counts",
+            hovermode='x',
+            yaxis_tickformat='k',
+            bargap=0.20
+        )
+
+        return histogram_fig
