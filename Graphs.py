@@ -8,12 +8,13 @@ class Graphs:
     def __init__(self, currency):
         self._currency = currency
 
-    def _draw_hline(self, fig, y_val, line_dash, line_col):
+    def _draw_hline(self, fig, y_val, line_dash, line_col, annotation=None):
 
         fig.add_hline(
             y=y_val,
             line_dash=line_dash,
-            line_color=line_col
+            line_color=line_col,
+            annotation_text=annotation or ''
         )
         
         return None
@@ -48,7 +49,8 @@ class Graphs:
             yaxis_title="Price (Close)",
             hovermode='x',
             yaxis_tickformat='.3f',
-            xaxis_rangeslider_visible=False
+            xaxis_rangeslider_visible=False,
+            showlegend=False
         )
 
         return candlestick_week_fig
@@ -90,6 +92,11 @@ class Graphs:
             )
         ])
 
+        self._draw_vline(tick_vol_fig, start_time, "solid", "black")
+
+        self._draw_hline(tick_vol_fig, 30, "dash", "red", "Average Volatility")
+        self._draw_hline(tick_vol_fig, 60, "dash", "green", "High Volatility")
+
         tick_vol_fig.update_layout(
             width=1000,
             title=f"{self._currency} - Tick Volume for today",
@@ -98,11 +105,6 @@ class Graphs:
             hovermode='x',
             yaxis_tickformat='k'
         )
-
-        self._draw_vline(tick_vol_fig, start_time, "solid", "black")
-
-        self._draw_hline(tick_vol_fig, 30, "dash", "red")
-        self._draw_hline(tick_vol_fig, 60, "dash", "green")
 
         return tick_vol_fig
 
@@ -198,18 +200,28 @@ class Graphs:
             ]
         )
 
-        candlesticks_minute_fig.add_hline(
-            y=overall_day['high'], 
-            line_dash="dot",
-            annotation_text=f"High - {overall_day['high']}",
-            line_color='green'
+        self._draw_hline(
+            candlesticks_minute_fig,
+            overall_day['high'],
+            "dot",
+            'green',
+            f"High"
         )
 
-        candlesticks_minute_fig.add_hline(
-            y=overall_day['low'], 
-            line_dash="dot",
-            annotation_text=f"Low - {overall_day['low']}",
-            line_color='red'
+        self._draw_hline(
+            candlesticks_minute_fig,
+            overall_day['open'],
+            "dot",
+            'green',
+            f"Open"
+        )
+
+        self._draw_hline(
+            candlesticks_minute_fig,
+            overall_day['low'],
+            "dot",
+            'red',
+            f"Low"
         )
 
         self._draw_vline(candlesticks_minute_fig, start_time, "solid", "black")
@@ -221,7 +233,8 @@ class Graphs:
             yaxis_title="Price",
             hovermode='x',
             yaxis_tickformat='.5f',
-            xaxis_rangeslider_visible=False
+            xaxis_rangeslider_visible=False,
+            showlegend=False
         )
 
         return candlesticks_minute_fig
@@ -235,10 +248,10 @@ class Graphs:
             )
         ])
 
-        self._draw_hline(fig, 20, "dash", "green")
-        self._draw_hline(fig, 80, "dash", "green")
-        self._draw_hline(fig, 30, "solid", "black")
-        self._draw_hline(fig, 70, "solid", "black")
+        self._draw_hline(fig, 20, "dash", "green", "Ideal - Buy")
+        self._draw_hline(fig, 80, "dash", "green", "Ideal - Sell")
+        self._draw_hline(fig, 30, "solid", "black", "Oversold")
+        self._draw_hline(fig, 70, "solid", "black", "Overbought")
 
         fig.update_layout(
             width=1000,
