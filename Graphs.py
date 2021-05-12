@@ -288,7 +288,12 @@ class Graphs:
             ]
         )
 
-        bull_bear_power_fig.update_layout(template='simple_white')
+        bull_bear_power_fig.update_layout(
+            template='simple_white',
+            title=f"{self._currency} - Bull-Bear measurement (30 minute intervals)",
+            hovermode='x',
+            yaxis_tickformat='.3f'
+        )
 
         return bull_bear_power_fig
 
