@@ -25,7 +25,7 @@ class ForexAnalyzer:
 
         self._rsi_today = None
 
-        self._indicators_stats_df = None
+        self._indicators_stats_df = {}
 
         if not mt5.initialize():
             print("initialize() failed, error code =",mt5.last_error())
@@ -45,7 +45,7 @@ class ForexAnalyzer:
 
         return None
     
-    def _create_indicators(self, day_stats):
+    def _create_indicators(self, day_stats, timeframe):
 
         day_stats.rename(
             columns={
@@ -62,7 +62,7 @@ class ForexAnalyzer:
         indicators.bears_power(period=15, column_name='bears_power')
         indicators.bulls_power(period=15, column_name='bulls_power')
 
-        self._indicators_stats_df = indicators.df
+        self._indicators_stats_df[timeframe] = indicators.df
 
         return None
 
@@ -89,8 +89,8 @@ class ForexAnalyzer:
     def get_rsi_today(self):
         return self._rsi_df
 
-    def get_indicator_stats(self):
-        return self._indicators_stats_df
+    def get_indicator_stats(self, timeframe):
+        return self._indicators_stats_df[timeframe]
 
     def get_hourly_stats(self):
 
@@ -111,7 +111,7 @@ class ForexAnalyzer:
         rates_df = self._fetch_data_mt5('1M', 24*60)
 
         self._calculate_rsi(rates_df)
-        self._create_indicators(rates_df.copy())
+        self._create_indicators(rates_df.copy(), '1M')
 
         pip_lambda = lambda open_price, close_price: self._calculate_pip(open_price, close_price)
         rates_df['pip_difference'] = rates_df.apply(lambda x: pip_lambda(x['low'], x['high']), axis=1)
