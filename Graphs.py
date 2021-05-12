@@ -277,18 +277,16 @@ class Graphs:
                     x=indicators_df['time'],
                     y=indicators_df['bears_power'],
                     name='Bear Power',
-                    marker_color='red'
+                    marker_color='#EC8888'
                 ),
                 go.Bar(
                     x=indicators_df['time'],
                     y=indicators_df['bulls_power'],
                     name='Bull Power',
-                    marker_color='blue'
+                    marker_color='#888CEC'
                 )
             ]
         )
-
-        bull_bear_power_fig.update_yaxes(range=[-0.0008, 0.0008])
 
         bull_bear_power_fig.update_layout(template='simple_white')
 
