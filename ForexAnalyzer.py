@@ -97,6 +97,8 @@ class ForexAnalyzer:
         # Last 24 hours, in 30-minute intervals
         rates_df = self._fetch_data_mt5('30M', 24*2)
 
+        self._create_indicators(rates_df.copy(), '30M')
+
         # Numbers are too small, bigger multiplier
         pct_change_lambda = lambda a,b: ((b-a)/a) * 100
         rates_df['percentage_change'] = rates_df.apply(
