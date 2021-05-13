@@ -9,17 +9,15 @@ import talib
 
 class ForexAnalyzer:
 
-    def __init__(self, forex_pair):
+    def __init__(self, forex_pair=None):
 
         self._mt5_timeframe_dict = {
             '1M': mt5.TIMEFRAME_M1,
             '30M': mt5.TIMEFRAME_M30,
             '1D': mt5.TIMEFRAME_D1,
         }
-    
+        
         self._forex_pair = forex_pair
-
-        self._forex_multiplier = 0.001 if 'JPY' in forex_pair else 0.00001
         
         self._timezone = pytz.timezone('Europe/Moscow') # MT5 timezone
 
@@ -31,16 +29,12 @@ class ForexAnalyzer:
             print("initialize() failed, error code =",mt5.last_error())
             quit()
 
-    def update_forex_pair(self, forex_pair):
-
-        self._forex_pair = forex_pair
-        self._forex_multiplier = 0.001 if 'JPY' in forex_pair else 0.00001
-
-        return None
+    def _get_multiplier(self):
+        return 0.001 if 'JPY' in self._forex_pair else 0.00001
 
     def _calculate_pip(self, open_price, close_price):
 
-        pips = round((close_price - open_price) / self._forex_multiplier)
+        pips = round((close_price - open_price) / self._get_multiplier())
         return int(pips)
 
     def _calculate_rsi(self, day_stats):
@@ -86,6 +80,13 @@ class ForexAnalyzer:
         rates['time'] = pd.to_datetime(rates['time'], unit='s')
 
         return rates
+
+    def update_forex_pair(self, forex_pair):
+
+        self._forex_pair = forex_pair
+        self._forex_multiplier = 0.001 if 'JPY' in forex_pair else 0.00001
+
+        return None
 
     def get_current_time(self):
         return datetime.now()  + timedelta(hours=3) # Local time is 3 hours behind

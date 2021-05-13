@@ -32,7 +32,6 @@ def _generate_candlestick_monthly():
 def generate_layout():
 
     return html.Div([
-        html.H1(children='Hello World'),
         _generate_dropdown(),
         _generate_candlestick_monthly()
     ])
