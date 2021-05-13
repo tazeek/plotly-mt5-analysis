@@ -91,7 +91,7 @@ class Graphs:
 
         histogram_fig.update_layout(
             width=800,
-            title=f"{self._currency} - Close price counts for the day (Current closing price: {day_stats['close']})",
+            title=f"{self._currency} - Close price counts for the day (Current closing price: {day_stats['close']:.5f})",
             xaxis_title="Price range",
             yaxis_title="Counts",
             hovermode='x',

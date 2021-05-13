@@ -35,4 +35,7 @@ def generate_layout():
         _loading_figure_layout('candlestick-30d-fig'),
         _loading_figure_layout('tick-volatility-fig'),
         _loading_figure_layout('pip-size-histogram-fig'),
+        _loading_figure_layout('heatmap-changes-fig'),
+        _loading_figure_layout('percentage-changes-fig'),
+        _loading_figure_layout('close-price-histogram-fig')
     ])
