@@ -20,11 +20,14 @@ def _generate_dropdown():
 
 def _generate_candlestick_monthly():
 
-    return html.Div([
-        dcc.Graph(
-            id="candlestick-30d-fig"
-        )
-    ])
+    return dcc.Loading(
+        type="default",
+        children=html.Div([
+            dcc.Graph(
+                id="candlestick-30d-fig"
+            )
+        ])
+    )
 
 def generate_layout():
 
