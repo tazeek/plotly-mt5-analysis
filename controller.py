@@ -31,7 +31,10 @@ def register_callbacks(app):
         ]
     
     @app.callback(
-        [Output("tick-volatility-fig","figure")],
+        [
+            Output("tick-volatility-fig","figure"),
+            Output("pip-size-histogram-fig","figure")
+        ],
         [Input("current-currency", "data")]
     )
     def display_tick_volatility(value):
@@ -40,17 +43,6 @@ def register_callbacks(app):
         start_day = forex_analyzer.get_start_day()
 
         return [
-            graph_generator.plot_tick_volume_fullday(day_stats, start_day)
-        ]
-    
-    @app.callback(
-        [Output("pip-size-histogram-fig","figure")],
-        [Input("current-currency", "data")]
-    )
-    def display_tick_volatility(value):
-        
-        day_stats = forex_analyzer.get_daily_stats()
-
-        return [
+            graph_generator.plot_tick_volume_fullday(day_stats, start_day),
             graph_generator.plot_pip_difference_graph(day_stats)
         ]
