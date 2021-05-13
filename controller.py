@@ -41,6 +41,10 @@ def register_callbacks(app):
         
         day_stats = forex_analyzer.get_daily_stats()
         start_day = forex_analyzer.get_start_day()
+        hourly_stats = forex_analyzer.get_hourly_stats()
+        today_stats = forex_analyzer.get_d1_stats(day_stats.to_dict('records')[-1])
+        
+        print(today_stats)
 
         return [
             graph_generator.plot_tick_volume_fullday(day_stats, start_day),

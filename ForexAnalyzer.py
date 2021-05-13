@@ -128,12 +128,13 @@ class ForexAnalyzer:
 
         return rates_df
 
-    def get_d1_stats(self):
+    def get_d1_stats(self, stats_dict=None):
 
         # Last 24 hours, in 1-minute intervals
-        rates_df = self._fetch_data_mt5('1D', 1)
+        if stats_dict is None:
+            rates_df = self._fetch_data_mt5('1D', 1)
 
-        stats_dict = pd.DataFrame(rates_df).to_dict('records')[0]
+            stats_dict = rates_df.to_dict('records')[0]
 
         stats_dict['width_candlestick'] = self._calculate_pip(stats_dict['low'], stats_dict['high'])
         stats_dict['gap_high_open'] = self._calculate_pip(stats_dict['open'],stats_dict['high'])
