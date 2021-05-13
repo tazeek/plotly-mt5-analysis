@@ -20,7 +20,7 @@ class ForexAnalyzer:
         self._forex_pair = forex_pair
 
         self._forex_multiplier = 0.001 if 'JPY' in forex_pair else 0.00001
-
+        
         self._timezone = pytz.timezone('Europe/Moscow') # MT5 timezone
 
         self._rsi_today = None
@@ -30,6 +30,13 @@ class ForexAnalyzer:
         if not mt5.initialize():
             print("initialize() failed, error code =",mt5.last_error())
             quit()
+
+    def update_forex_pair(self, forex_pair):
+
+        self._forex_pair = forex_pair
+        self._forex_multiplier = 0.001 if 'JPY' in forex_pair else 0.00001
+
+        return None
 
     def _calculate_pip(self, open_price, close_price):
 
