@@ -268,6 +268,7 @@ class Graphs:
 
         self._draw_hline(fig, 20, "dash", "green", "Ideal - Buy")
         self._draw_hline(fig, 80, "dash", "green", "Ideal - Sell")
+        self._draw_hline(fig, 50, "solid", "#9A5132", "Balanced")
         self._draw_hline(fig, 30, "solid", "black", "Oversold")
         self._draw_hline(fig, 70, "solid", "black", "Overbought")
 
