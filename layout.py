@@ -13,6 +13,7 @@ def _generate_dropdown():
             options=dropdown_options,
             value='GBPUSD'
         ),
+        dcc.Store(id='current-currency',data='GBPUSD')
         ],
         style={"width": "10%"}
     )

@@ -6,8 +6,15 @@ from ForexAnalyzer import ForexAnalyzer
 def register_callbacks(app):
     
     @app.callback(
-       [Output("candlestick-30d-fig","figure")],
-       [Input("currency-dropdown", "value")]
+        [Output("current-currency","data")],
+        [Input("currency-dropdown", "value")]
+    )
+    def update_forex_analyzer(value):
+        return [value]
+
+    @app.callback(
+        [Output("candlestick-30d-fig","figure")],
+        [Input("current-currency", "data")]
     )
     def display_30day_info(value):
 
