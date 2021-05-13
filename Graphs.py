@@ -87,10 +87,9 @@ class Graphs:
         )
 
         self._draw_vline(histogram_fig, day_stats['close'], "solid", "black")
-        self._draw_vline(histogram_fig, day_stats['open'], "dash", "green")
+        self._draw_vline(histogram_fig, day_stats['open'], "solid", "green")
 
         histogram_fig.update_layout(
-            width=800,
             title=f"{self._currency} - Close price counts for the day (Current closing price: {day_stats['close']:.5f})",
             xaxis_title="Price range",
             yaxis_title="Counts",
@@ -154,7 +153,6 @@ class Graphs:
         )
 
         heatmap_fig.update_layout(
-            width=1000,
             title=f"{self._currency} - Heatmap for price changes today",
             xaxis_title="Time",
             hovermode='x',
@@ -182,7 +180,6 @@ class Graphs:
         percentage_change_fig.update_yaxes(range=[-1,1])
 
         percentage_change_fig.update_layout(
-            width=1000,
             title=f"{self._currency} - Percentage Change for today",
             xaxis_title="Time",
             yaxis_title="Percentage change",
@@ -248,7 +245,6 @@ class Graphs:
         self._draw_vline(candlesticks_minute_fig, start_time, "solid", "black")
 
         candlesticks_minute_fig.update_layout(
-            width=1000,
             title=f"{self._currency} - Series for today",
             xaxis_title="Time",
             yaxis_title="Price",
@@ -277,7 +273,6 @@ class Graphs:
         self._draw_hline(fig, 70, "solid", "black", "Overbought")
 
         fig.update_layout(
-            width=1000,
             xaxis_title="Time",
             yaxis_title="RSI Value",
             hovermode='x',

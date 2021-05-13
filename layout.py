@@ -37,5 +37,8 @@ def generate_layout():
         _loading_figure_layout('pip-size-histogram-fig'),
         _loading_figure_layout('heatmap-changes-fig'),
         _loading_figure_layout('percentage-changes-fig'),
-        _loading_figure_layout('close-price-histogram-fig')
+        _loading_figure_layout('close-price-histogram-fig'),
+        _loading_figure_layout('candlestick-today-fig'),
+        _loading_figure_layout('rsi-fig'),
+        _loading_figure_layout('bull-bear-fig')
     ])
