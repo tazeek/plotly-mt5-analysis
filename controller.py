@@ -36,8 +36,6 @@ def register_callbacks(app):
         hourly_stats = forex_analyzer.get_hourly_stats()
         today_stats = forex_analyzer.get_d1_stats(last_30days_stats.to_dict('records')[-1])
 
-        print(today_stats)
-
         return [
             graph_generator.plot_candlesticks_weekly(last_30days_stats),
             graph_generator.plot_tick_volume_fullday(day_stats, start_day),
