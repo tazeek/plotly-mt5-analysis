@@ -40,7 +40,7 @@ def register_callbacks(app):
         start_day = forex_analyzer.get_start_day()
 
         return [
-            graph_generator..plot_tick_volume_fullday(day_stats, start_day)
+            graph_generator.plot_tick_volume_fullday(day_stats, start_day)
         ]
     
     @app.callback(
