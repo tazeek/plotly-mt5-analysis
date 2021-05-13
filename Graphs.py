@@ -5,8 +5,13 @@ import numpy as np
 
 class Graphs:
 
-    def __init__(self, currency):
+    def __init__(self, currency=None):
         self._currency = currency
+
+    def update_currency(self, currency):
+        self._currency = currency
+
+        return None
 
     def _draw_hline(self, fig, y_val, line_dash, line_col, annotation=None):
 
