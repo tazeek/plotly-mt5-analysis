@@ -29,9 +29,32 @@ def _generate_candlestick_monthly():
         ])
     )
 
+def _generate_tick_volatility():
+
+    return dcc.Loading(
+        type="default",
+        children=html.Div([
+            dcc.Graph(
+                id='tick-volatility-fig'
+            )
+        ])
+    )
+
+def _generate_pip_size_histogram():
+    return dcc.Loading(
+        type="default",
+        children=html.Div([
+            dcc.Graph(
+                id='pip-size-histogram-fig'
+            )
+        ])
+    )
+
 def generate_layout():
 
     return html.Div([
         _generate_dropdown(),
-        _generate_candlestick_monthly()
+        _generate_candlestick_monthly(),
+        _generate_tick_volatility(),
+        _generate_pip_size_histogram()
     ])
