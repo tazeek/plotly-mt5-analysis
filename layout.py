@@ -12,13 +12,23 @@ def _generate_dropdown():
             id='currency-dropdown',
             options=dropdown_options,
             value='GBPUSD'
-        )],
+        ),
+        ],
         style={"width": "10%"}
     )
+
+def _generate_candlestick_monthly():
+
+    return html.Div([
+        dcc.Graph(
+            id="candlestick-30d-fig"
+        )
+    ])
 
 def generate_layout():
 
     return html.Div([
         html.H1(children='Hello World'),
-        _generate_dropdown()
+        _generate_dropdown(),
+        _generate_candlestick_monthly()
     ])
