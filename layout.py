@@ -1,6 +1,16 @@
 import dash_core_components as dcc
 import dash_html_components as html
 
+def _loading_figure_layout(fig_id):
+    return dcc.Loading(
+        type="default",
+        children=html.Div([
+            dcc.Graph(
+                id=fig_id
+            )
+        ])
+    )
+
 def _generate_dropdown():
 
     forex_list = ['GBPUSD','EURGBP','EURUSD','AUDUSD','AUDJPY','USDJPY']
@@ -18,43 +28,11 @@ def _generate_dropdown():
         style={"width": "10%"}
     )
 
-def _generate_candlestick_monthly():
-
-    return dcc.Loading(
-        type="default",
-        children=html.Div([
-            dcc.Graph(
-                id="candlestick-30d-fig"
-            )
-        ])
-    )
-
-def _generate_tick_volatility():
-
-    return dcc.Loading(
-        type="default",
-        children=html.Div([
-            dcc.Graph(
-                id='tick-volatility-fig'
-            )
-        ])
-    )
-
-def _generate_pip_size_histogram():
-    return dcc.Loading(
-        type="default",
-        children=html.Div([
-            dcc.Graph(
-                id='pip-size-histogram-fig'
-            )
-        ])
-    )
-
 def generate_layout():
 
     return html.Div([
         _generate_dropdown(),
-        _generate_candlestick_monthly(),
-        _generate_tick_volatility(),
-        _generate_pip_size_histogram()
+        _loading_figure_layout('candlestick-30d-fig'),
+        _loading_figure_layout('tick-volatility-fig'),
+        _loading_figure_layout('pip-size-histogram-fig'),
     ])
