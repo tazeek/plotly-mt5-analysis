@@ -9,7 +9,7 @@ def register_callbacks(app):
        [Output("candlestick-30d-fig","figure")],
        [Input("currency-dropdown", "value")]
     )
-    def test_output(value):
+    def display_30day_info(value):
 
         forex_analyzer = ForexAnalyzer(value)
         last_30days_stats = forex_analyzer.get_month_stats()
