@@ -33,6 +33,12 @@ class Graphs:
 
     def plot_candlesticks_weekly(self, data):
 
+        string_creator = lambda open, high, low, close, size: f"Open: {open}<br>High: {high}<br>Low: {low}<br>Close: {close}<br>Size: {size}"
+
+        hovertext= data.apply(
+            lambda row: string_creator(row['open'], row['high'], row['low'], row['close'], row['pip_difference'])
+            , axis=1
+        )
         candlestick_week_fig = go.Figure(
             data=[
                 go.Candlestick(
@@ -40,7 +46,9 @@ class Graphs:
                     open=data['open'], 
                     high=data['high'],
                     low=data['low'], 
-                    close=data['close']
+                    close=data['close'],
+                    text=hovertext,
+                    hoverinfo='text'
                 )
             ]
         )
