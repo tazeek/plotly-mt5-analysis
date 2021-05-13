@@ -6,7 +6,6 @@ def _generate_dropdown():
     forex_list = ['GBPUSD','EURGBP','EURUSD','AUDUSD','AUDJPY','USDJPY']
 
     dropdown_options = [{'label': currency, 'value': currency} for currency in forex_list]
-    print(dropdown_options)
 
     return html.Div([
         dcc.Dropdown(
@@ -18,8 +17,7 @@ def _generate_dropdown():
 
 def generate_layout():
 
-    _generate_dropdown()
-    
     return html.Div([
-        html.H1(children='Hello World')
+        html.H1(children='Hello World'),
+        _generate_dropdown()
     ])
