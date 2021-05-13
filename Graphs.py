@@ -69,7 +69,7 @@ class Graphs:
             hovermode='x',
             yaxis_tickformat='.5f',
             xaxis_rangeslider_visible=False,
-            showlegend=False
+            showlegend=False,
         )
 
         return candlestick_week_fig
@@ -118,7 +118,6 @@ class Graphs:
         self._draw_hline(tick_vol_fig, 60, "dash", "green", "High Volatility")
 
         tick_vol_fig.update_layout(
-            width=1000,
             title=f"{self._currency} - Tick Volume for today",
             xaxis_title="Time",
             yaxis_title="Volume",
@@ -328,7 +327,6 @@ class Graphs:
         )
 
         histogram_fig.update_layout(
-            width=800,
             title=f"{self._currency} - Pip size counts",
             xaxis_title="Pip size",
             yaxis_title="Counts",
