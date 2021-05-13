@@ -12,8 +12,9 @@ def _generate_dropdown():
             id='currency-dropdown',
             options=dropdown_options,
             value='GBPUSD'
-        )
-    ])
+        )],
+        style={"width": "10%"}
+    )
 
 def generate_layout():
 
