@@ -22,7 +22,8 @@ def register_callbacks(app):
         [
             Output("candlestick-30d-fig","figure"),
             Output("tick-volatility-fig","figure"),
-            Output("pip-size-histogram-fig","figure")
+            Output("pip-size-histogram-fig","figure"),
+            Output("percentage-changes-fig","figure")
         ],
         [Input("current-currency", "data")]
     )
@@ -39,5 +40,6 @@ def register_callbacks(app):
         return [
             graph_generator.plot_candlesticks_weekly(last_30days_stats),
             graph_generator.plot_tick_volume_fullday(day_stats, start_day),
-            graph_generator.plot_pip_difference_graph(day_stats)
+            graph_generator.plot_pip_difference_graph(day_stats),
+            graph_generator.plot_percentage_change(hourly_stats, start_day)
         ]
