@@ -136,4 +136,9 @@ class ForexAnalyzer:
     
     def get_month_stats(self):
 
-        return self._fetch_data_mt5('1D', 30)
+        rates_df =  self._fetch_data_mt5('1D', 30)
+
+        pip_lambda = lambda open_price, close_price: self._calculate_pip(open_price, close_price)
+        rates_df['pip_difference'] = rates_df.apply(lambda x: pip_lambda(x['low'], x['high']), axis=1)
+
+        return rates_df
