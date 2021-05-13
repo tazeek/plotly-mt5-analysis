@@ -25,8 +25,8 @@ def register_callbacks(app):
             Output("pip-size-histogram-fig","figure"),
             Output("heatmap-changes-fig","figure"),
             Output("percentage-changes-fig","figure"),
-            Output("close-price-histogram-fig","figure")
-
+            Output("close-price-histogram-fig","figure"),
+            Output("bull-bear-fig","figure")
         ],
         [Input("current-currency", "data")]
     )
@@ -47,5 +47,6 @@ def register_callbacks(app):
             graph_generator.plot_pip_difference_graph(day_stats),
             graph_generator.plot_heatmap_fullday(hourly_stats, start_day, high_price_time, low_price_time),
             graph_generator.plot_percentage_change(hourly_stats, start_day),
-            graph_generator.plot_histogram_fullday(day_stats, today_stats)
+            graph_generator.plot_histogram_fullday(day_stats, today_stats),
+            graph_generator.plot_bull_bears_graph(forex_analyzer.get_indicator_stats('30M'))
         ]
