@@ -33,11 +33,14 @@ def generate_layout():
     return html.Div([
         _generate_dropdown(),
         _loading_figure_layout('candlestick-30d-fig'),
+        html.Hr(),
         _loading_figure_layout('tick-volatility-fig'),
         _loading_figure_layout('pip-size-histogram-fig'),
+        html.Hr(),
         _loading_figure_layout('heatmap-changes-fig'),
         _loading_figure_layout('percentage-changes-fig'),
         _loading_figure_layout('close-price-histogram-fig'),
+        html.Hr(),
         _loading_figure_layout('candlestick-today-fig'),
         _loading_figure_layout('rsi-fig'),
         _loading_figure_layout('bull-bear-fig')
