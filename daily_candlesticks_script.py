@@ -1,0 +1,1 @@
+from ForexAnalyzer import ForexAnalyzer
