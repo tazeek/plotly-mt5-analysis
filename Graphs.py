@@ -90,7 +90,7 @@ class Graphs:
         self._draw_vline(histogram_fig, day_stats['open'], "solid", "green")
 
         histogram_fig.update_layout(
-            title=f"{self._currency} - Close price counts for the day (Current closing price: {day_stats['close']:.5f})",
+            title=f"{self._currency} - Close price counts (Open price (Green): <b>{day_stats['open']:.5f}</b>, Close price (Black): <b>{day_stats['close']:.5f}</b>)",
             xaxis_title="Price range",
             yaxis_title="Counts",
             hovermode='x',
@@ -112,9 +112,16 @@ class Graphs:
         ])
 
         self._draw_vline(tick_vol_fig, start_time, "solid", "black")
-
-        self._draw_hline(tick_vol_fig, 30, "dash", "red", "Average Volatility")
-        self._draw_hline(tick_vol_fig, 60, "dash", "green", "High Volatility")
+        
+        tick_vol_fig.add_hrect(
+            y0=30, 
+            y1=0,
+            fillcolor="#D55A5A",
+            annotation_text="Average Volatility",
+            annotation_position="outside top right",
+            layer="below", 
+            opacity=0.25
+        )
 
         tick_vol_fig.update_layout(
             title=f"{self._currency} - Tick Volume for today",
@@ -177,8 +184,6 @@ class Graphs:
             )
         ])
 
-        percentage_change_fig.update_yaxes(range=[-1,1])
-
         percentage_change_fig.update_layout(
             title=f"{self._currency} - Percentage Change for today",
             xaxis_title="Time",
@@ -187,13 +192,18 @@ class Graphs:
             yaxis_tickformat='.3f'
         )
 
-        self._draw_hline(percentage_change_fig, 0.03, "dash", "red")
-        self._draw_hline(percentage_change_fig, -0.03, "dash", "red")
-        self._draw_hline(percentage_change_fig, 0.10, "dash", "green")
-        self._draw_hline(percentage_change_fig, -0.10, "dash", "green")
         self._draw_hline(percentage_change_fig, 0, "solid", "black")
-
         self._draw_vline(percentage_change_fig, start_time, "solid", "black")
+
+        percentage_change_fig.add_hrect(
+            y0=0.03, 
+            y1=-0.03,
+            fillcolor="#D55A5A",
+            annotation_text="Less activity zone",
+            annotation_position="outside bottom left",
+            layer="below", 
+            opacity=0.25
+        )
 
         return percentage_change_fig
 
@@ -256,9 +266,9 @@ class Graphs:
 
         return candlesticks_minute_fig
 
-    def plot_rsi_figure(self, rsi_today):
+    def plot_rsi_figure(self, rsi_today, start_time):
 
-        fig = go.Figure([
+        rsi_fig = go.Figure([
             go.Scatter(
                 x=rsi_today['time'], 
                 y=rsi_today['value'],
@@ -266,22 +276,38 @@ class Graphs:
             )
         ])
 
-        self._draw_hline(fig, 20, "dash", "green", "Ideal - Buy")
-        self._draw_hline(fig, 80, "dash", "green", "Ideal - Sell")
-        self._draw_hline(fig, 50, "solid", "#9A5132", "Balanced")
-        self._draw_hline(fig, 30, "solid", "black", "Oversold")
-        self._draw_hline(fig, 70, "solid", "black", "Overbought")
+        self._draw_hline(rsi_fig, 50, "solid", "#9A5132", "Balanced")
+        self._draw_hline(rsi_fig, 30, "solid", "black", "Oversold")
+        self._draw_hline(rsi_fig, 70, "solid", "black", "Overbought")
 
-        fig.update_layout(
+        self._draw_vline(rsi_fig, start_time, "solid", "black")
+
+        rsi_fig.update_layout(
             xaxis_title="Time",
             yaxis_title="RSI Value",
             hovermode='x',
             yaxis_tickformat='.2f'
         )
 
-        return fig
+        rsi_fig.add_hrect(
+            y0=0, 
+            y1=30,
+            fillcolor="palegreen",
+            layer="below", 
+            opacity=0.25
+        )
 
-    def plot_bull_bears_graph(self, indicators_df):
+        rsi_fig.add_hrect(
+            y0=100, 
+            y1=70,
+            fillcolor="palegreen",
+            layer="below", 
+            opacity=0.25
+        )
+
+        return rsi_fig
+
+    def plot_bull_bears_graph(self, indicators_df, start_time):
 
         bull_bear_power_fig = go.Figure(
             data=[
@@ -299,6 +325,8 @@ class Graphs:
                 )
             ]
         )
+
+        self._draw_vline(bull_bear_power_fig, start_time, "solid", "black")
 
         bull_bear_power_fig.update_layout(
             template='simple_white',
@@ -321,8 +349,10 @@ class Graphs:
             ]
         )
 
+        ongoing_pip_size = day_stats['pip_difference'].iloc[-1]
+
         histogram_fig.update_layout(
-            title=f"{self._currency} - Pip size counts",
+            title=f"{self._currency} - Pip size counts (Ongoing Pip differnece: {ongoing_pip_size})",
             xaxis_title="Pip size",
             yaxis_title="Counts",
             hovermode='x',
@@ -330,6 +360,6 @@ class Graphs:
             bargap=0.20
         )
 
-        self._draw_vline(histogram_fig, day_stats['pip_difference'].iloc[-1], "solid", "black")
+        self._draw_vline(histogram_fig, ongoing_pip_size, "solid", "black")
 
         return histogram_fig
