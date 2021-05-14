@@ -177,8 +177,6 @@ class Graphs:
             )
         ])
 
-        percentage_change_fig.update_yaxes(range=[-1,1])
-
         percentage_change_fig.update_layout(
             title=f"{self._currency} - Percentage Change for today",
             xaxis_title="Time",
@@ -187,13 +185,20 @@ class Graphs:
             yaxis_tickformat='.3f'
         )
 
-        self._draw_hline(percentage_change_fig, 0.03, "dash", "red")
-        self._draw_hline(percentage_change_fig, -0.03, "dash", "red")
         self._draw_hline(percentage_change_fig, 0.10, "dash", "green")
         self._draw_hline(percentage_change_fig, -0.10, "dash", "green")
         self._draw_hline(percentage_change_fig, 0, "solid", "black")
 
         self._draw_vline(percentage_change_fig, start_time, "solid", "black")
+
+        percentage_change_fig.add_hrect(
+            y0=0.03, 
+            y1=-0.03,
+            fillcolor="LightSalmon", 
+            opacity=0.5,
+            layer="below", 
+            line_width=0
+        )
 
         return percentage_change_fig
 
