@@ -266,30 +266,32 @@ class Graphs:
 
         return candlesticks_minute_fig
 
-    def plot_rsi_figure(self, rsi_today):
+    def plot_rsi_figure(self, rsi_today, start_time):
 
-        fig = go.Figure([
+        rsi_fig = go.Figure([
             go.Scatter(
                 x=rsi_today['time'], 
                 y=rsi_today['value'],
                 line=dict(width=0.5)
             )
         ])
-        
-        self._draw_hline(fig, 50, "solid", "#9A5132", "Balanced")
-        self._draw_hline(fig, 30, "solid", "black", "Oversold")
-        self._draw_hline(fig, 70, "solid", "black", "Overbought")
 
-        fig.update_layout(
+        self._draw_hline(rsi_fig, 50, "solid", "#9A5132", "Balanced")
+        self._draw_hline(rsi_fig, 30, "solid", "black", "Oversold")
+        self._draw_hline(rsi_fig, 70, "solid", "black", "Overbought")
+
+        self._draw_vline(rsi_fig, start_time, "solid", "black")
+
+        rsi_fig.update_layout(
             xaxis_title="Time",
             yaxis_title="RSI Value",
             hovermode='x',
             yaxis_tickformat='.2f'
         )
 
-        return fig
+        return rsi_fig
 
-    def plot_bull_bears_graph(self, indicators_df):
+    def plot_bull_bears_graph(self, indicators_df, start_time):
 
         bull_bear_power_fig = go.Figure(
             data=[
@@ -307,6 +309,8 @@ class Graphs:
                 )
             ]
         )
+
+        self._draw_vline(bull_bear_power_fig, start_time, "solid", "black")
 
         bull_bear_power_fig.update_layout(
             template='simple_white',

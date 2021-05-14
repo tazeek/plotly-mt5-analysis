@@ -51,6 +51,6 @@ def register_callbacks(app):
             graph_generator.plot_percentage_change(hourly_stats, start_day),
             graph_generator.plot_histogram_fullday(day_stats, today_stats),
             graph_generator.plot_candlesticks_fullday(day_stats, today_stats, start_day, forex_analyzer.get_indicator_stats('1M')),
-            graph_generator.plot_rsi_figure(forex_analyzer.get_rsi_today()),
-            graph_generator.plot_bull_bears_graph(forex_analyzer.get_indicator_stats('30M'))
+            graph_generator.plot_rsi_figure(forex_analyzer.get_rsi_today(), start_day),
+            graph_generator.plot_bull_bears_graph(forex_analyzer.get_indicator_stats('30M'), start_day)
         ]
