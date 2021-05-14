@@ -21,6 +21,7 @@ def register_callbacks(app):
     @app.callback(
         [
             Output("candlestick-30d-fig","figure"),
+            Output("candlestick-fullday-fig","figure"),
             Output("tick-volatility-fig","figure"),
             Output("pip-size-histogram-fig","figure"),
             Output("heatmap-changes-fig","figure"),
