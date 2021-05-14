@@ -30,6 +30,12 @@ def _generate_profit_pip_calculator():
                 'Calculate pip count', 
                 id='submit-val', 
                 style={'margin-top': 10}
+            ),
+
+            html.Div(
+                id='average-pip-text',
+                children='Average pip per trade: 0',
+                style={'margin-top': 10}
             )
         ]
     )
