@@ -31,16 +31,17 @@ def _generate_dropdown():
 
     dropdown_options = [{'label': currency, 'value': currency} for currency in forex_list]
 
-    return html.Div([
-        dcc.Dropdown(
-            id='currency-dropdown',
-            options=dropdown_options,
-            clearable=False,
-            value='GBPUSD'
-        ),
-        dcc.Store(id='current-currency',data='GBPUSD')
+    return html.Div(
+        [
+            dcc.Dropdown(
+                id='currency-dropdown',
+                options=dropdown_options,
+                clearable=False,
+                value='GBPUSD'
+            ),
+            dcc.Store(id='current-currency',data='GBPUSD')
         ],
-        style={"width": "10%"}
+            style={"width": "10%"}
     )
 
 def generate_layout():
