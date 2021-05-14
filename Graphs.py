@@ -112,9 +112,16 @@ class Graphs:
         ])
 
         self._draw_vline(tick_vol_fig, start_time, "solid", "black")
-
-        self._draw_hline(tick_vol_fig, 30, "dash", "red", "Average Volatility")
-        self._draw_hline(tick_vol_fig, 60, "dash", "green", "High Volatility")
+        
+        tick_vol_fig.add_hrect(
+            y0=30, 
+            y1=0,
+            fillcolor="#D55A5A",
+            annotation_text="Average Volatility",
+            annotation_position="outside top right",
+            layer="below", 
+            opacity=0.25
+        )
 
         tick_vol_fig.update_layout(
             title=f"{self._currency} - Tick Volume for today",
@@ -185,10 +192,7 @@ class Graphs:
             yaxis_tickformat='.3f'
         )
 
-        self._draw_hline(percentage_change_fig, 0.10, "dash", "green")
-        self._draw_hline(percentage_change_fig, -0.10, "dash", "green")
         self._draw_hline(percentage_change_fig, 0, "solid", "black")
-
         self._draw_vline(percentage_change_fig, start_time, "solid", "black")
 
         percentage_change_fig.add_hrect(
@@ -198,7 +202,7 @@ class Graphs:
             annotation_text="Less activity zone",
             annotation_position="outside bottom left",
             layer="below", 
-            opacity=0.75
+            opacity=0.25
         )
 
         return percentage_change_fig
@@ -271,9 +275,7 @@ class Graphs:
                 line=dict(width=0.5)
             )
         ])
-
-        self._draw_hline(fig, 20, "dash", "green", "Ideal - Buy")
-        self._draw_hline(fig, 80, "dash", "green", "Ideal - Sell")
+        
         self._draw_hline(fig, 50, "solid", "#9A5132", "Balanced")
         self._draw_hline(fig, 30, "solid", "black", "Oversold")
         self._draw_hline(fig, 70, "solid", "black", "Overbought")
