@@ -1,4 +1,4 @@
-from dash.dependencies import Input, Output
+from dash.dependencies import Input, Output, State
 
 from Graphs import Graphs
 from ForexAnalyzer import ForexAnalyzer
@@ -56,3 +56,19 @@ def register_callbacks(app):
             graph_generator.plot_rsi_figure(forex_analyzer.get_rsi_today(), start_day),
             graph_generator.plot_bull_bears_graph(forex_analyzer.get_indicator_stats('30M'), start_day)
         ]
+
+    @app.callback(
+        [Output('average-pip-text','children')],
+        [Input('start-calculation','n_clicks')],
+        [
+            State('input_profit_target','value'),
+            State('input_leverage','value'),
+            State('input_minimum_trade','value')
+        ]
+    )
+    def perform_average_pip_calculation(clicks, **test):
+        avg_pip = 0
+
+        print(test)
+
+        return f"Average pip per trade: {avg_pip}"

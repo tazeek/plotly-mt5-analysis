@@ -28,7 +28,7 @@ def _generate_profit_pip_calculator():
 
             html.Button(
                 'Calculate pip count', 
-                id='submit-val', 
+                id='start-calculation', 
                 style={'margin-top': 10}
             ),
 
