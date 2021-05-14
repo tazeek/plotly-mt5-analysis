@@ -3,6 +3,8 @@ from dash.dependencies import Input, Output, State
 from Graphs import Graphs
 from ForexAnalyzer import ForexAnalyzer
 
+import math
+
 def register_callbacks(app):
     
     forex_analyzer = ForexAnalyzer()
@@ -64,10 +66,15 @@ def register_callbacks(app):
             State('input_profit_target','value'),
             State('input_leverage','value'),
             State('input_minimum_trade','value')
-        ]
+        ],
+        prevent_initial_call=True
     )
-    def perform_average_pip_calculation(click_count, target, leverage, min_trade):
+    def perform_average_pip_calculation(click_count, target=0, leverage=0, min_trade=0):
         avg_pip = 0
+
+        leverage = float(leverage)
+        target = float(target)
+        min_trade = float(min_trade)
 
         if leverage > 0 and min_trade > 0:
 
