@@ -1,6 +1,8 @@
 import dash_core_components as dcc
 import dash_html_components as html
 
+import random
+
 def _fetch_forex_pairs():
     forex_pairs = []
 
@@ -52,6 +54,7 @@ def _generate_profit_pip_calculator():
 def _generate_dropdown():
 
     forex_list = _fetch_forex_pairs()
+    current_forex = random.choice(forex_list)
 
     dropdown_options = [{'label': currency, 'value': currency} for currency in forex_list]
 
@@ -61,9 +64,9 @@ def _generate_dropdown():
                 id='currency-dropdown',
                 options=dropdown_options,
                 clearable=False,
-                value='GBPUSD'
+                value=current_forex
             ),
-            dcc.Store(id='current-currency',data='GBPUSD')
+            dcc.Store(id='current-currency',data=current_forex)
         ],
             style={"width": "10%"}
     )
