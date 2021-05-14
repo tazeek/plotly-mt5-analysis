@@ -194,10 +194,11 @@ class Graphs:
         percentage_change_fig.add_hrect(
             y0=0.03, 
             y1=-0.03,
-            fillcolor="LightSalmon", 
-            opacity=0.5,
+            fillcolor="#D55A5A",
+            annotation_text="Less activity zone",
+            annotation_position="outside bottom left",
             layer="below", 
-            line_width=0
+            opacity=0.75
         )
 
         return percentage_change_fig
