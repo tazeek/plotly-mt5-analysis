@@ -21,6 +21,7 @@ def _generate_dropdown():
         dcc.Dropdown(
             id='currency-dropdown',
             options=dropdown_options,
+            clearable=False,
             value='GBPUSD'
         ),
         dcc.Store(id='current-currency',data='GBPUSD')
