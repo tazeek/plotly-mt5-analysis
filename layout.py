@@ -1,6 +1,15 @@
 import dash_core_components as dcc
 import dash_html_components as html
 
+def _fetch_forex_pairs():
+    forex_pairs = []
+
+    with open('forex_pairs.txt') as f:
+        for line in f.readlines():
+            forex_pairs.append(line.strip())
+    
+    return forex_pairs
+
 def _loading_figure_layout(fig_id):
     return dcc.Loading(
         type="default",
@@ -42,7 +51,7 @@ def _generate_profit_pip_calculator():
 
 def _generate_dropdown():
 
-    forex_list = ['GBPUSD','EURGBP','EURUSD','AUDUSD','AUDJPY','USDJPY']
+    forex_list = _fetch_forex_pairs()
 
     dropdown_options = [{'label': currency, 'value': currency} for currency in forex_list]
 
