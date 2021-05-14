@@ -21,6 +21,7 @@ def _generate_profit_pip_calculator():
                 id=f"input_{field}",
                 type="text",
                 placeholder=f"{field}",
+                style={"margin-left": "15px"}
             ) for field in field_list
         ]
     )
