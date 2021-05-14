@@ -36,6 +36,38 @@ class Graphs:
         
         return None
 
+    def plot_candlestick_today(self, data):
+
+        info_text = f"Candlestick width: {data['width_candlestick']}<br>" + \
+            f"Gap (High-Open): {data['gap_high_open']}<br>" + \
+            f"Gap (Low-Open): {data['gap_open_low']}<br>" + \
+            f"Current gap (Open-close): {data['gap_close_open']}"
+
+        candlestick_today_fig = go.Figure(
+            data=[
+                go.Candlestick(
+                    x=[data['time']],
+                    open=[data['open']], 
+                    high=[data['high']],
+                    low=[data['low']], 
+                    close=[data['close']],
+                    text=info_text,
+                    hoverinfo='text'
+                )
+            ]
+        )
+
+        candlestick_today_fig.update_layout(
+            title=f"{self._currency} - Today",
+            yaxis_title="Price",
+            hovermode='x',
+            yaxis_tickformat='.5f',
+            xaxis_rangeslider_visible=False,
+            showlegend=False,
+        )
+
+        return candlestick_today_fig
+
     def plot_candlesticks_weekly(self, data):
 
         def _create_info(data_row):
