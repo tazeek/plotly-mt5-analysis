@@ -46,7 +46,7 @@ def register_callbacks(app):
 
         return [
             graph_generator.plot_candlesticks_weekly(last_30days_stats),
-            graph_generator.plot_candlestick_today(last_30days_stats.iloc[-1]),
+            graph_generator.plot_candlestick_today(today_stats),
             graph_generator.plot_tick_volume_fullday(day_stats, start_day),
             graph_generator.plot_pip_difference_graph(day_stats),
             graph_generator.plot_heatmap_fullday(hourly_stats, start_day, high_price_time, low_price_time),
