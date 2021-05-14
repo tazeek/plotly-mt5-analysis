@@ -25,4 +25,6 @@ candlesticks_width_dict = dict(
 )
 
 # Write to new text file
-print(candlesticks_width_dict)
+with open('candlesticks_width.txt', 'w+') as f:
+    for key, value in candlesticks_width_dict.items():
+        f.writelines(f"{key}: {value}\n")
