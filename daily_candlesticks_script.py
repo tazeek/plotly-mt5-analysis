@@ -19,4 +19,10 @@ for pair in forex_pairs:
     pair_stats = forex_analyzer.get_d1_stats()
     candlesticks_width_dict[pair] = pair_stats['width_candlestick']
 
+# Sort out dictionary in descending order
+candlesticks_width_dict = dict(
+    sorted(candlesticks_width_dict.items(), key=lambda item: item[1], reverse=True)
+)
+
+# Write to new text file
 print(candlesticks_width_dict)
