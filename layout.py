@@ -11,6 +11,20 @@ def _loading_figure_layout(fig_id):
         ])
     )
 
+def _generate_profit_pip_calculator():
+
+    field_list = ['profit_target','leverage','minimum_trade']
+
+    return html.Div(
+        [
+            dcc.Input(
+                id=f"input_{field}",
+                type="text",
+                placeholder=f"{field}",
+            ) for field in field_list
+        ]
+    )
+
 def _generate_dropdown():
 
     forex_list = ['GBPUSD','EURGBP','EURUSD','AUDUSD','AUDJPY','USDJPY']
@@ -32,6 +46,8 @@ def _generate_dropdown():
 def generate_layout():
 
     return html.Div([
+        _generate_profit_pip_calculator(),
+        html.Hr(),
         _generate_dropdown(),
         _loading_figure_layout('candlestick-30d-fig'),
         _loading_figure_layout('candlestick-fullday-fig'),
