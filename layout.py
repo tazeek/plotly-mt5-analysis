@@ -17,12 +17,20 @@ def _generate_profit_pip_calculator():
 
     return html.Div(
         [
-            dcc.Input(
-                id=f"input_{field}",
-                type="text",
-                placeholder=f"{field}",
-                style={"margin-left": "15px"}
-            ) for field in field_list
+            html.Div([
+                dcc.Input(
+                    id=f"input_{field}",
+                    type="text",
+                    placeholder=f"{field}",
+                    style={"margin-right": "15px"}
+                ) for field in field_list
+            ]),
+
+            html.Button(
+                'Calculate pip count', 
+                id='submit-val', 
+                style={'margin-top': 10}
+            )
         ]
     )
 
