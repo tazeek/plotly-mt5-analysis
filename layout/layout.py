@@ -85,7 +85,7 @@ def generate_layout():
         _generate_profit_pip_calculator(),
         html.Hr(),
         _generate_dropdown(),
-        _loading_figure_layout('candlestick-30d-fig'),
+        _loading_figure_layout('candlestick-30d-fig', draw_config),
         _loading_figure_layout('candlestick-fullday-fig'),
         html.Hr(),
         _loading_figure_layout('tick-volatility-fig'),

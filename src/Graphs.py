@@ -95,7 +95,7 @@ class Graphs:
         )
 
         candlestick_week_fig.update_layout(
-            title=f"{self._currency} - Series for last 30 working days",
+            title=f"{self._currency} - Series for last 100 working days",
             xaxis_title="Date",
             yaxis_title="Price",
             hovermode='x',
