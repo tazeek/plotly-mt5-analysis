@@ -1,7 +1,7 @@
 from dash.dependencies import Input, Output, State
 
-from Graphs import Graphs
-from ForexAnalyzer import ForexAnalyzer
+from src.Graphs import Graphs
+from src.ForexAnalyzer import ForexAnalyzer
 
 import math
 

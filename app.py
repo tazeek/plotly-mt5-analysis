@@ -1,5 +1,5 @@
-from controller import register_callbacks
-from layout import generate_layout
+from controller.controller import register_callbacks
+from layout.layout import generate_layout
 
 import dash
 
