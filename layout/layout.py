@@ -17,12 +17,13 @@ def _fetch_forex_pairs():
     
     return forex_pairs
 
-def _loading_figure_layout(fig_id):
+def _loading_figure_layout(fig_id, config=None):
     return dcc.Loading(
         type="default",
         children=html.Div([
             dcc.Graph(
-                id=fig_id
+                id=fig_id,
+                config=config
             )
         ])
     )
@@ -78,6 +79,8 @@ def _generate_dropdown():
 
 def generate_layout():
 
+    draw_config = {'modeBarButtonsToAdd': ['drawline','eraseshape']}
+
     return html.Div([
         _generate_profit_pip_calculator(),
         html.Hr(),
@@ -92,7 +95,7 @@ def generate_layout():
         _loading_figure_layout('percentage-changes-fig'),
         _loading_figure_layout('close-price-histogram-fig'),
         html.Hr(),
-        _loading_figure_layout('candlestick-today-fig'),
+        _loading_figure_layout('candlestick-today-fig', draw_config),
         _loading_figure_layout('rsi-fig'),
         _loading_figure_layout('bull-bear-fig')
     ])
