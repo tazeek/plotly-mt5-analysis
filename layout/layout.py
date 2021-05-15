@@ -6,7 +6,12 @@ import random
 def _fetch_forex_pairs():
     forex_pairs = []
 
-    with open('forex_pairs.txt') as f:
+    file_path = "\\".join([
+        'C:','Users','Tazeek','Desktop','Projects',
+        'plotly-mt5-analysis','files','forex_pairs.txt'
+    ])
+
+    with open(file_path) as f:
         for line in f.readlines():
             forex_pairs.append(line.strip())
     
