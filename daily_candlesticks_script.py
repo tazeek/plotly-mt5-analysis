@@ -24,6 +24,8 @@ candlesticks_width_dict = dict(
     sorted(candlesticks_width_dict.items(), key=lambda item: item[1], reverse=True)
 )
 
+candlesticks_width_dict['last_updated'] = forex_analyzer.get_current_time(0)
+
 # Write to new text file
 with open('files\\candlesticks_width.txt', 'w+') as f:
     for key, value in candlesticks_width_dict.items():
