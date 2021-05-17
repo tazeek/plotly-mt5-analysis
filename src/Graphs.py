@@ -343,13 +343,13 @@ class Graphs:
 
         bull_bear_power_fig = go.Figure(
             data=[
-                go.Bar(
+                go.Scatter(
                     x=indicators_df['time'],
                     y=indicators_df['bears_power'],
                     name='Bear Power',
                     marker_color='#EC8888'
                 ),
-                go.Bar(
+                go.Scatter(
                     x=indicators_df['time'],
                     y=indicators_df['bulls_power'],
                     name='Bull Power',
@@ -359,6 +359,7 @@ class Graphs:
         )
 
         self._draw_vline(bull_bear_power_fig, start_time, "solid", "black")
+        self._draw_hline(bull_bear_power_fig,0,'solid','black')
 
         bull_bear_power_fig.update_layout(
             template='simple_white',
