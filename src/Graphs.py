@@ -343,13 +343,13 @@ class Graphs:
 
         bull_bear_power_fig = go.Figure(
             data=[
-                go.Bar(
+                go.Scatter(
                     x=indicators_df['time'],
                     y=indicators_df['bears_power'],
                     name='Bear Power',
                     marker_color='#EC8888'
                 ),
-                go.Bar(
+                go.Scatter(
                     x=indicators_df['time'],
                     y=indicators_df['bulls_power'],
                     name='Bull Power',
