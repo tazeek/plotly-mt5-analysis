@@ -51,7 +51,7 @@ def register_callbacks(app):
             graph_generator.plot_candlestick_today(today_stats),
             graph_generator.plot_tick_volume_fullday(day_stats, start_day),
             graph_generator.plot_pip_difference_graph(day_stats),
-            graph_generator.plot_heatmap_fullday(hourly_stats, start_day, high_price_time, low_price_time),
+            graph_generator.plot_heatmap_fullday(hourly_stats, start_day),
             graph_generator.plot_percentage_change(hourly_stats, start_day),
             graph_generator.plot_histogram_fullday(day_stats, today_stats),
             graph_generator.plot_candlesticks_fullday(day_stats, today_stats, start_day, forex_analyzer.get_indicator_stats('1M')),
