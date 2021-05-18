@@ -119,10 +119,9 @@ class Graphs:
         )
 
         self._draw_vline(histogram_fig, day_stats['close'], "solid", "black")
-        self._draw_vline(histogram_fig, day_stats['open'], "solid", "green")
 
         histogram_fig.update_layout(
-            title=f"{self._currency} - Close price counts (Open price (Green): <b>{day_stats['open']:.5f}</b>, Close price (Black): <b>{day_stats['close']:.5f}</b>)",
+            title=f"{self._currency} - Close price counts (Current close price (Black): <b>{day_stats['close']:.5f}</b>)",
             xaxis_title="Price range",
             yaxis_title="Counts",
             hovermode='x',
@@ -375,6 +374,7 @@ class Graphs:
             bargap=0.20
         )
 
+        self._draw_vline(histogram_fig, ongoing_pip_size, "solid", "black")
         self._draw_vline(histogram_fig, ongoing_pip_size, "solid", "black")
 
         return histogram_fig
