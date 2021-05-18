@@ -262,26 +262,10 @@ class Graphs:
 
         self._draw_hline(
             candlesticks_minute_fig,
-            overall_day['high'],
-            "dot",
-            'green',
-            f"High"
-        )
-
-        self._draw_hline(
-            candlesticks_minute_fig,
             overall_day['open'],
             "dot",
             'darkmagenta',
             f"Open"
-        )
-
-        self._draw_hline(
-            candlesticks_minute_fig,
-            overall_day['low'],
-            "dot",
-            'red',
-            f"Low"
         )
 
         self._draw_vline(candlesticks_minute_fig, start_time, "solid", "black")
