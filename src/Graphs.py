@@ -165,7 +165,7 @@ class Graphs:
 
         return tick_vol_fig
 
-    def plot_heatmap_fullday(self, data, start_time, high_price_time, low_price_time):
+    def plot_heatmap_fullday(self, data, start_time):
 
         info_text = 'Time: %{x}<br><br>' + \
             'Open price: %{customdata[0]:.5f}<br>' + \
@@ -198,8 +198,6 @@ class Graphs:
         )
 
         self._draw_vline(heatmap_fig, start_time, "solid", "black")
-        self._draw_vline(heatmap_fig, high_price_time, "dash", "green")
-        self._draw_vline(heatmap_fig, low_price_time, "dash", "red")
 
         heatmap_fig.update_yaxes(showticklabels=False)
 
@@ -262,26 +260,10 @@ class Graphs:
 
         self._draw_hline(
             candlesticks_minute_fig,
-            overall_day['high'],
-            "dot",
-            'green',
-            f"High"
-        )
-
-        self._draw_hline(
-            candlesticks_minute_fig,
             overall_day['open'],
             "dot",
             'darkmagenta',
             f"Open"
-        )
-
-        self._draw_hline(
-            candlesticks_minute_fig,
-            overall_day['low'],
-            "dot",
-            'red',
-            f"Low"
         )
 
         self._draw_vline(candlesticks_minute_fig, start_time, "solid", "black")
