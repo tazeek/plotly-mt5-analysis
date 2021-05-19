@@ -72,19 +72,18 @@ def _generate_dropdown():
     current_forex = forex_list[0]
 
     dropdown_options = []
-    storage_dict = {}
 
     for forex in forex_list:
         
         symbol = forex['symbol']
+        width = forex['width']
         
         dropdown_options.append({
-            'label': symbol,
+            'label': f"{symbol} - {width}",
             'value': symbol
         })
 
-        storage_dict[symbol] = forex['width']
-        margin_style = {"margin-top": 10}
+    margin_style = {"margin-top": 10}
 
     return html.Div([
 
@@ -96,16 +95,9 @@ def _generate_dropdown():
                     clearable=False,
                     value=current_forex['symbol']
                 ),
-                dcc.Store(id='current-currency',data=current_forex['symbol']),
-                dcc.Store(id='candlestick-width-dict',data=storage_dict)
+                dcc.Store(id='current-currency',data=current_forex['symbol'])
             ],
-                style={"width": "10%"}
-        ),
-
-        html.Div(
-            id='candlestick-width-text',
-            children=f"Candlestick width: {current_forex['width']}",
-            style=margin_style
+                style={"width": "15%"}
         ),
 
         html.Div(

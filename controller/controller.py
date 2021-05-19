@@ -12,18 +12,16 @@ def register_callbacks(app):
 
     @app.callback(
         [
-            Output("current-currency","data"), 
-            Output("candlestick-width-text","children")
+            Output("current-currency","data")
         ],
-        [Input("currency-dropdown", "value")],
-        [State("candlestick-width-dict","data")]
+        [Input("currency-dropdown", "value")]
     )
-    def update_new_forex(changed_currency, candlestick_dict):
+    def update_new_forex(changed_currency):
 
         forex_analyzer.update_forex_pair(changed_currency)
         graph_generator.update_currency(changed_currency)
 
-        return [changed_currency, f"Candlestick width: {candlestick_dict[changed_currency]}"]
+        return [changed_currency]
     
     @app.callback(
         [
