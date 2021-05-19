@@ -5,6 +5,7 @@ import random
 
 def _fetch_forex_pairs():
     forex_pairs = []
+    last_updated_time = ""
 
     file_path = "\\".join([
         'C:','Users','Tazeek','Desktop','Projects',
@@ -20,8 +21,10 @@ def _fetch_forex_pairs():
                     'symbol': forex_data[0],
                     'width': forex_data[1].rstrip()
                 })
+            else:
+                last_updated_time = ":".join(forex_data[1:]).rstrip()
     
-    return forex_pairs
+    return forex_pairs, last_updated_time
 
 def _loading_figure_layout(fig_id, config=None):
     return dcc.Loading(
@@ -65,7 +68,8 @@ def _generate_profit_pip_calculator():
 
 def _generate_dropdown():
 
-    forex_list = _fetch_forex_pairs()
+    forex_list, last_updated_time = _fetch_forex_pairs()
+    print(last_updated_time)
     current_forex = forex_list[0]
 
     dropdown_options = []
@@ -81,6 +85,7 @@ def _generate_dropdown():
         })
 
         storage_dict[symbol] = forex['width']
+        margin_style = {"margin-top": 10}
 
     return html.Div([
 
@@ -101,7 +106,12 @@ def _generate_dropdown():
         html.Div(
             id='candlestick-width-text',
             children=f"Candlestick width: {current_forex['width']}",
-            style={'margin-top': 10}
+            style=margin_style
+        ),
+
+        html.Div(
+            children=f"Candlestick width last updated: {last_updated_time}",
+            style=margin_style
         )
     ])
 
