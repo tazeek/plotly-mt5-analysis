@@ -68,10 +68,22 @@ def _generate_dropdown():
     forex_list = _fetch_forex_pairs()
     current_forex = forex_list[0]
 
-    dropdown_options = [{'label': forex['symbol'], 'value': forex['symbol']} for forex in forex_list]
+    dropdown_options = []
+    storage_dict = {}
+
+    for forex in forex_list:
+        
+        symbol = forex['symbol']
+        
+        dropdown_options.append({
+            'label': symbol,
+            'value': symbol
+        })
+
+        storage_dict[symbol] = forex['width']
 
     return html.Div([
-    
+
         html.Div(
             [
                 dcc.Dropdown(
@@ -80,7 +92,8 @@ def _generate_dropdown():
                     clearable=False,
                     value=current_forex['symbol']
                 ),
-                dcc.Store(id='current-currency',data=current_forex['symbol'])
+                dcc.Store(id='current-currency',data=current_forex['symbol']),
+                dcc.Store(id='test',data=storage_dict)
             ],
                 style={"width": "10%"}
         ),
