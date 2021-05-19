@@ -69,7 +69,6 @@ def _generate_profit_pip_calculator():
 def _generate_dropdown():
 
     forex_list, last_updated_time = _fetch_forex_pairs()
-    print(last_updated_time)
     current_forex = forex_list[0]
 
     dropdown_options = []
