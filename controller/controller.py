@@ -11,14 +11,17 @@ def register_callbacks(app):
     graph_generator = Graphs()
 
     @app.callback(
-        [Output("current-currency","data")],
+        [
+            Output("current-currency","data")
+        ],
         [Input("currency-dropdown", "value")]
     )
-    def update_forex_analyzer(value):
-        forex_analyzer.update_forex_pair(value)
-        graph_generator.update_currency(value)
+    def update_new_forex(changed_currency):
 
-        return [value]
+        forex_analyzer.update_forex_pair(changed_currency)
+        graph_generator.update_currency(changed_currency)
+
+        return [changed_currency]
     
     @app.callback(
         [
@@ -35,7 +38,7 @@ def register_callbacks(app):
         ],
         [Input("current-currency", "data")]
     )
-    def display_tick_volatility(value):
+    def update_all_graphs(value):
         
         last_30days_stats = forex_analyzer.get_month_stats()
         day_stats = forex_analyzer.get_daily_stats()
