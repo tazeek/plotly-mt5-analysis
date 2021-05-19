@@ -8,12 +8,15 @@ def _fetch_forex_pairs():
 
     file_path = "\\".join([
         'C:','Users','Tazeek','Desktop','Projects',
-        'plotly-mt5-analysis','files','forex_pairs.txt'
+        'plotly-mt5-analysis','files','candlesticks_width.txt'
     ])
 
     with open(file_path) as f:
         for line in f.readlines():
-            forex_pairs.append(line.strip())
+
+            forex_data = line.split(':')[0]
+            if len(forex_data) < 7:
+                forex_pairs.append(forex_data)
     
     return forex_pairs
 
@@ -60,7 +63,7 @@ def _generate_profit_pip_calculator():
 def _generate_dropdown():
 
     forex_list = _fetch_forex_pairs()
-    current_forex = random.choice(forex_list)
+    current_forex = forex_list[0]
 
     dropdown_options = [{'label': currency, 'value': currency} for currency in forex_list]
 
