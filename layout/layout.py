@@ -93,13 +93,13 @@ def _generate_dropdown():
                     value=current_forex['symbol']
                 ),
                 dcc.Store(id='current-currency',data=current_forex['symbol']),
-                dcc.Store(id='test',data=storage_dict)
+                dcc.Store(id='candlestick-width-dict',data=storage_dict)
             ],
                 style={"width": "10%"}
         ),
 
         html.Div(
-            id='candlestick-width-information',
+            id='candlestick-width-text',
             children=f"Candlestick width: {current_forex['width']}",
             style={'margin-top': 10}
         )
