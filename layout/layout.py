@@ -14,9 +14,12 @@ def _fetch_forex_pairs():
     with open(file_path) as f:
         for line in f.readlines():
 
-            forex_data = line.split(':')[0]
-            if len(forex_data) < 7:
-                forex_pairs.append(forex_data)
+            forex_data = line.split(':')
+            if len(forex_data[0]) < 7:
+                forex_pairs.append({
+                    'symbol': forex_data[0],
+                    'width': forex_data[1].rstrip()
+                })
     
     return forex_pairs
 
@@ -65,20 +68,29 @@ def _generate_dropdown():
     forex_list = _fetch_forex_pairs()
     current_forex = forex_list[0]
 
-    dropdown_options = [{'label': currency, 'value': currency} for currency in forex_list]
+    dropdown_options = [{'label': forex['symbol'], 'value': forex['symbol']} for forex in forex_list]
 
-    return html.Div(
-        [
-            dcc.Dropdown(
-                id='currency-dropdown',
-                options=dropdown_options,
-                clearable=False,
-                value=current_forex
-            ),
-            dcc.Store(id='current-currency',data=current_forex)
-        ],
-            style={"width": "10%"}
-    )
+    return html.Div([
+    
+        html.Div(
+            [
+                dcc.Dropdown(
+                    id='currency-dropdown',
+                    options=dropdown_options,
+                    clearable=False,
+                    value=current_forex['symbol']
+                ),
+                dcc.Store(id='current-currency',data=current_forex['symbol'])
+            ],
+                style={"width": "10%"}
+        ),
+
+        html.Div(
+            id='candlestick-width-information',
+            children=f"Candlestick width: {current_forex['width']}",
+            style={'margin-top': 10}
+        )
+    ])
 
 def generate_layout():
 
