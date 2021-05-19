@@ -18,7 +18,7 @@ def register_callbacks(app):
         [Input("currency-dropdown", "value")],
         [State("candlestick-width-dict","data")]
     )
-    def update_forex_analyzer(changed_currency, candlestick_dict):
+    def update_new_forex(changed_currency, candlestick_dict):
 
         forex_analyzer.update_forex_pair(changed_currency)
         graph_generator.update_currency(changed_currency)
@@ -40,7 +40,7 @@ def register_callbacks(app):
         ],
         [Input("current-currency", "data")]
     )
-    def display_tick_volatility(value):
+    def update_all_graphs(value):
         
         last_30days_stats = forex_analyzer.get_month_stats()
         day_stats = forex_analyzer.get_daily_stats()
