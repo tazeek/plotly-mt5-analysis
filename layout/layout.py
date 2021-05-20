@@ -101,6 +101,11 @@ def _generate_dropdown():
         ),
 
         html.Div(
+            id='spread-value',
+            style=margin_style
+        ),
+
+        html.Div(
             children=f"Candlestick width last updated: {last_updated_time}",
             style=margin_style
         )
