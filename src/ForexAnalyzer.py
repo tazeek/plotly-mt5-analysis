@@ -81,10 +81,15 @@ class ForexAnalyzer:
 
         return rates
 
+    def find_spread(self):
+
+        last_tick_info =mt5.symbol_info_tick(self._forex_pair)
+        return None
+
+
     def update_forex_pair(self, forex_pair):
 
         self._forex_pair = forex_pair
-        self._forex_multiplier = 0.001 if 'JPY' in forex_pair else 0.00001
 
         return None
 
