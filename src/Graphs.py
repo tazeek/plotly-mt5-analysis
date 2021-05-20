@@ -289,6 +289,8 @@ class Graphs:
             )
         ])
 
+        current_rsi_val = rsi_today.value.iat[-1]
+
         self._draw_hline(rsi_fig, 50, "solid", "#9A5132", "Balanced")
         self._draw_hline(rsi_fig, 30, "solid", "black", "Oversold")
         self._draw_hline(rsi_fig, 70, "solid", "black", "Overbought")
@@ -298,6 +300,7 @@ class Graphs:
         rsi_fig.update_layout(
             xaxis_title="Time",
             yaxis_title="RSI Value",
+            title=f"RSI of {self._currency} (Current RSI: <b>{current_rsi_val:.3f}</b>)",
             hovermode='x',
             yaxis_tickformat='.2f'
         )
