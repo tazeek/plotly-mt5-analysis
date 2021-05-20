@@ -12,7 +12,8 @@ def register_callbacks(app):
 
     @app.callback(
         [
-            Output("current-currency","data")
+            Output("current-currency","data"),
+            Output("spread-value","children")
         ],
         [Input("currency-dropdown", "value")]
     )
@@ -21,7 +22,9 @@ def register_callbacks(app):
         forex_analyzer.update_forex_pair(changed_currency)
         graph_generator.update_currency(changed_currency)
 
-        return [changed_currency]
+        spread_num = forex_analyzer.find_spread()
+
+        return [changed_currency, f"Spread value: {spread_num}"]
     
     @app.callback(
         [
