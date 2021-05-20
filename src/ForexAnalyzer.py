@@ -83,7 +83,7 @@ class ForexAnalyzer:
 
     def find_spread(self):
 
-        last_tick_info =mt5.symbol_info_tick(self._forex_pair)
+        last_tick_info = mt5.symbol_info_tick(self._forex_pair)
         spread_num = self._calculate_pip(last_tick_info.bid, last_tick_info.ask)
 
         return spread_num

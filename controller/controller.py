@@ -45,7 +45,7 @@ def register_callbacks(app):
         start_day = forex_analyzer.get_start_day()
         hourly_stats = forex_analyzer.get_hourly_stats()
         today_stats = forex_analyzer.get_d1_stats(last_30days_stats.to_dict('records')[-1])
-        forex_analyzer.find_spread()
+        spread_num = forex_analyzer.find_spread()
 
         high_price_time = day_stats.loc[day_stats['high'] == today_stats['high']]['time'].iloc[-1]
         low_price_time = day_stats.loc[day_stats['low'] == today_stats['low']]['time'].iloc[-1]
