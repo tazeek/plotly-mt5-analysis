@@ -366,7 +366,7 @@ class Graphs:
         ongoing_pip_size = day_stats['pip_difference'].iloc[-1]
 
         histogram_fig.update_layout(
-            title=f"{self._currency} - Pip size counts (Ongoing Pip differnece: {ongoing_pip_size})",
+            title=f"{self._currency} - Pip size counts (Current pip differnece: {ongoing_pip_size})",
             xaxis_title="Pip size",
             yaxis_title="Counts",
             hovermode='x',
