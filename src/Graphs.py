@@ -121,7 +121,7 @@ class Graphs:
         self._draw_vline(histogram_fig, day_stats['close'], "solid", "black")
 
         histogram_fig.update_layout(
-            title=f"{self._currency} - Close price counts (Current close price (Black): <b>{day_stats['close']:.5f}</b>)",
+            title=f"{self._currency} - Close price counts (Current price: <b>{day_stats['close']:.5f}</b>)",
             xaxis_title="Price range",
             yaxis_title="Counts",
             hovermode='x',
