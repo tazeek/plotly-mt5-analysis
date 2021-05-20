@@ -154,8 +154,10 @@ class Graphs:
             opacity=0.25
         )
 
+        current_tick_vol = data.tick_volume.iat[-1]
+
         tick_vol_fig.update_layout(
-            title=f"{self._currency} - Tick Volume for today",
+            title=f"{self._currency} - Tick Volume for today (Current tick volume: <b>{current_tick_vol}</b>)",
             xaxis_title="Time",
             yaxis_title="Volume",
             hovermode='x',
