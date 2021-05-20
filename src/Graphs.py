@@ -121,7 +121,7 @@ class Graphs:
         self._draw_vline(histogram_fig, day_stats['close'], "solid", "black")
 
         histogram_fig.update_layout(
-            title=f"{self._currency} - Close price counts (Current close price (Black): <b>{day_stats['close']:.5f}</b>)",
+            title=f"{self._currency} - Close price counts (Current price: <b>{day_stats['close']:.5f}</b>)",
             xaxis_title="Price range",
             yaxis_title="Counts",
             hovermode='x',
@@ -154,8 +154,10 @@ class Graphs:
             opacity=0.25
         )
 
+        current_tick_vol = data.tick_volume.iat[-1]
+
         tick_vol_fig.update_layout(
-            title=f"{self._currency} - Tick Volume for today",
+            title=f"{self._currency} - Tick Volume for today (Current tick volume: <b>{current_tick_vol}</b>)",
             xaxis_title="Time",
             yaxis_title="Volume",
             hovermode='x',
@@ -190,8 +192,10 @@ class Graphs:
             )
         )
 
+        current_perc_change = data.percentage_change.iat[-1]
+
         heatmap_fig.update_layout(
-            title=f"{self._currency} - Heatmap for price changes today",
+            title=f"{self._currency} - Heatmap for price changes today (Current change: <b>{current_perc_change:.3f}</b>)",
             xaxis_title="Time",
             hovermode='x',
         )
@@ -213,8 +217,10 @@ class Graphs:
             )
         ])
 
+        current_perc_change = data.percentage_change.iat[-1]
+
         percentage_change_fig.update_layout(
-            title=f"{self._currency} - Percentage Change for today",
+            title=f"{self._currency} - Percentage Change for today (Current change: <b>{current_perc_change:.3f}</b>)",
             xaxis_title="Time",
             yaxis_title="Percentage change",
             hovermode='x',
@@ -289,6 +295,8 @@ class Graphs:
             )
         ])
 
+        current_rsi_val = rsi_today.value.iat[-1]
+
         self._draw_hline(rsi_fig, 50, "solid", "#9A5132", "Balanced")
         self._draw_hline(rsi_fig, 30, "solid", "black", "Oversold")
         self._draw_hline(rsi_fig, 70, "solid", "black", "Overbought")
@@ -298,6 +306,7 @@ class Graphs:
         rsi_fig.update_layout(
             xaxis_title="Time",
             yaxis_title="RSI Value",
+            title=f"RSI of {self._currency} (Current RSI: <b>{current_rsi_val:.3f}</b>)",
             hovermode='x',
             yaxis_tickformat='.2f'
         )
@@ -366,7 +375,7 @@ class Graphs:
         ongoing_pip_size = day_stats['pip_difference'].iloc[-1]
 
         histogram_fig.update_layout(
-            title=f"{self._currency} - Pip size counts (Ongoing Pip differnece: {ongoing_pip_size})",
+            title=f"{self._currency} - Pip size counts (Current pip differnece: <b>{ongoing_pip_size}</b>)",
             xaxis_title="Pip size",
             yaxis_title="Counts",
             hovermode='x',
