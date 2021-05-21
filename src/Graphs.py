@@ -37,7 +37,7 @@ class Graphs:
         return None
 
     def plot_atr_analyzer(self, data):
-        
+
         atr_fig = go.Figure([
             go.Scatter(
                 x=data['time'], 
@@ -46,6 +46,14 @@ class Graphs:
                 line=dict(width=1)
             )
         ])
+
+        atr_fig.update_layout(
+            title=f"{self._currency} - Average True Value",
+            xaxis_title="Time",
+            yaxis_title="ATR",
+            hovermode='x',
+            yaxis_tickformat='.3f'
+        )
 
         return atr_fig
 
