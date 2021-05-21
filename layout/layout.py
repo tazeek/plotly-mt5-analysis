@@ -43,6 +43,12 @@ def _generate_profit_pip_calculator():
 
     return html.Div(
         [
+            html.Button(
+                'Refresh Page', 
+                id='refresh-stats',
+                style={"margin-bottom": "15px"}
+            ),
+
             html.Div([
                 dcc.Input(
                     id=f"input_{field}",
