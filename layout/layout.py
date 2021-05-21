@@ -93,6 +93,7 @@ def _generate_dropdown():
                     id='currency-dropdown',
                     options=dropdown_options,
                     clearable=False,
+                    searchable=False,
                     value=current_forex['symbol']
                 ),
                 dcc.Store(id='current-currency',data=current_forex['symbol'])
@@ -120,6 +121,7 @@ def generate_layout():
         html.Hr(),
         _generate_dropdown(),
         _loading_figure_layout('candlestick-30d-fig', draw_config),
+        #_loading_figure_layout('atr-day-fig'),
         _loading_figure_layout('candlestick-fullday-fig'),
         html.Hr(),
         _loading_figure_layout('tick-volatility-fig'),
