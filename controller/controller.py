@@ -30,6 +30,7 @@ def register_callbacks(app):
         [
             Output("candlestick-30d-fig","figure"),
             Output("candlestick-fullday-fig","figure"),
+            Output("atr-day-fig","figure"),
             Output("tick-volatility-fig","figure"),
             Output("pip-size-histogram-fig","figure"),
             Output("heatmap-changes-fig","figure"),
@@ -55,6 +56,7 @@ def register_callbacks(app):
         return [
             graph_generator.plot_candlesticks_weekly(last_30days_stats),
             graph_generator.plot_candlestick_today(today_stats),
+            graph_generator.plot_atr_analyzer(forex_analyzer.get_indicator_stats('1D')),
             graph_generator.plot_tick_volume_fullday(day_stats, start_day),
             graph_generator.plot_pip_difference_graph(day_stats),
             graph_generator.plot_heatmap_fullday(hourly_stats, start_day),
