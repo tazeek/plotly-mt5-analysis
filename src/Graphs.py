@@ -37,7 +37,17 @@ class Graphs:
         return None
 
     def plot_atr_analyzer(self, data):
-        ...
+        
+        atr_fig = go.Figure([
+            go.Scatter(
+                x=data['time'], 
+                y=data['atr'],
+                opacity=0.5,
+                line=dict(width=1)
+            )
+        ])
+
+        return atr_fig
 
     def plot_candlestick_today(self, data):
 
