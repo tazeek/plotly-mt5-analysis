@@ -62,6 +62,7 @@ class ForexAnalyzer:
         indicators.sma(period=15, column_name='sma')
         indicators.bears_power(period=15, column_name='bears_power')
         indicators.bulls_power(period=15, column_name='bulls_power')
+        indicators.atr(period=14, column_name='atr')
 
         self._indicators_stats_df[timeframe] = indicators.df
 
