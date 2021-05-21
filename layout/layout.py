@@ -122,6 +122,7 @@ def generate_layout():
         _generate_dropdown(),
         _loading_figure_layout('candlestick-30d-fig', draw_config),
         _loading_figure_layout('candlestick-fullday-fig'),
+        _loading_figure_layout('atr-day-fig'),
         html.Hr(),
         _loading_figure_layout('tick-volatility-fig'),
         _loading_figure_layout('pip-size-histogram-fig'),
