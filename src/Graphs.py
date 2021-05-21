@@ -89,7 +89,7 @@ class Graphs:
 
         return candlestick_today_fig
 
-    def plot_candlesticks_weekly(self, data):
+    def plot_candlesticks_weekly(self, data, indicator_df):
 
         def _create_info(data_row):
 
@@ -111,6 +111,12 @@ class Graphs:
                     close=data['close'],
                     text=hover_list,
                     hoverinfo='text'
+                ),
+                go.Scatter(
+                    x=indicator_df['time'], 
+                    y=indicator_df['sma'],
+                    line=dict(color='black', width=5),
+                    name=""
                 )
             ]
         )
