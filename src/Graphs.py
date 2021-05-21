@@ -36,6 +36,9 @@ class Graphs:
         
         return None
 
+    def plot_atr_analyzer(self, data):
+        ...
+
     def plot_candlestick_today(self, data):
 
         info_text = f"Candlestick width: {data['width_candlestick']}<br>" + \
