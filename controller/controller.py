@@ -40,9 +40,12 @@ def register_callbacks(app):
             Output("rsi-fig","figure"),
             Output("bull-bear-fig","figure")
         ],
-        [Input("current-currency", "data")]
+        [
+            Input("current-currency", "data"),
+            Input("refresh-stats","n_clicks")
+        ]
     )
-    def update_all_graphs(value):
+    def update_all_graphs(value, clicks):
         
         last_30days_stats = forex_analyzer.get_month_stats()
         day_stats = forex_analyzer.get_daily_stats()
