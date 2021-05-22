@@ -55,11 +55,6 @@ def register_callbacks(app):
         hourly_stats = forex_analyzer.get_hourly_stats()
         today_stats = forex_analyzer.get_d1_stats(last_30days_stats.to_dict('records')[-1])
 
-        print(value)
-        print(today_stats)
-        high_price_time = day_stats.loc[day_stats['high'] == today_stats['high']]['time'].iloc[-1]
-        low_price_time = day_stats.loc[day_stats['low'] == today_stats['low']]['time'].iloc[-1]
-
         return [
             graph_generator.plot_candlesticks_weekly(last_30days_stats, forex_analyzer.get_indicator_stats('1D')),
             graph_generator.plot_candlestick_today(today_stats),
@@ -113,6 +108,7 @@ def register_callbacks(app):
         symbol_list = [forex['symbol'] for forex in candlestick_data]
         updated_pairs = fetch_latest_candlesticks(symbol_list)
 
-        print(updated_pairs)
+        last_updated_time = updated_pairs['last_updated']
+        del updated_pairs['last_updated']
         
         raise PreventUpdate
