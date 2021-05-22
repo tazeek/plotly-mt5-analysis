@@ -1,8 +1,6 @@
 import dash_core_components as dcc
 import dash_html_components as html
 
-import random
-
 def _fetch_forex_pairs():
     forex_pairs = []
     last_updated_time = ""
