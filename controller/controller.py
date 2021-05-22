@@ -1,4 +1,5 @@
 from dash.dependencies import Input, Output, State
+from dash.exceptions import PreventUpdate
 
 from src.Graphs import Graphs
 from src.ForexAnalyzer import ForexAnalyzer
@@ -90,3 +91,13 @@ def register_callbacks(app):
             avg_pip = math.ceil(target / (min_trade * leverage))
 
         return [f"Average pip per trade: {avg_pip}"]
+
+    @app.callback(
+        [
+            Output("current-currency","data"),
+            Output("spread-value","children")
+        ],
+        [Input("currency-dropdown", "value")]
+    )
+    def fetch_new_candlesticks_width():
+        raise PreventUpdate
