@@ -105,13 +105,16 @@ def register_callbacks(app):
     )
     def fetch_new_candlesticks_width(clicks, current_currency, candlestick_data):
 
+        if clicks == 0:
+            raise PreventUpdate
+            
         symbol_list = [forex['symbol'] for forex in candlestick_data]
         updated_pairs = fetch_latest_candlesticks(symbol_list)
 
-        dropdown_options = []
-
         last_updated_time = updated_pairs['last_updated']
         del updated_pairs['last_updated']
+
+        dropdown_options = []
 
         for symbol, width in updated_pairs.items():
             
