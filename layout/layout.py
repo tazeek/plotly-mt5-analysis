@@ -43,12 +43,6 @@ def _generate_profit_pip_calculator():
 
     return html.Div(
         [
-            html.Button(
-                'Refresh Page', 
-                id='refresh-stats',
-                style={"margin-bottom": "15px"}
-            ),
-
             html.Div([
                 dcc.Input(
                     id=f"input_{field}",
@@ -93,6 +87,12 @@ def _generate_dropdown():
 
     return html.Div([
 
+        html.Button(
+            'Refresh Page', 
+            id='refresh-stats',
+            style={"margin-bottom": "15px"}
+        ),
+
         html.Div(
             [
                 dcc.Dropdown(
@@ -120,7 +120,7 @@ def _generate_dropdown():
         html.Button(
             'Update candlesticks stats', 
             id='update-candlesticks-stats',
-            style={"margin-bottom": "15px"}
+            style={"margin-top": "15px"}
         ),
     ])
 
