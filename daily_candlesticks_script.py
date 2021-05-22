@@ -1,6 +1,10 @@
+from src.ForexAnalyzer import ForexAnalyzer
 
 # Get the stats of each forex pair and store in dictionary
-def fetch_latest_candlesticks(forex_analyzer):
+def fetch_latest_candlesticks(forex_pairs):
+
+    forex_analyzer = ForexAnalyzer()
+    
     candlesticks_width_dict = {}
 
     for pair in forex_pairs:

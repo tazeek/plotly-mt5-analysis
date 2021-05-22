@@ -1,6 +1,8 @@
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 
+from daily_candlesticks_script import fetch_latest_candlesticks
+
 from src.Graphs import Graphs
 from src.ForexAnalyzer import ForexAnalyzer
 
@@ -53,6 +55,8 @@ def register_callbacks(app):
         hourly_stats = forex_analyzer.get_hourly_stats()
         today_stats = forex_analyzer.get_d1_stats(last_30days_stats.to_dict('records')[-1])
 
+        print(value)
+        print(today_stats)
         high_price_time = day_stats.loc[day_stats['high'] == today_stats['high']]['time'].iloc[-1]
         low_price_time = day_stats.loc[day_stats['low'] == today_stats['low']]['time'].iloc[-1]
 
@@ -99,10 +103,16 @@ def register_callbacks(app):
         ],
         [
             Input("update-candlesticks-stats", "n_clicks"),
+            Input("current-currency", "data"),
             State("candlesticks-width","data")
-        ]
+        ],
+        prevent_initial_call=True
     )
-    def fetch_new_candlesticks_width(clicks, candlestick_data):
+    def fetch_new_candlesticks_width(clicks, current_currency, candlestick_data):
+
         symbol_list = [forex['symbol'] for forex in candlestick_data]
-        print(symbol_list)
+        updated_pairs = fetch_latest_candlesticks(symbol_list)
+
+        print(updated_pairs)
+        
         raise PreventUpdate
