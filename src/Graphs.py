@@ -376,7 +376,7 @@ class Graphs:
             template='simple_white',
             title=f"{self._currency} - Bull-Bear measurement (30 minute intervals)",
             hovermode='x',
-            yaxis_tickformat='.3f'
+            yaxis_tickformat='.5f'
         )
 
         return bull_bear_power_fig

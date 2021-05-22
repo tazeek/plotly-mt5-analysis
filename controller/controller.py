@@ -113,4 +113,3 @@ def register_callbacks(app):
         return [
             f"Candlestick width last updated: {last_updated_time}"
         ]
-        #raise PreventUpdate
