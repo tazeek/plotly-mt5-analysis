@@ -93,7 +93,6 @@ def register_callbacks(app):
 
     @app.callback(
         [
-            Output("currency-dropdown","options"),
             Output("last-updated-candlesticks","children")
         ],
         [
@@ -111,4 +110,7 @@ def register_callbacks(app):
         last_updated_time = updated_pairs['last_updated']
         del updated_pairs['last_updated']
         
-        raise PreventUpdate
+        return [
+            f"Candlestick width last updated: {last_updated_time}"
+        ]
+        #raise PreventUpdate
