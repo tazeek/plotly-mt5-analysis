@@ -29,7 +29,10 @@ def register_callbacks(app):
 
         spread_num = forex_analyzer.find_spread()
 
-        return [changed_currency, f"Spread value: {spread_num}"]
+        return [
+            changed_currency, 
+            f"Spread value: {spread_num}"
+        ]
     
     @app.callback(
         [
@@ -71,8 +74,12 @@ def register_callbacks(app):
         ]
 
     @app.callback(
-        [Output('average-pip-text','children')],
-        [Input('start-calculation','n_clicks')],
+        [
+            Output('average-pip-text','children')
+        ],
+        [
+            Input('start-calculation','n_clicks')
+        ],
         [
             State('input_profit_target','value'),
             State('input_leverage','value'),
@@ -91,7 +98,9 @@ def register_callbacks(app):
 
             avg_pip = math.ceil(target / (min_trade * leverage))
 
-        return [f"Average pip per trade: {avg_pip}"]
+        return [
+            f"Average pip per trade: {avg_pip}"
+        ]
 
     @app.callback(
         [
