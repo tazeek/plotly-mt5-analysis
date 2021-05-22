@@ -102,7 +102,8 @@ def _generate_dropdown():
                     searchable=False,
                     value=current_forex['symbol']
                 ),
-                dcc.Store(id='current-currency',data=current_forex['symbol'])
+                dcc.Store(id='current-currency',data=current_forex['symbol']),
+                dcc.Store(id='candlesticks-width', data=forex_list)
             ],
                 style={"width": "15%"}
         ),
@@ -113,6 +114,7 @@ def _generate_dropdown():
         ),
 
         html.Div(
+            id="last-updated-candlesticks",
             children=f"Candlestick width last updated: {last_updated_time}",
             style=margin_style
         ),

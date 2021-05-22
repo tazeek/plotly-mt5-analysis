@@ -94,10 +94,15 @@ def register_callbacks(app):
 
     @app.callback(
         [
-            Output("current-currency","data"),
-            Output("spread-value","children")
+            Output("currency-dropdown","options"),
+            Output("last-updated-candlesticks","children")
         ],
-        [Input("currency-dropdown", "value")]
+        [
+            Input("update-candlesticks-stats", "n_clicks"),
+            State("candlesticks-width","data")
+        ]
     )
-    def fetch_new_candlesticks_width():
+    def fetch_new_candlesticks_width(clicks, candlestick_data):
+        symbol_list = [forex['symbol'] for forex in candlestick_data]
+        print(symbol_list)
         raise PreventUpdate
