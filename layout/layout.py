@@ -100,8 +100,6 @@ def _generate_dropdown(forex_list):
             'value': symbol
         })
 
-    margin_style = {"margin-top": 10}
-
     return html.Div([
 
         html.Div(
@@ -121,7 +119,7 @@ def _generate_dropdown(forex_list):
 
         html.Div(
             id='spread-value',
-            style=margin_style
+            style={"margin-top": 10}
         ),
 
         html.Button(
