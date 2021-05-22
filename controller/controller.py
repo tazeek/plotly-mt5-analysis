@@ -93,6 +93,7 @@ def register_callbacks(app):
 
     @app.callback(
         [
+            Output("currency-dropdown","options"),
             Output("last-updated-candlesticks","children")
         ],
         [
@@ -107,9 +108,19 @@ def register_callbacks(app):
         symbol_list = [forex['symbol'] for forex in candlestick_data]
         updated_pairs = fetch_latest_candlesticks(symbol_list)
 
+        dropdown_options = []
+
         last_updated_time = updated_pairs['last_updated']
         del updated_pairs['last_updated']
+
+        for symbol, width in updated_pairs.items():
+            
+            dropdown_options.append({
+                'label': f"{symbol} - {width}",
+                'value': symbol
+            })
         
         return [
+            dropdown_options,
             f"Candlestick width last updated: {last_updated_time}"
         ]
