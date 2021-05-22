@@ -18,7 +18,9 @@ def register_callbacks(app):
             Output("current-currency","data"),
             Output("spread-value","children")
         ],
-        [Input("currency-dropdown", "value")]
+        [
+            Input("currency-dropdown", "value")
+        ]
     )
     def update_new_forex(changed_currency):
 
@@ -93,17 +95,17 @@ def register_callbacks(app):
 
     @app.callback(
         [
+            Output("currency-dropdown","value"),
             Output("currency-dropdown","options"),
             Output("last-updated-candlesticks","children")
         ],
         [
             Input("update-candlesticks-stats", "n_clicks"),
-            Input("current-currency", "data"),
             State("candlesticks-width","data")
         ],
         prevent_initial_call=True
     )
-    def fetch_new_candlesticks_width(clicks, current_currency, candlestick_data):
+    def fetch_new_candlesticks_width(clicks, candlestick_data):
 
         if clicks is None:
             raise PreventUpdate
@@ -115,7 +117,6 @@ def register_callbacks(app):
         del updated_pairs['last_updated']
 
         widest_gap_symbol = next(iter(updated_pairs))
-
         dropdown_options = []
 
         for symbol, width in updated_pairs.items():
@@ -126,6 +127,7 @@ def register_callbacks(app):
             })
         
         return [
+            widest_gap_symbol,
             dropdown_options,
             f"Candlestick width last updated: {last_updated_time}"
         ]
