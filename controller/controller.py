@@ -1,4 +1,7 @@
 from dash.dependencies import Input, Output, State
+from dash.exceptions import PreventUpdate
+
+from daily_candlesticks_script import fetch_latest_candlesticks
 
 from src.Graphs import Graphs
 from src.ForexAnalyzer import ForexAnalyzer
@@ -15,7 +18,9 @@ def register_callbacks(app):
             Output("current-currency","data"),
             Output("spread-value","children")
         ],
-        [Input("currency-dropdown", "value")]
+        [
+            Input("currency-dropdown", "value")
+        ]
     )
     def update_new_forex(changed_currency):
 
@@ -52,9 +57,6 @@ def register_callbacks(app):
         hourly_stats = forex_analyzer.get_hourly_stats()
         today_stats = forex_analyzer.get_d1_stats(last_30days_stats.to_dict('records')[-1])
 
-        high_price_time = day_stats.loc[day_stats['high'] == today_stats['high']]['time'].iloc[-1]
-        low_price_time = day_stats.loc[day_stats['low'] == today_stats['low']]['time'].iloc[-1]
-
         return [
             graph_generator.plot_candlesticks_weekly(last_30days_stats, forex_analyzer.get_indicator_stats('1D')),
             graph_generator.plot_candlestick_today(today_stats),
@@ -90,3 +92,42 @@ def register_callbacks(app):
             avg_pip = math.ceil(target / (min_trade * leverage))
 
         return [f"Average pip per trade: {avg_pip}"]
+
+    @app.callback(
+        [
+            Output("currency-dropdown","value"),
+            Output("currency-dropdown","options"),
+            Output("last-updated-candlesticks","children")
+        ],
+        [
+            Input("update-candlesticks-stats", "n_clicks"),
+            State("candlesticks-width","data")
+        ],
+        prevent_initial_call=True
+    )
+    def fetch_new_candlesticks_width(clicks, candlestick_data):
+
+        if clicks is None:
+            raise PreventUpdate
+
+        symbol_list = [forex['symbol'] for forex in candlestick_data]
+        updated_pairs = fetch_latest_candlesticks(symbol_list)
+
+        last_updated_time = updated_pairs['last_updated']
+        del updated_pairs['last_updated']
+
+        widest_gap_symbol = next(iter(updated_pairs))
+        dropdown_options = []
+
+        for symbol, width in updated_pairs.items():
+            
+            dropdown_options.append({
+                'label': f"{symbol} - {width}",
+                'value': symbol
+            })
+        
+        return [
+            widest_gap_symbol,
+            dropdown_options,
+            f"Candlestick width last updated: {last_updated_time}"
+        ]

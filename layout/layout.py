@@ -43,12 +43,6 @@ def _generate_profit_pip_calculator():
 
     return html.Div(
         [
-            html.Button(
-                'Refresh Page', 
-                id='refresh-stats',
-                style={"margin-bottom": "15px"}
-            ),
-
             html.Div([
                 dcc.Input(
                     id=f"input_{field}",
@@ -93,6 +87,12 @@ def _generate_dropdown():
 
     return html.Div([
 
+        html.Button(
+            'Refresh Page', 
+            id='refresh-stats',
+            style={"margin-bottom": "15px"}
+        ),
+
         html.Div(
             [
                 dcc.Dropdown(
@@ -102,7 +102,8 @@ def _generate_dropdown():
                     searchable=False,
                     value=current_forex['symbol']
                 ),
-                dcc.Store(id='current-currency',data=current_forex['symbol'])
+                dcc.Store(id='current-currency',data=current_forex['symbol']),
+                dcc.Store(id='candlesticks-width', data=forex_list)
             ],
                 style={"width": "15%"}
         ),
@@ -113,9 +114,16 @@ def _generate_dropdown():
         ),
 
         html.Div(
+            id="last-updated-candlesticks",
             children=f"Candlestick width last updated: {last_updated_time}",
             style=margin_style
-        )
+        ),
+
+        html.Button(
+            'Update candlesticks stats', 
+            id='update-candlesticks-stats',
+            style={"margin-top": "15px"}
+        ),
     ])
 
 def generate_layout():
