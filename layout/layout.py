@@ -66,7 +66,25 @@ def _generate_profit_pip_calculator():
         ]
     )
 
-def _generate_dropdown():
+def _generate_candlesticks_info(last_updated_time):
+
+    return html.Div([
+
+        html.Div(
+            id="last-updated-candlesticks",
+            children=f"Candlestick width last updated: {last_updated_time}",
+            style={"margin-top": 10}
+        ),
+
+        html.Button(
+            'Update candlesticks stats', 
+            id='update-candlesticks-stats',
+            style={"margin-top": "15px"}
+        ),
+    ])
+
+
+def _generate_dropdown(forex_list):
 
     forex_list, last_updated_time = _fetch_forex_pairs()
     current_forex = forex_list[0]
@@ -111,29 +129,21 @@ def _generate_dropdown():
         html.Div(
             id='spread-value',
             style=margin_style
-        ),
-
-        html.Div(
-            id="last-updated-candlesticks",
-            children=f"Candlestick width last updated: {last_updated_time}",
-            style=margin_style
-        ),
-
-        html.Button(
-            'Update candlesticks stats', 
-            id='update-candlesticks-stats',
-            style={"margin-top": "15px"}
-        ),
+        )
     ])
 
 def generate_layout():
+
+    forex_list, last_updated_time = _fetch_forex_pairs()
 
     draw_config = {'modeBarButtonsToAdd': ['drawline','eraseshape']}
 
     return html.Div([
         _generate_profit_pip_calculator(),
         html.Hr(),
-        _generate_dropdown(),
+        _generate_candlesticks_info(last_updated_time),
+        html.Hr(),
+        _generate_dropdown(forex_list),
         _loading_figure_layout('candlestick-30d-fig', draw_config),
         _loading_figure_layout('candlestick-fullday-fig'),
         html.Hr(),
