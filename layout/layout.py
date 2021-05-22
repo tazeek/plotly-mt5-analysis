@@ -86,7 +86,6 @@ def _generate_candlesticks_info(last_updated_time):
 
 def _generate_dropdown(forex_list):
 
-    forex_list, last_updated_time = _fetch_forex_pairs()
     current_forex = forex_list[0]
 
     dropdown_options = []
@@ -104,12 +103,6 @@ def _generate_dropdown(forex_list):
     margin_style = {"margin-top": 10}
 
     return html.Div([
-
-        html.Button(
-            'Refresh Page', 
-            id='refresh-stats',
-            style={"margin-bottom": "15px"}
-        ),
 
         html.Div(
             [
@@ -129,7 +122,13 @@ def _generate_dropdown(forex_list):
         html.Div(
             id='spread-value',
             style=margin_style
-        )
+        ),
+
+        html.Button(
+            'Refresh Page', 
+            id='refresh-stats',
+            style={"margin-top": "15px"}
+        ),
     ])
 
 def generate_layout():
