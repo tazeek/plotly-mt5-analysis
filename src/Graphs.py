@@ -36,27 +36,6 @@ class Graphs:
         
         return None
 
-    def plot_atr_analyzer(self, data):
-
-        atr_fig = go.Figure([
-            go.Scatter(
-                x=data['time'], 
-                y=data['atr'],
-                opacity=0.5,
-                line=dict(width=1)
-            )
-        ])
-
-        atr_fig.update_layout(
-            title=f"{self._currency} - Average True Value",
-            xaxis_title="Time",
-            yaxis_title="ATR",
-            hovermode='x',
-            yaxis_tickformat='.3f'
-        )
-
-        return atr_fig
-
     def plot_candlestick_today(self, data):
 
         info_text = f"Candlestick width: {data['width_candlestick']}<br>" + \
