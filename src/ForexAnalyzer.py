@@ -62,7 +62,6 @@ class ForexAnalyzer:
         indicators.sma(period=15, column_name='sma')
         indicators.bears_power(period=15, column_name='bears_power')
         indicators.bulls_power(period=15, column_name='bulls_power')
-        indicators.atr(period=14, column_name='atr')
 
         self._indicators_stats_df[timeframe] = indicators.df
 
@@ -116,7 +115,8 @@ class ForexAnalyzer:
         self._create_indicators(rates_df.copy(), '30M')
 
         # Numbers are too small, bigger multiplier
-        pct_change_lambda = lambda a,b: ((b-a)/a) * 100
+        pct_change_lambda = lambda open,close: ((close-open)/open) * 100
+
         rates_df['percentage_change'] = rates_df.apply(
             lambda x: pct_change_lambda(x['open'], x['close']), axis=1
         )
