@@ -283,6 +283,18 @@ class Graphs:
                     y=indicators_df['sma'],
                     line=dict(color='black', width=5),
                     name=""
+                ),
+                go.Scatter(
+                    x=indicators_df['time'],
+                    y=indicators_df['bollinger_up'],
+                    line=dict(color='green',width=5),
+                    name=""
+                ),
+                go.Scatter(
+                    x=indicators_df['time'],
+                    y=indicators_df['bollinger_bottom'],
+                    line=dict(color='green',width=5),
+                    name=""
                 )
             ]
         )
