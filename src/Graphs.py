@@ -90,6 +90,18 @@ class Graphs:
                     close=data['close'],
                     text=hover_list,
                     hoverinfo='text'
+                ),
+                 go.Scatter(
+                    x=indicator_df['time'],
+                    y=indicator_df['bollinger_top'],
+                    line=dict(color='green',width=2),
+                    name=""
+                ),
+                go.Scatter(
+                    x=indicator_df['time'],
+                    y=indicator_df['bollinger_bottom'],
+                    line=dict(color='green',width=2),
+                    name=""
                 )
             ]
         )
@@ -286,14 +298,14 @@ class Graphs:
                 ),
                 go.Scatter(
                     x=indicators_df['time'],
-                    y=indicators_df['bollinger_up'],
-                    line=dict(color='green',width=5),
+                    y=indicators_df['bollinger_top'],
+                    line=dict(color='green',width=2),
                     name=""
                 ),
                 go.Scatter(
                     x=indicators_df['time'],
                     y=indicators_df['bollinger_bottom'],
-                    line=dict(color='green',width=5),
+                    line=dict(color='green',width=2),
                     name=""
                 )
             ]
