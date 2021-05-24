@@ -129,8 +129,6 @@ class ForexAnalyzer:
 
         rates_df['percentage_diff'] = diff_prev_list
 
-        print(rates_df[['price_percentage_change', 'percentage_diff']])
-
         return rates_df
 
     def get_daily_stats(self):
