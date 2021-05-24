@@ -117,9 +117,19 @@ class ForexAnalyzer:
         # Numbers are too small, bigger multiplier
         pct_change_lambda = lambda open,close: ((close-open)/open) * 100
 
-        rates_df['percentage_change'] = rates_df.apply(
+        rates_df['price_percentage_change'] = rates_df.apply(
             lambda x: pct_change_lambda(x['open'], x['close']), axis=1
         )
+
+        starting_diff = 0
+        diff_prev_list = []
+        for pct in rates_df['price_percentage_change']:
+            starting_diff += pct
+            diff_prev_list.append(starting_diff)
+
+        rates_df['percentage_diff'] = diff_prev_list
+
+        print(rates_df[['price_percentage_change', 'percentage_diff']])
 
         return rates_df
 

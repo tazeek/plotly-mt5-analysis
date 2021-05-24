@@ -182,7 +182,7 @@ class Graphs:
         heatmap_fig = go.Figure(
             data=go.Heatmap(
                 customdata=customdata_list,
-                z=[data['percentage_change']],
+                z=[data['price_percentage_change']],
                 y=None,
                 x=data['time'],
                 zmin=-0.25,
@@ -192,7 +192,7 @@ class Graphs:
             )
         )
 
-        current_perc_change = data.percentage_change.iat[-1]
+        current_perc_change = data.price_percentage_change.iat[-1]
 
         heatmap_fig.update_layout(
             title=f"{self._currency} - Heatmap for price changes today (Current change: <b>{current_perc_change:.3f}</b>)",
@@ -211,13 +211,13 @@ class Graphs:
         percentage_change_fig = go.Figure([
             go.Scatter(
                 x=data['time'], 
-                y=data['percentage_change'],
+                y=data['price_percentage_change'],
                 mode='lines+markers',
                 opacity=0.5
             )
         ])
 
-        current_perc_change = data.percentage_change.iat[-1]
+        current_perc_change = data.price_percentage_change.iat[-1]
 
         percentage_change_fig.update_layout(
             title=f"{self._currency} - Percentage Change for today (Current change: <b>{current_perc_change:.3f}</b>)",
