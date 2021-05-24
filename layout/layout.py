@@ -147,6 +147,7 @@ def generate_layout():
         html.Hr(),
         _loading_figure_layout('heatmap-changes-fig'),
         _loading_figure_layout('percentage-changes-fig'),
+        _loading_figure_layout('agg-percentage-fig'),
         _loading_figure_layout('close-price-histogram-fig'),
         html.Hr(),
         _loading_figure_layout('candlestick-today-fig', draw_config),
