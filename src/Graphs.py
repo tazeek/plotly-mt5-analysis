@@ -242,6 +242,30 @@ class Graphs:
 
         return percentage_change_fig
 
+    def plot_percentage_difference(self, data, start_time):
+
+        percentage_change_fig = go.Figure([
+            go.Scatter(
+                x=data['time'], 
+                y=data['percentage_diff'],
+                mode='lines+markers',
+                opacity=0.5
+            )
+        ])
+
+        percentage_change_fig.update_layout(
+            title=f"{self._currency} - Aggregate Percentage",
+            xaxis_title="Time",
+            yaxis_title="Percentage",
+            hovermode='x',
+            yaxis_tickformat='.4f'
+        )
+
+        self._draw_hline(percentage_change_fig, 0, "solid", "black")
+        self._draw_vline(percentage_change_fig, start_time, "solid", "black")
+
+        return percentage_change_fig
+
     def plot_candlesticks_fullday(self, data_day, overall_day, start_time, indicators_df):
 
         candlesticks_minute_fig = go.Figure(
