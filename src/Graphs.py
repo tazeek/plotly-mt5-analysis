@@ -220,7 +220,7 @@ class Graphs:
         current_perc_change = data.price_percentage_change.iat[-1]
 
         percentage_change_fig.update_layout(
-            title=f"{self._currency} - Percentage Change for today (Current change: <b>{current_perc_change:.3f}</b>)",
+            title=f"{self._currency} - Price Percentage Change for today (Current change: <b>{current_perc_change:.3f}</b>)",
             xaxis_title="Time",
             yaxis_title="Percentage change",
             hovermode='x',
