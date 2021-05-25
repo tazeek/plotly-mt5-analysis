@@ -12,7 +12,7 @@ class ForexAnalyzer:
     def __init__(self, forex_pair=None):
 
         self._mt5_timeframe_dict = {
-            '1M': mt5.TIMEFRAME_M1,
+            '15M': mt5.TIMEFRAME_M15,
             '30M': mt5.TIMEFRAME_M30,
             '1D': mt5.TIMEFRAME_D1,
         }
@@ -134,11 +134,11 @@ class ForexAnalyzer:
 
     def get_daily_stats(self):
 
-        # Last 24 hours, in 1-minute intervals
-        rates_df = self._fetch_data_mt5('1M', 24*60)
+        # Last 24 hours, in 15-minute intervals
+        rates_df = self._fetch_data_mt5('15M', 4*24)
 
         self._calculate_rsi(rates_df)
-        self._create_indicators(rates_df.copy(), '1M')
+        self._create_indicators(rates_df.copy(), '15M')
 
         pip_lambda = lambda open_price, close_price: self._calculate_pip(open_price, close_price)
         rates_df['pip_difference'] = rates_df.apply(lambda x: pip_lambda(x['low'], x['high']), axis=1)
