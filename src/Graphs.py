@@ -166,10 +166,8 @@ class Graphs:
             opacity=0.25
         )
 
-        current_tick_vol = data.tick_volume.iat[-1]
-
         tick_vol_fig.update_layout(
-            title=f"{self._currency} - Tick Volume for today (Current tick volume: <b>{current_tick_vol}</b>)",
+            title=f"{self._currency} - Tick Volume for today ((15-minute intervals)",
             xaxis_title="Time",
             yaxis_title="Volume",
             hovermode='x',
@@ -322,7 +320,7 @@ class Graphs:
         self._draw_vline(candlesticks_minute_fig, start_time, "solid", "black")
 
         candlesticks_minute_fig.update_layout(
-            title=f"{self._currency} - Series for today",
+            title=f"{self._currency} - Series for today (15-minute intervals)",
             xaxis_title="Time",
             yaxis_title="Price",
             hovermode='x',
@@ -343,8 +341,6 @@ class Graphs:
             )
         ])
 
-        current_rsi_val = rsi_today.value.iat[-1]
-
         self._draw_hline(rsi_fig, 50, "solid", "#9A5132", "Balanced")
         self._draw_hline(rsi_fig, 30, "solid", "black", "Oversold")
         self._draw_hline(rsi_fig, 70, "solid", "black", "Overbought")
@@ -354,7 +350,7 @@ class Graphs:
         rsi_fig.update_layout(
             xaxis_title="Time",
             yaxis_title="RSI Value",
-            title=f"RSI of {self._currency} (Current RSI: <b>{current_rsi_val:.3f}</b>)",
+            title=f"RSI of {self._currency} (15-minute intervals)",
             hovermode='x',
             yaxis_tickformat='.2f'
         )
