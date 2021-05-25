@@ -121,8 +121,7 @@ def register_callbacks(app):
         if clicks is None:
             raise PreventUpdate
 
-        symbol_list = [forex['symbol'] for forex in candlestick_data]
-        updated_pairs = fetch_latest_candlesticks(symbol_list)
+        updated_pairs = fetch_latest_candlesticks()
 
         last_updated_time = updated_pairs['last_updated']
         del updated_pairs['last_updated']

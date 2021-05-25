@@ -1,10 +1,15 @@
 from src.ForexAnalyzer import ForexAnalyzer
 
 # Get the stats of each forex pair and store in dictionary
-def fetch_latest_candlesticks(forex_pairs):
+def fetch_latest_candlesticks():
 
     forex_analyzer = ForexAnalyzer()
-    
+    forex_pairs = []
+
+    with open('files\\forex_pairs.txt') as f:
+        for line in f.readlines():
+            forex_pairs.append(line.rstrip())
+            
     candlesticks_width_dict = {}
 
     for pair in forex_pairs:
