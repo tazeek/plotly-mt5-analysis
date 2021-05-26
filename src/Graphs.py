@@ -155,16 +155,6 @@ class Graphs:
         ])
 
         self._draw_vline(tick_vol_fig, start_time, "solid", "black")
-        
-        tick_vol_fig.add_hrect(
-            y0=30, 
-            y1=0,
-            fillcolor="#D55A5A",
-            annotation_text="Average Volatility",
-            annotation_position="outside top right",
-            layer="below", 
-            opacity=0.25
-        )
 
         tick_vol_fig.update_layout(
             title=f"{self._currency} - Tick Volume for today (15-minute intervals)",
@@ -239,6 +229,16 @@ class Graphs:
 
         self._draw_hline(percentage_change_fig, 0, "solid", "black")
         self._draw_vline(percentage_change_fig, start_time, "solid", "black")
+
+        percentage_change_fig.add_hrect(
+            y0=0.03, 
+            y1=-0.03,
+            fillcolor="#D55A5A",
+            annotation_text="Less activity zone",
+            annotation_position="outside bottom left",
+            layer="below", 
+            opacity=0.25
+        )
 
         return percentage_change_fig
 
