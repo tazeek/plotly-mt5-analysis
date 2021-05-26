@@ -240,16 +240,6 @@ class Graphs:
         self._draw_hline(percentage_change_fig, 0, "solid", "black")
         self._draw_vline(percentage_change_fig, start_time, "solid", "black")
 
-        percentage_change_fig.add_hrect(
-            y0=0.03, 
-            y1=-0.03,
-            fillcolor="#D55A5A",
-            annotation_text="Less activity zone",
-            annotation_position="outside bottom left",
-            layer="below", 
-            opacity=0.25
-        )
-
         return percentage_change_fig
 
     def plot_percentage_difference(self, data, start_time):
