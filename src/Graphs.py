@@ -167,7 +167,7 @@ class Graphs:
         )
 
         tick_vol_fig.update_layout(
-            title=f"{self._currency} - Tick Volume for today ((15-minute intervals)",
+            title=f"{self._currency} - Tick Volume for today (15-minute intervals)",
             xaxis_title="Time",
             yaxis_title="Volume",
             hovermode='x',
