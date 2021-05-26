@@ -30,7 +30,15 @@ class ForexAnalyzer:
             quit()
 
     def _get_multiplier(self):
-        return 0.001 if 'JPY' in self._forex_pair else 0.00001
+
+        multiplier = 0.00001
+
+        if 'JPY' in self._forex_pair:
+            multiplier = 0.001
+        elif 'XAU' in self._forex_pair:
+            multiplier = 0.01
+
+        return multiplier
 
     def _calculate_pip(self, open_price, close_price):
 
