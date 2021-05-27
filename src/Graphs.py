@@ -155,19 +155,9 @@ class Graphs:
         ])
 
         self._draw_vline(tick_vol_fig, start_time, "solid", "black")
-        
-        tick_vol_fig.add_hrect(
-            y0=30, 
-            y1=0,
-            fillcolor="#D55A5A",
-            annotation_text="Average Volatility",
-            annotation_position="outside top right",
-            layer="below", 
-            opacity=0.25
-        )
 
         tick_vol_fig.update_layout(
-            title=f"{self._currency} - Tick Volume for today ((15-minute intervals)",
+            title=f"{self._currency} - Tick Volume for today (15-minute intervals)",
             xaxis_title="Time",
             yaxis_title="Volume",
             hovermode='x',
