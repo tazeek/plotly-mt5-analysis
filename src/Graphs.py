@@ -13,6 +13,14 @@ class Graphs:
 
         return None
 
+    def _candlestick_text(self, candlestick_info):
+
+        return f"Open: {candlestick_info['open']:.5f}<br>" + \
+                f"High: {candlestick_info['high']:.5f}<br>" + \
+                f"Low: {candlestick_info['low']:.5f}<br>" + \
+                f"Close: {candlestick_info['close']:.5f}<br>" + \
+                f"Width: {candlestick_info['pip_difference']}"
+
     def _draw_hline(self, fig, y_val, line_dash, line_col, annotation=None):
 
         fig.add_hline(
@@ -70,15 +78,7 @@ class Graphs:
 
     def plot_candlesticks_weekly(self, data, indicator_df):
 
-        def _create_info(data_row):
-
-            return f"Open: {data_row['open']:.5f}<br>" + \
-                f"High: {data_row['high']:.5f}<br>" + \
-                f"Low: {data_row['low']:.5f}<br>" + \
-                f"Close: {data_row['close']:.5f}<br>" + \
-                f"Width: {data_row['pip_difference']}"
-
-        hover_list= data.apply(lambda data_row: _create_info(data_row), axis=1)
+        hover_list= data.apply(lambda data_row:self. _candlestick_text(data_row), axis=1)
 
         candlestick_week_fig = go.Figure(
             data=[
@@ -267,6 +267,8 @@ class Graphs:
         return percentage_change_fig
 
     def plot_candlesticks_fullday(self, data_day, overall_day, start_time, indicators_df):
+        
+        hover_list= data_day.apply(lambda data_row:self._candlestick_text(data_row), axis=1)
 
         candlesticks_minute_fig = go.Figure(
             data=[
@@ -276,7 +278,8 @@ class Graphs:
                     high=data_day['high'],
                     low=data_day['low'], 
                     close=data_day['close'],
-                    name=""
+                    text=hover_list,
+                    hoverinfo='text'
                 ),
                 go.Scatter(
                     x=indicators_df['time'], 
