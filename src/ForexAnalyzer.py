@@ -160,7 +160,6 @@ class ForexAnalyzer:
             axis=1
         )
 
-        #rates_df['width_candlestick'] = self._calculate_pip(rates_df['low'], rates_df['high'])
         return rates_df
 
     def get_d1_stats(self, stats_dict=None):
