@@ -149,8 +149,18 @@ class ForexAnalyzer:
         self._create_indicators(rates_df.copy(), '15M')
 
         pip_lambda = lambda open_price, close_price: self._calculate_pip(open_price, close_price)
-        rates_df['pip_difference'] = rates_df.apply(lambda x: pip_lambda(x['low'], x['high']), axis=1)
+        
+        rates_df['pip_difference'] = rates_df.apply(
+            lambda x: pip_lambda(x['low'], x['high']), 
+            axis=1
+        )
 
+        rates_df['width_candlestick'] = rates_df.apply(
+            lambda x: self._calculate_pip(x['low'], x['high']),
+            axis=1
+        )
+
+        #rates_df['width_candlestick'] = self._calculate_pip(rates_df['low'], rates_df['high'])
         return rates_df
 
     def get_d1_stats(self, stats_dict=None):
