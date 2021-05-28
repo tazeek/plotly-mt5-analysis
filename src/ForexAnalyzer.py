@@ -116,30 +116,6 @@ class ForexAnalyzer:
     def get_indicator_stats(self, timeframe):
         return self._indicators_stats_df[timeframe]
 
-    def get_hourly_stats(self):
-
-        # Last 24 hours, in 30-minute intervals
-        rates_df = self._fetch_data_mt5('30M', 24*2)
-
-        self._create_indicators(rates_df.copy(), '30M')
-
-        # Numbers are too small, bigger multiplier
-        pct_change_lambda = lambda open,close: ((close-open)/open) * 100
-
-        rates_df['price_percentage_change'] = rates_df.apply(
-            lambda x: pct_change_lambda(x['open'], x['close']), axis=1
-        )
-
-        starting_diff = 0
-        diff_prev_list = []
-        for pct in rates_df['price_percentage_change']:
-            starting_diff += pct
-            diff_prev_list.append(starting_diff)
-
-        rates_df['percentage_diff'] = diff_prev_list
-
-        return rates_df
-
     def get_daily_stats(self):
 
         # Last 24 hours, in 15-minute intervals
