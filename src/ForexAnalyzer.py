@@ -160,6 +160,20 @@ class ForexAnalyzer:
             axis=1
         )
 
+        pct_change_lambda = lambda open,close: ((close-open)/open) * 100
+
+        rates_df['price_percentage_change'] = rates_df.apply(
+            lambda x: pct_change_lambda(x['open'], x['close']), axis=1
+        )
+
+        starting_diff = 0
+        diff_prev_list = []
+        for pct in rates_df['price_percentage_change']:
+            starting_diff += pct
+            diff_prev_list.append(starting_diff)
+
+        rates_df['percentage_diff'] = diff_prev_list
+
         return rates_df
 
     def get_d1_stats(self, stats_dict=None):
