@@ -58,21 +58,20 @@ def register_callbacks(app):
         last_30days_stats = forex_analyzer.get_month_stats()
         day_stats = forex_analyzer.get_daily_stats()
         start_day = forex_analyzer.get_start_day()
-        hourly_stats = forex_analyzer.get_hourly_stats()
         today_stats = forex_analyzer.get_d1_stats(last_30days_stats.to_dict('records')[-1])
 
         return [
             graph_generator.plot_candlesticks_weekly(last_30days_stats, forex_analyzer.get_indicator_stats('1D')),
             graph_generator.plot_candlestick_today(today_stats),
             graph_generator.plot_tick_volume_fullday(day_stats, start_day),
-            graph_generator.plot_percentage_difference(hourly_stats, start_day),
+            graph_generator.plot_percentage_difference(day_stats, start_day),
             graph_generator.plot_pip_difference_graph(day_stats),
-            graph_generator.plot_heatmap_fullday(hourly_stats, start_day),
-            graph_generator.plot_percentage_change(hourly_stats, start_day),
+            graph_generator.plot_heatmap_fullday(day_stats, start_day),
+            graph_generator.plot_percentage_change(day_stats, start_day),
             graph_generator.plot_histogram_fullday(day_stats, today_stats),
             graph_generator.plot_candlesticks_fullday(day_stats, today_stats, start_day, forex_analyzer.get_indicator_stats('15M')),
             graph_generator.plot_rsi_figure(forex_analyzer.get_rsi_today(), start_day),
-            graph_generator.plot_bull_bears_graph(forex_analyzer.get_indicator_stats('30M'), start_day)
+            graph_generator.plot_bull_bears_graph(forex_analyzer.get_indicator_stats('15M'), start_day)
         ]
 
     @app.callback(
