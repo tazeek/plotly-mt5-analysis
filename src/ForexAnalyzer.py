@@ -13,7 +13,6 @@ class ForexAnalyzer:
 
         self._mt5_timeframe_dict = {
             '15M': mt5.TIMEFRAME_M15,
-            '30M': mt5.TIMEFRAME_M30,
             '1D': mt5.TIMEFRAME_D1,
         }
         
