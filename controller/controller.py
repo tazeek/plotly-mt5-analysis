@@ -45,6 +45,7 @@ def register_callbacks(app):
             Output("percentage-changes-fig","figure"),
             Output("close-price-histogram-fig","figure"),
             Output("candlestick-15M-fig","figure"),
+            Output("candlestick-1H-fig","figure"),
             Output("rsi-fig","figure"),
             Output("bull-bear-fig","figure")
         ],
@@ -56,21 +57,22 @@ def register_callbacks(app):
     def update_all_graphs(value, clicks):
         
         quarterly_stats = forex_analyzer.get_quarterly_stats()
-        day_stats = forex_analyzer.get_daily_stats()
+        stats_15M = forex_analyzer.get_daily_stats()
+        stats_1H = forex_analyzer.get_daily_stats('1H')
         start_day = forex_analyzer.get_start_day()
         today_stats = forex_analyzer.get_d1_stats(quarterly_stats.to_dict('records')[-1])
 
         return [
             graph_generator.plot_candlesticks_quarterly(quarterly_stats, forex_analyzer.get_indicator_stats('1D')),
             graph_generator.plot_candlestick_today(today_stats),
-            graph_generator.plot_tick_volume_fullday(day_stats, start_day),
-            graph_generator.plot_percentage_difference(day_stats, start_day),
-            graph_generator.plot_pip_difference_graph(day_stats),
-            graph_generator.plot_heatmap_fullday(day_stats, start_day),
-            graph_generator.plot_percentage_change(day_stats, start_day),
-            graph_generator.plot_histogram_fullday(day_stats, today_stats),
-            graph_generator.plot_candlesticks_fullday(day_stats, start_day, forex_analyzer.get_indicator_stats('15M')),
-            graph_generator.plot_candlesticks_fullday(day_stats, start_day, forex_analyzer.get_indicator_stats('1H')),
+            graph_generator.plot_tick_volume_fullday(stats_15M, start_day),
+            graph_generator.plot_percentage_difference(stats_15M, start_day),
+            graph_generator.plot_pip_difference_graph(stats_15M),
+            graph_generator.plot_heatmap_fullday(stats_15M, start_day),
+            graph_generator.plot_percentage_change(stats_15M, start_day),
+            graph_generator.plot_histogram_fullday(stats_15M, today_stats),
+            graph_generator.plot_candlesticks_fullday(stats_15M, start_day, forex_analyzer.get_indicator_stats('15M')),
+            graph_generator.plot_candlesticks_fullday(stats_1H, start_day, forex_analyzer.get_indicator_stats('1H')),
             graph_generator.plot_rsi_figure(forex_analyzer.get_rsi_today(), start_day),
             graph_generator.plot_bull_bears_graph(forex_analyzer.get_indicator_stats('15M'), start_day)
         ]

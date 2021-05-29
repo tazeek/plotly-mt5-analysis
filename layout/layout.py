@@ -151,7 +151,7 @@ def generate_layout():
         _loading_figure_layout('close-price-histogram-fig'),
         html.Hr(),
         _loading_figure_layout('candlestick-15M-fig', draw_config),
-        _loading_figure_layout('candlestick-1D-fig', draw_config),
+        _loading_figure_layout('candlestick-1H-fig', draw_config),
         html.Hr(),
         _loading_figure_layout('rsi-fig'),
         _loading_figure_layout('bull-bear-fig')
