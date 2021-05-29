@@ -118,31 +118,6 @@ class Graphs:
 
         return candlestick_week_fig
 
-    def plot_histogram_fullday(self, data, day_stats):
-
-        histogram_fig = go.Figure(
-            data=[
-                go.Histogram(
-                    x=data['close'],
-                    opacity=0.4,
-                    bingroup='bar'
-                )
-            ]
-        )
-
-        self._draw_vline(histogram_fig, day_stats['close'], "solid", "black")
-
-        histogram_fig.update_layout(
-            title=f"{self._currency} - Close price counts (Current price: <b>{day_stats['close']:.5f}</b>)",
-            xaxis_title="Price range",
-            yaxis_title="Counts",
-            hovermode='x',
-            yaxis_tickformat='k',
-            bargap=0.20
-        )
-
-        return histogram_fig
-
     def plot_tick_volume_fullday(self, data, start_time):
 
         tick_vol_fig = go.Figure([
