@@ -121,7 +121,9 @@ class ForexAnalyzer:
         # Last 24 hours, in 15-minute intervals
         rates_df = self._fetch_data_mt5(timeframe, 4*24)
 
-        self._calculate_rsi(rates_df)
+        if timeframe == '15M':
+            self._calculate_rsi(rates_df)
+            
         self._create_indicators(rates_df.copy(), timeframe)
 
         pip_lambda = lambda open_price, close_price: self._calculate_pip(open_price, close_price)
