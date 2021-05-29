@@ -363,31 +363,3 @@ class Graphs:
         )
 
         return bull_bear_power_fig
-
-    def plot_pip_difference_graph(self, day_stats):
-        
-        histogram_fig = go.Figure(
-            data=[
-                go.Histogram(
-                    x=day_stats['pip_difference'],
-                    opacity=0.4,
-                    bingroup='bar'
-                )
-            ]
-        )
-
-        ongoing_pip_size = day_stats['pip_difference'].iloc[-1]
-
-        histogram_fig.update_layout(
-            title=f"{self._currency} - Pip size counts (Current pip differnece: <b>{ongoing_pip_size}</b>)",
-            xaxis_title="Pip size",
-            yaxis_title="Counts",
-            hovermode='x',
-            yaxis_tickformat='k',
-            bargap=0.20
-        )
-
-        self._draw_vline(histogram_fig, ongoing_pip_size, "solid", "black")
-        self._draw_vline(histogram_fig, ongoing_pip_size, "solid", "black")
-
-        return histogram_fig
