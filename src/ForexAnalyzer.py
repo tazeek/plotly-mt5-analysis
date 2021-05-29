@@ -167,7 +167,7 @@ class ForexAnalyzer:
         
         return stats_dict
     
-    def get_month_stats(self):
+    def get_quarterly_stats(self):
 
         rates_df =  self._fetch_data_mt5('1D', 100)
 

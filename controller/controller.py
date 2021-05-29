@@ -55,7 +55,7 @@ def register_callbacks(app):
     )
     def update_all_graphs(value, clicks):
         
-        last_30days_stats = forex_analyzer.get_month_stats()
+        last_30days_stats = forex_analyzer.get_quarterly_stats()
         day_stats = forex_analyzer.get_daily_stats()
         start_day = forex_analyzer.get_start_day()
         today_stats = forex_analyzer.get_d1_stats(last_30days_stats.to_dict('records')[-1])
