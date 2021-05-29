@@ -76,9 +76,9 @@ class Graphs:
 
         return candlestick_today_fig
 
-    def plot_candlesticks_weekly(self, data, indicator_df):
+    def plot_candlesticks_quarterly(self, data, indicator_df):
 
-        hover_list= data.apply(lambda data_row:self. _candlestick_text(data_row), axis=1)
+        hover_list= data.apply(lambda data_row:self._candlestick_text(data_row), axis=1)
 
         candlestick_week_fig = go.Figure(
             data=[
@@ -266,7 +266,7 @@ class Graphs:
 
         return percentage_change_fig
 
-    def plot_candlesticks_fullday(self, data_day, overall_day, start_time, indicators_df):
+    def plot_candlesticks_fullday(self, data_day, start_time, indicators_df):
         
         hover_list= data_day.apply(lambda data_row:self._candlestick_text(data_row), axis=1)
 
@@ -300,14 +300,6 @@ class Graphs:
                     name=""
                 )
             ]
-        )
-
-        self._draw_hline(
-            candlesticks_minute_fig,
-            overall_day['open'],
-            "dot",
-            'darkmagenta',
-            f"Open"
         )
 
         self._draw_vline(candlesticks_minute_fig, start_time, "solid", "black")
