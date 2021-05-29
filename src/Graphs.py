@@ -266,7 +266,7 @@ class Graphs:
 
         return percentage_change_fig
 
-    def plot_candlesticks_fullday(self, data_day, start_time, indicators_df):
+    def plot_candlesticks_fullday(self, data_day, start_time, indicators_df, timeframe):
         
         hover_list= data_day.apply(lambda data_row:self._candlestick_text(data_row), axis=1)
 
@@ -305,7 +305,7 @@ class Graphs:
         self._draw_vline(candlesticks_minute_fig, start_time, "solid", "black")
 
         candlesticks_minute_fig.update_layout(
-            title=f"{self._currency} - Series for today (15-minute intervals)",
+            title=f"{self._currency} - Series for today ({timeframe})",
             xaxis_title="Time",
             yaxis_title="Price",
             hovermode='x',
