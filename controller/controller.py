@@ -36,15 +36,15 @@ def register_callbacks(app):
     
     @app.callback(
         [
-            Output("candlestick-30d-fig","figure"),
-            Output("candlestick-fullday-fig","figure"),
+            Output("candlestick-quarterly-fig","figure"),
+            Output("candlestick-today-stat","figure"),
             Output("tick-volatility-fig","figure"),
             Output("agg-percentage-fig","figure"),
             Output("pip-size-histogram-fig","figure"),
-            Output("heatmap-changes-fig","figure"),
+            Output("heatmap-price-changes-fig","figure"),
             Output("percentage-changes-fig","figure"),
             Output("close-price-histogram-fig","figure"),
-            Output("candlestick-today-fig","figure"),
+            Output("candlestick-15M-fig","figure"),
             Output("rsi-fig","figure"),
             Output("bull-bear-fig","figure")
         ],
