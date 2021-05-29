@@ -116,13 +116,13 @@ class ForexAnalyzer:
     def get_indicator_stats(self, timeframe):
         return self._indicators_stats_df[timeframe]
 
-    def get_daily_stats(self):
+    def get_daily_stats(self, timeframe='15M'):
 
         # Last 24 hours, in 15-minute intervals
-        rates_df = self._fetch_data_mt5('15M', 4*24)
+        rates_df = self._fetch_data_mt5(timeframe, 4*24)
 
         self._calculate_rsi(rates_df)
-        self._create_indicators(rates_df.copy(), '15M')
+        self._create_indicators(rates_df.copy(), timeframe)
 
         pip_lambda = lambda open_price, close_price: self._calculate_pip(open_price, close_price)
         
