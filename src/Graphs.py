@@ -259,7 +259,7 @@ class Graphs:
                 go.Scatter(
                     x=indicators_df['time'], 
                     y=indicators_df['sma'],
-                    line=dict(color='black', width=5),
+                    line=dict(color='black', width=2),
                     name=""
                 ),
                 go.Scatter(
