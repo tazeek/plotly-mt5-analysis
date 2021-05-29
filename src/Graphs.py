@@ -76,9 +76,9 @@ class Graphs:
 
         return candlestick_today_fig
 
-    def plot_candlesticks_weekly(self, data, indicator_df):
+    def plot_candlesticks_quarterly(self, data, indicator_df):
 
-        hover_list= data.apply(lambda data_row:self. _candlestick_text(data_row), axis=1)
+        hover_list= data.apply(lambda data_row:self._candlestick_text(data_row), axis=1)
 
         candlestick_week_fig = go.Figure(
             data=[
@@ -95,13 +95,15 @@ class Graphs:
                     x=indicator_df['time'],
                     y=indicator_df['bollinger_top'],
                     line=dict(color='purple',width=2),
-                    name=""
+                    name="",
+                    hoverinfo='none'
                 ),
                 go.Scatter(
                     x=indicator_df['time'],
                     y=indicator_df['bollinger_bottom'],
                     line=dict(color='purple',width=2),
-                    name=""
+                    name="",
+                    hoverinfo='none'
                 )
             ]
         )
@@ -117,31 +119,6 @@ class Graphs:
         )
 
         return candlestick_week_fig
-
-    def plot_histogram_fullday(self, data, day_stats):
-
-        histogram_fig = go.Figure(
-            data=[
-                go.Histogram(
-                    x=data['close'],
-                    opacity=0.4,
-                    bingroup='bar'
-                )
-            ]
-        )
-
-        self._draw_vline(histogram_fig, day_stats['close'], "solid", "black")
-
-        histogram_fig.update_layout(
-            title=f"{self._currency} - Close price counts (Current price: <b>{day_stats['close']:.5f}</b>)",
-            xaxis_title="Price range",
-            yaxis_title="Counts",
-            hovermode='x',
-            yaxis_tickformat='k',
-            bargap=0.20
-        )
-
-        return histogram_fig
 
     def plot_tick_volume_fullday(self, data, start_time):
 
@@ -266,7 +243,7 @@ class Graphs:
 
         return percentage_change_fig
 
-    def plot_candlesticks_fullday(self, data_day, overall_day, start_time, indicators_df):
+    def plot_candlesticks_fullday(self, data_day, start_time, indicators_df, timeframe):
         
         hover_list= data_day.apply(lambda data_row:self._candlestick_text(data_row), axis=1)
 
@@ -284,36 +261,31 @@ class Graphs:
                 go.Scatter(
                     x=indicators_df['time'], 
                     y=indicators_df['sma'],
-                    line=dict(color='black', width=5),
-                    name=""
+                    line=dict(color='black', width=2),
+                    name="",
+                    hoverinfo='none'
                 ),
                 go.Scatter(
                     x=indicators_df['time'],
                     y=indicators_df['bollinger_top'],
                     line=dict(color='purple',width=2),
-                    name=""
+                    name="",
+                    hoverinfo='none'
                 ),
                 go.Scatter(
                     x=indicators_df['time'],
                     y=indicators_df['bollinger_bottom'],
                     line=dict(color='purple',width=2),
-                    name=""
+                    name="",
+                    hoverinfo='none'
                 )
             ]
-        )
-
-        self._draw_hline(
-            candlesticks_minute_fig,
-            overall_day['open'],
-            "dot",
-            'darkmagenta',
-            f"Open"
         )
 
         self._draw_vline(candlesticks_minute_fig, start_time, "solid", "black")
 
         candlesticks_minute_fig.update_layout(
-            title=f"{self._currency} - Series for today (15-minute intervals)",
+            title=f"{self._currency} - Series for today ({timeframe})",
             xaxis_title="Time",
             yaxis_title="Price",
             hovermode='x',
@@ -396,31 +368,3 @@ class Graphs:
         )
 
         return bull_bear_power_fig
-
-    def plot_pip_difference_graph(self, day_stats):
-        
-        histogram_fig = go.Figure(
-            data=[
-                go.Histogram(
-                    x=day_stats['pip_difference'],
-                    opacity=0.4,
-                    bingroup='bar'
-                )
-            ]
-        )
-
-        ongoing_pip_size = day_stats['pip_difference'].iloc[-1]
-
-        histogram_fig.update_layout(
-            title=f"{self._currency} - Pip size counts (Current pip differnece: <b>{ongoing_pip_size}</b>)",
-            xaxis_title="Pip size",
-            yaxis_title="Counts",
-            hovermode='x',
-            yaxis_tickformat='k',
-            bargap=0.20
-        )
-
-        self._draw_vline(histogram_fig, ongoing_pip_size, "solid", "black")
-        self._draw_vline(histogram_fig, ongoing_pip_size, "solid", "black")
-
-        return histogram_fig
