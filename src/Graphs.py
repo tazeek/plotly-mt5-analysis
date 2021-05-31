@@ -162,10 +162,8 @@ class Graphs:
             )
         )
 
-        current_perc_change = data.price_percentage_change.iat[-1]
-
         heatmap_fig.update_layout(
-            title=f"{self._currency} - Heatmap for price changes today (Current change: <b>{current_perc_change:.3f}</b>)",
+            title=f"{self._currency} - Heatmap for price changes today",
             xaxis_title="Time",
             hovermode='x',
         )
@@ -187,10 +185,8 @@ class Graphs:
             )
         ])
 
-        current_perc_change = data.price_percentage_change.iat[-1]
-
         percentage_change_fig.update_layout(
-            title=f"{self._currency} - Price Percentage Change for today (Current change: <b>{current_perc_change:.3f}</b>)",
+            title=f"{self._currency} - Price Percentage Change for today",
             xaxis_title="Time",
             yaxis_title="Percentage change",
             hovermode='x',
