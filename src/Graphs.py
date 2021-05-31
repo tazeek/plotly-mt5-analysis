@@ -13,6 +13,9 @@ class Graphs:
 
         return None
 
+    def _filter_data(self, data, start_time):
+        return data[data['time'] >= start_time]
+
     def _candlestick_text(self, candlestick_info):
 
         return f"Open: {candlestick_info['open']:.5f}<br>" + \
@@ -29,17 +32,6 @@ class Graphs:
             line_color=line_col,
             annotation_text=annotation or '',
             line_width=0.5
-        )
-        
-        return None
-
-    def _draw_vline(self, fig, x_val, line_dash, line_col):
-        
-        fig.add_vline(
-            x=x_val,
-            line_dash=line_dash,
-            line_color=line_col,
-            line_width=0.75
         )
         
         return None
@@ -122,16 +114,15 @@ class Graphs:
 
     def plot_tick_volume_fullday(self, data, start_time):
 
+        data = self._filter_data(data.copy(), start_time)
+
         tick_vol_fig = go.Figure([
             go.Scatter(
                 x=data['time'], 
                 y=data['tick_volume'],
-                opacity=0.5,
-                line=dict(width=1)
+                line=dict(width=4)
             )
         ])
-
-        self._draw_vline(tick_vol_fig, start_time, "solid", "black")
 
         tick_vol_fig.update_layout(
             title=f"{self._currency} - Tick Volume for today (15-minute intervals)",
@@ -144,6 +135,8 @@ class Graphs:
         return tick_vol_fig
 
     def plot_heatmap_fullday(self, data, start_time):
+
+        data = self._filter_data(data.copy(), start_time)
 
         info_text = 'Time: %{x}<br><br>' + \
             'Open price: %{customdata[0]:.5f}<br>' + \
@@ -169,21 +162,19 @@ class Graphs:
             )
         )
 
-        current_perc_change = data.price_percentage_change.iat[-1]
-
         heatmap_fig.update_layout(
-            title=f"{self._currency} - Heatmap for price changes today (Current change: <b>{current_perc_change:.3f}</b>)",
+            title=f"{self._currency} - Heatmap for price changes today",
             xaxis_title="Time",
             hovermode='x',
         )
-
-        self._draw_vline(heatmap_fig, start_time, "solid", "black")
 
         heatmap_fig.update_yaxes(showticklabels=False)
 
         return heatmap_fig
 
     def plot_percentage_change(self, data, start_time):
+
+        data = self._filter_data(data.copy(), start_time)
 
         percentage_change_fig = go.Figure([
             go.Scatter(
@@ -194,10 +185,8 @@ class Graphs:
             )
         ])
 
-        current_perc_change = data.price_percentage_change.iat[-1]
-
         percentage_change_fig.update_layout(
-            title=f"{self._currency} - Price Percentage Change for today (Current change: <b>{current_perc_change:.3f}</b>)",
+            title=f"{self._currency} - Price Percentage Change for today",
             xaxis_title="Time",
             yaxis_title="Percentage change",
             hovermode='x',
@@ -205,7 +194,6 @@ class Graphs:
         )
 
         self._draw_hline(percentage_change_fig, 0, "solid", "black")
-        self._draw_vline(percentage_change_fig, start_time, "solid", "black")
 
         percentage_change_fig.add_hrect(
             y0=0.03, 
@@ -221,6 +209,9 @@ class Graphs:
 
     def plot_candlesticks_fullday(self, data_day, start_time, indicators_df, timeframe):
         
+        data_day = self._filter_data(data_day.copy(), start_time)
+        indicators_df = self._filter_data(indicators_df.copy(), start_time)
+
         hover_list= data_day.apply(lambda data_row:self._candlestick_text(data_row), axis=1)
 
         candlesticks_minute_fig = go.Figure(
@@ -258,8 +249,6 @@ class Graphs:
             ]
         )
 
-        self._draw_vline(candlesticks_minute_fig, start_time, "solid", "black")
-
         candlesticks_minute_fig.update_layout(
             title=f"{self._currency} - Series for today ({timeframe})",
             xaxis_title="Time",
@@ -274,19 +263,15 @@ class Graphs:
 
     def plot_rsi_figure(self, rsi_today, start_time):
 
+        rsi_today = self._filter_data(rsi_today.copy(), start_time)
+
         rsi_fig = go.Figure([
             go.Scatter(
                 x=rsi_today['time'], 
                 y=rsi_today['value'],
-                line=dict(width=0.5)
+                line=dict(width=4)
             )
         ])
-
-        self._draw_hline(rsi_fig, 50, "solid", "#9A5132", "Balanced")
-        self._draw_hline(rsi_fig, 30, "solid", "black", "Oversold")
-        self._draw_hline(rsi_fig, 70, "solid", "black", "Overbought")
-
-        self._draw_vline(rsi_fig, start_time, "solid", "black")
 
         rsi_fig.update_layout(
             xaxis_title="Time",
@@ -316,6 +301,8 @@ class Graphs:
 
     def plot_bull_bears_graph(self, indicators_df, start_time):
 
+        indicators_df = self._filter_data(indicators_df.copy(), start_time)
+
         bull_bear_power_fig = go.Figure(
             data=[
                 go.Scatter(
@@ -333,7 +320,6 @@ class Graphs:
             ]
         )
 
-        self._draw_vline(bull_bear_power_fig, start_time, "solid", "black")
         self._draw_hline(bull_bear_power_fig,0,'solid','black')
 
         bull_bear_power_fig.update_layout(

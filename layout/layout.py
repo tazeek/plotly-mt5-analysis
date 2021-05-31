@@ -106,7 +106,6 @@ def _generate_dropdown(forex_list):
                     id='currency-dropdown',
                     options=dropdown_options,
                     clearable=False,
-                    searchable=False,
                     value=current_forex['symbol']
                 ),
                 dcc.Store(id='current-currency',data=current_forex['symbol']),
