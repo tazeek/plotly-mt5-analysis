@@ -37,17 +37,6 @@ class Graphs:
         
         return None
 
-    def _draw_vline(self, fig, x_val, line_dash, line_col):
-        
-        fig.add_vline(
-            x=x_val,
-            line_dash=line_dash,
-            line_color=line_col,
-            line_width=0.75
-        )
-        
-        return None
-
     def plot_candlestick_today(self, data):
 
         info_text = f"Candlestick width: {data['width_candlestick']}<br>" + \
@@ -137,8 +126,6 @@ class Graphs:
             )
         ])
 
-        self._draw_vline(tick_vol_fig, start_time, "solid", "black")
-
         tick_vol_fig.update_layout(
             title=f"{self._currency} - Tick Volume for today (15-minute intervals)",
             xaxis_title="Time",
@@ -185,8 +172,6 @@ class Graphs:
             hovermode='x',
         )
 
-        self._draw_vline(heatmap_fig, start_time, "solid", "black")
-
         heatmap_fig.update_yaxes(showticklabels=False)
 
         return heatmap_fig
@@ -215,7 +200,6 @@ class Graphs:
         )
 
         self._draw_hline(percentage_change_fig, 0, "solid", "black")
-        self._draw_vline(percentage_change_fig, start_time, "solid", "black")
 
         percentage_change_fig.add_hrect(
             y0=0.03, 
@@ -271,8 +255,6 @@ class Graphs:
             ]
         )
 
-        self._draw_vline(candlesticks_minute_fig, start_time, "solid", "black")
-
         candlesticks_minute_fig.update_layout(
             title=f"{self._currency} - Series for today ({timeframe})",
             xaxis_title="Time",
@@ -300,8 +282,6 @@ class Graphs:
         self._draw_hline(rsi_fig, 50, "solid", "#9A5132", "Balanced")
         self._draw_hline(rsi_fig, 30, "solid", "black", "Oversold")
         self._draw_hline(rsi_fig, 70, "solid", "black", "Overbought")
-
-        self._draw_vline(rsi_fig, start_time, "solid", "black")
 
         rsi_fig.update_layout(
             xaxis_title="Time",
@@ -350,7 +330,6 @@ class Graphs:
             ]
         )
 
-        self._draw_vline(bull_bear_power_fig, start_time, "solid", "black")
         self._draw_hline(bull_bear_power_fig,0,'solid','black')
 
         bull_bear_power_fig.update_layout(
