@@ -120,8 +120,7 @@ class Graphs:
             go.Scatter(
                 x=data['time'], 
                 y=data['tick_volume'],
-                opacity=0.5,
-                line=dict(width=1)
+                line=dict(width=4)
             )
         ])
 
