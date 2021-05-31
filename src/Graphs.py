@@ -231,6 +231,9 @@ class Graphs:
 
     def plot_candlesticks_fullday(self, data_day, start_time, indicators_df, timeframe):
         
+        data_day = self._filter_data(data_day.copy(), start_time)
+        indicators_df = self._filter_data(indicators_df.copy(), start_time)
+
         hover_list= data_day.apply(lambda data_row:self._candlestick_text(data_row), axis=1)
 
         candlesticks_minute_fig = go.Figure(
