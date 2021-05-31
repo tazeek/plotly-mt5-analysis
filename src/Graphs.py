@@ -2,6 +2,7 @@ from tapy import Indicators
 
 import plotly.graph_objects as go
 import numpy as np
+import pandas as pd
 
 class Graphs:
 
@@ -13,7 +14,7 @@ class Graphs:
 
         return None
 
-    def filter_data(self, data, start_time):
+    def _filter_data(self, data, start_time):
         return data[data['time'] >= start_time]
 
     def _candlestick_text(self, candlestick_info):
@@ -125,7 +126,7 @@ class Graphs:
 
     def plot_tick_volume_fullday(self, data, start_time):
 
-        data = data[data['time'] >= start_time]
+        data = self._filter_data(data.copy(), start_time)
 
         tick_vol_fig = go.Figure([
             go.Scatter(
