@@ -151,6 +151,8 @@ class Graphs:
 
     def plot_heatmap_fullday(self, data, start_time):
 
+        data = self._filter_data(data.copy(), start_time)
+
         info_text = 'Time: %{x}<br><br>' + \
             'Open price: %{customdata[0]:.5f}<br>' + \
             'Close price: %{customdata[1]:.5f}<br>' + \
@@ -190,6 +192,8 @@ class Graphs:
         return heatmap_fig
 
     def plot_percentage_change(self, data, start_time):
+
+        data = self._filter_data(data.copy(), start_time)
 
         percentage_change_fig = go.Figure([
             go.Scatter(
@@ -280,6 +284,8 @@ class Graphs:
 
     def plot_rsi_figure(self, rsi_today, start_time):
 
+        rsi_today = self._filter_data(rsi_today.copy(), start_time)
+
         rsi_fig = go.Figure([
             go.Scatter(
                 x=rsi_today['time'], 
@@ -321,6 +327,8 @@ class Graphs:
         return rsi_fig
 
     def plot_bull_bears_graph(self, indicators_df, start_time):
+
+        indicators_df = self._filter_data(indicators_df.copy(), start_time)
 
         bull_bear_power_fig = go.Figure(
             data=[
