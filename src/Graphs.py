@@ -13,6 +13,9 @@ class Graphs:
 
         return None
 
+    def filter_data(self, data, start_time):
+        return data[data['time'] >= start_time]
+
     def _candlestick_text(self, candlestick_info):
 
         return f"Open: {candlestick_info['open']:.5f}<br>" + \
@@ -121,6 +124,8 @@ class Graphs:
         return candlestick_week_fig
 
     def plot_tick_volume_fullday(self, data, start_time):
+
+        data = data[data['time'] >= start_time]
 
         tick_vol_fig = go.Figure([
             go.Scatter(
