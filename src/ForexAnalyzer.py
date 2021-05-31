@@ -108,7 +108,7 @@ class ForexAnalyzer:
         return datetime.now()  + timedelta(hours=addition_hours) # Local time is 3 hours behind
 
     def get_start_day(self):
-        return datetime.now(self._timezone).replace(hour=0,minute=0)
+        return datetime.now(self._timezone).replace(hour=0,minute=0,second=0).strftime("%Y-%m-%d %H:%M:%S")
 
     def get_rsi_today(self):
         return self._rsi_df
