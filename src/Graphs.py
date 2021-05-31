@@ -275,13 +275,9 @@ class Graphs:
             go.Scatter(
                 x=rsi_today['time'], 
                 y=rsi_today['value'],
-                line=dict(width=0.5)
+                line=dict(width=4)
             )
         ])
-
-        self._draw_hline(rsi_fig, 50, "solid", "#9A5132", "Balanced")
-        self._draw_hline(rsi_fig, 30, "solid", "black", "Oversold")
-        self._draw_hline(rsi_fig, 70, "solid", "black", "Overbought")
 
         rsi_fig.update_layout(
             xaxis_title="Time",
