@@ -15,6 +15,7 @@ class ForexAnalyzer:
             '15M': mt5.TIMEFRAME_M15,
             '1H': mt5.TIMEFRAME_H1,
             '1D': mt5.TIMEFRAME_D1,
+            '4H': mt5.TIMEFRAME_H4
         }
         
         self._forex_pair = forex_pair
