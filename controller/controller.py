@@ -42,6 +42,7 @@ def register_callbacks(app):
             Output("heatmap-price-changes-fig","figure"),
             Output("percentage-changes-fig","figure"),
             Output("candlestick-1H-fig","figure"),
+            Output("candlestick-4H-fig","figure"),
             Output("candlestick-15M-fig","figure"),
             Output("rsi-fig","figure"),
             Output("bull-bear-fig","figure")
@@ -67,6 +68,7 @@ def register_callbacks(app):
             graph_generator.plot_heatmap_fullday(stats_15M, start_day),
             graph_generator.plot_percentage_change(stats_15M, start_day),
             graph_generator.plot_candlesticks_fullday(stats_1H, start_day, forex_analyzer.get_indicator_stats('1H'), '1H'),
+            graph_generator.plot_candlesticks_fullday(stats_4H, start_day, forex_analyzer.get_indicator_stats('4H'), '4H'),
             graph_generator.plot_candlesticks_fullday(stats_15M, start_day, forex_analyzer.get_indicator_stats('15M'), '15M'),
             graph_generator.plot_rsi_figure(forex_analyzer.get_rsi_today(), start_day),
             graph_generator.plot_bull_bears_graph(forex_analyzer.get_indicator_stats('15M'), start_day)
