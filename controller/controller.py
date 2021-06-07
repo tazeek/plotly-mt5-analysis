@@ -56,6 +56,7 @@ def register_callbacks(app):
         quarterly_stats = forex_analyzer.get_quarterly_stats()
         stats_15M = forex_analyzer.get_daily_stats()
         stats_1H = forex_analyzer.get_daily_stats('1H')
+        stats_4H = forex_analyzer.get_daily_stats('4H')
         start_day = forex_analyzer.get_start_day()
         today_stats = forex_analyzer.get_d1_stats(quarterly_stats.to_dict('records')[-1])
 
