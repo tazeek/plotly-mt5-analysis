@@ -7,11 +7,25 @@ class Graphs:
 
     def __init__(self, currency=None):
         self._currency = currency
+        self._missing_dates = {}
 
     def update_currency(self, currency):
         self._currency = currency
 
         return None
+
+    def _filter_missing_dates(self, data, timeframe):
+
+        if timeframe not in data:
+            # retrieve the dates that ARE in the original datset
+            original_dates = [d.strftime("%Y-%m-%d") for d in data['Date']]
+
+            # define dates with missing values
+            break_dates = [d for d in dt_all.strftime("%Y-%m-%d").tolist() if not d in original_dates]
+
+            self._missing_dates[timeframe] = break_dates
+
+        return self._missing_dates[timeframe]
 
     def _filter_data(self, data, start_time):
         return data[data['time'] >= start_time]
@@ -317,7 +331,8 @@ class Graphs:
             template='simple_white',
             title=f"{self._currency} - Bull-Bear measurement",
             hovermode='x',
-            yaxis_tickformat='.5f'
+            yaxis_tickformat='.5f',
+            xaxis = dict(type="category")
         )
 
         return bull_bear_power_fig
