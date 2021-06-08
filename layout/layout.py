@@ -138,7 +138,7 @@ def generate_layout():
         _generate_candlesticks_info(last_updated_time),
         html.Hr(),
         _generate_dropdown(forex_list),
-        _loading_figure_layout('candlestick-quarterly-fig', draw_config),
+        #_loading_figure_layout('candlestick-quarterly-fig', draw_config),
         _loading_figure_layout('candlestick-today-stat'),
         html.Hr(),
         _loading_figure_layout('tick-volatility-fig'),

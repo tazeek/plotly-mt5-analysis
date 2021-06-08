@@ -120,7 +120,7 @@ class Graphs:
             go.Scatter(
                 x=data['time'], 
                 y=data['tick_volume'],
-                line=dict(width=4)
+                mode="lines+markers"
             )
         ])
 
@@ -269,7 +269,7 @@ class Graphs:
             go.Scatter(
                 x=rsi_today['time'], 
                 y=rsi_today['value'],
-                line=dict(width=4)
+                mode="lines+markers"
             )
         ])
 
