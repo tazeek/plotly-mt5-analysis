@@ -122,7 +122,7 @@ class ForexAnalyzer:
         # Last 24 hours, in 15-minute intervals
         rates_df = self._fetch_data_mt5(timeframe, bar_count)
 
-        if timeframe == '15M':
+        if timeframe == '1H':
             self._calculate_rsi(rates_df)
             
         self._create_indicators(rates_df.copy(), timeframe)

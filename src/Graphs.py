@@ -125,7 +125,7 @@ class Graphs:
         ])
 
         tick_vol_fig.update_layout(
-            title=f"{self._currency} - Tick Volume for today (15-minute intervals)",
+            title=f"{self._currency} - Tick Volume for today",
             xaxis_title="Time",
             yaxis_title="Volume",
             hovermode='x',
@@ -274,7 +274,7 @@ class Graphs:
         rsi_fig.update_layout(
             xaxis_title="Time",
             yaxis_title="RSI Value",
-            title=f"RSI of {self._currency} (15-minute intervals)",
+            title=f"RSI of {self._currency}",
             hovermode='x',
             yaxis_tickformat='.2f'
         )
