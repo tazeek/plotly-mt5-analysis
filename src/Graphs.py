@@ -1,7 +1,6 @@
-from tapy import Indicators
-
 import plotly.graph_objects as go
 import numpy as np
+import pandas as pd
 
 class Graphs:
 
@@ -17,6 +16,10 @@ class Graphs:
     def _filter_missing_dates(self, data, timeframe):
 
         if timeframe not in data:
+
+            # build complete timeline from start date to end date
+            dt_all = pd.date_range(start=data['Date'].iloc[0],end=data['Date'].iloc[-1])
+
             # retrieve the dates that ARE in the original datset
             original_dates = [d.strftime("%Y-%m-%d") for d in data['Date']]
 
