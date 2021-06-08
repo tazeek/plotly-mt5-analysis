@@ -36,7 +36,6 @@ def register_callbacks(app):
     
     @app.callback(
         [
-            #Output("candlestick-quarterly-fig","figure"),
             Output("candlestick-today-stat","figure"),
             Output("tick-volatility-fig","figure"),
             Output("heatmap-price-changes-fig","figure"),
@@ -62,7 +61,6 @@ def register_callbacks(app):
         today_stats = forex_analyzer.get_d1_stats(quarterly_stats.to_dict('records')[-1])
 
         return [
-            #graph_generator.plot_candlesticks_quarterly(quarterly_stats, forex_analyzer.get_indicator_stats('1D')),
             graph_generator.plot_candlestick_today(today_stats),
             graph_generator.plot_tick_volume_fullday(stats_15M, start_day),
             graph_generator.plot_heatmap_fullday(stats_15M, start_day),

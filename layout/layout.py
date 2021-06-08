@@ -138,7 +138,7 @@ def generate_layout():
         _generate_candlesticks_info(last_updated_time),
         html.Hr(),
         _generate_dropdown(forex_list),
-        #_loading_figure_layout('candlestick-quarterly-fig', draw_config),
+        _loading_figure_layout('candlestick-4H-fig', draw_config),
         _loading_figure_layout('candlestick-today-stat'),
         html.Hr(),
         _loading_figure_layout('tick-volatility-fig'),
@@ -148,7 +148,6 @@ def generate_layout():
         _loading_figure_layout('rsi-fig'),
         _loading_figure_layout('bull-bear-fig'),
         html.Hr(),
-        _loading_figure_layout('candlestick-4H-fig', draw_config),
         _loading_figure_layout('candlestick-1H-fig', draw_config),
         _loading_figure_layout('candlestick-15M-fig', draw_config),
         

@@ -179,9 +179,7 @@ class Graphs:
         percentage_change_fig = go.Figure([
             go.Scatter(
                 x=data['time'], 
-                y=data['price_percentage_change'],
-                mode='lines+markers',
-                opacity=0.5
+                y=data['price_percentage_change']
             )
         ])
 
