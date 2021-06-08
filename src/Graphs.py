@@ -15,7 +15,7 @@ class Graphs:
 
     def _filter_missing_dates(self, data, timeframe):
 
-        if timeframe not in data:
+        if timeframe not in self._missing_dates:
 
             # build complete timeline from start date to end date
             dt_all = pd.date_range(start=data['time'].iloc[0],end=data['time'].iloc[-1])
@@ -271,6 +271,14 @@ class Graphs:
             showlegend=False
         )
 
+        candlesticks_minute_fig.update_xaxes(
+            rangebreaks=[
+                dict(
+                    values=self._filter_missing_dates(data_day, timeframe)
+                )
+            ]
+        )
+
         return candlesticks_minute_fig
 
     def plot_rsi_figure(self, rsi_today, start_time):
@@ -305,6 +313,14 @@ class Graphs:
             fillcolor="palegreen",
             layer="below", 
             opacity=0.25
+        )
+
+        rsi_fig.update_xaxes(
+            rangebreaks=[
+                dict(
+                    values=self._filter_missing_dates(rsi_today, '1H')
+                )
+            ]
         )
 
         return rsi_fig
