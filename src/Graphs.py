@@ -1,17 +1,34 @@
-from tapy import Indicators
-
 import plotly.graph_objects as go
 import numpy as np
+import pandas as pd
 
 class Graphs:
 
     def __init__(self, currency=None):
         self._currency = currency
+        self._missing_dates = {}
 
     def update_currency(self, currency):
         self._currency = currency
 
         return None
+
+    def _filter_missing_dates(self, data, timeframe):
+
+        if timeframe not in self._missing_dates:
+
+            # build complete timeline from start date to end date
+            dt_all = pd.date_range(start=data['time'].iloc[0],end=data['time'].iloc[-1])
+
+            # retrieve the dates that ARE in the original datset
+            original_dates = [d.strftime("%Y-%m-%d") for d in data['time']]
+
+            # define dates with missing values
+            break_dates = [d for d in dt_all.strftime("%Y-%m-%d").tolist() if not d in original_dates]
+
+            self._missing_dates[timeframe] = break_dates
+
+        return self._missing_dates[timeframe]
 
     def _filter_data(self, data, start_time):
         return data[data['time'] >= start_time]
@@ -125,7 +142,7 @@ class Graphs:
         ])
 
         tick_vol_fig.update_layout(
-            title=f"{self._currency} - Tick Volume for today (15-minute intervals)",
+            title=f"{self._currency} - Tick Volume for today",
             xaxis_title="Time",
             yaxis_title="Volume",
             hovermode='x',
@@ -179,9 +196,7 @@ class Graphs:
         percentage_change_fig = go.Figure([
             go.Scatter(
                 x=data['time'], 
-                y=data['price_percentage_change'],
-                mode='lines+markers',
-                opacity=0.5
+                y=data['price_percentage_change']
             )
         ])
 
@@ -207,10 +222,7 @@ class Graphs:
 
         return percentage_change_fig
 
-    def plot_candlesticks_fullday(self, data_day, start_time, indicators_df, timeframe):
-        
-        data_day = self._filter_data(data_day.copy(), start_time)
-        indicators_df = self._filter_data(indicators_df.copy(), start_time)
+    def plot_candlesticks_fullday(self, data_day, indicators_df, timeframe):
 
         hover_list= data_day.apply(lambda data_row:self._candlestick_text(data_row), axis=1)
 
@@ -250,7 +262,7 @@ class Graphs:
         )
 
         candlesticks_minute_fig.update_layout(
-            title=f"{self._currency} - Series for today ({timeframe})",
+            title=f"{self._currency} - Series ({timeframe})",
             xaxis_title="Time",
             yaxis_title="Price",
             hovermode='x',
@@ -259,24 +271,30 @@ class Graphs:
             showlegend=False
         )
 
+        candlesticks_minute_fig.update_xaxes(
+            rangebreaks=[
+                dict(
+                    values=self._filter_missing_dates(data_day, timeframe)
+                )
+            ]
+        )
+
         return candlesticks_minute_fig
 
-    def plot_rsi_figure(self, rsi_today, start_time):
-
-        rsi_today = self._filter_data(rsi_today.copy(), start_time)
+    def plot_rsi_figure(self, rsi_today):
 
         rsi_fig = go.Figure([
             go.Scatter(
                 x=rsi_today['time'], 
                 y=rsi_today['value'],
-                mode="lines+markers"
+                mode="lines"
             )
         ])
 
         rsi_fig.update_layout(
             xaxis_title="Time",
             yaxis_title="RSI Value",
-            title=f"RSI of {self._currency} (15-minute intervals)",
+            title=f"RSI of {self._currency}",
             hovermode='x',
             yaxis_tickformat='.2f'
         )
@@ -297,11 +315,17 @@ class Graphs:
             opacity=0.25
         )
 
+        rsi_fig.update_xaxes(
+            rangebreaks=[
+                dict(
+                    values=self._filter_missing_dates(rsi_today, '1H')
+                )
+            ]
+        )
+
         return rsi_fig
 
-    def plot_bull_bears_graph(self, indicators_df, start_time):
-
-        indicators_df = self._filter_data(indicators_df.copy(), start_time)
+    def plot_bull_bears_graph(self, indicators_df):
 
         bull_bear_power_fig = go.Figure(
             data=[
@@ -324,9 +348,17 @@ class Graphs:
 
         bull_bear_power_fig.update_layout(
             template='simple_white',
-            title=f"{self._currency} - Bull-Bear measurement (15 minute intervals)",
+            title=f"{self._currency} - Bull-Bear measurement",
             hovermode='x',
             yaxis_tickformat='.5f'
+        )
+
+        bull_bear_power_fig.update_xaxes(
+            rangebreaks=[
+                dict(
+                    values=self._filter_missing_dates(indicators_df, '1H')
+                )
+            ]
         )
 
         return bull_bear_power_fig
