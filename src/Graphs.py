@@ -222,7 +222,7 @@ class Graphs:
 
         return percentage_change_fig
 
-    def plot_candlesticks_fullday(self, data_day, start_time, indicators_df, timeframe):
+    def plot_candlesticks_fullday(self, data_day, indicators_df, timeframe):
 
         hover_list= data_day.apply(lambda data_row:self._candlestick_text(data_row), axis=1)
 
@@ -281,7 +281,7 @@ class Graphs:
 
         return candlesticks_minute_fig
 
-    def plot_rsi_figure(self, rsi_today, start_time):
+    def plot_rsi_figure(self, rsi_today):
 
         rsi_fig = go.Figure([
             go.Scatter(
