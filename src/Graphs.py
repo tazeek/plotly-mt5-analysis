@@ -206,9 +206,6 @@ class Graphs:
         return percentage_change_fig
 
     def plot_candlesticks_fullday(self, data_day, start_time, indicators_df, timeframe):
-        
-        #data_day = self._filter_data(data_day.copy(), start_time)
-        #indicators_df = self._filter_data(indicators_df.copy(), start_time)
 
         hover_list= data_day.apply(lambda data_row:self._candlestick_text(data_row), axis=1)
 
@@ -261,13 +258,11 @@ class Graphs:
 
     def plot_rsi_figure(self, rsi_today, start_time):
 
-        rsi_today = self._filter_data(rsi_today.copy(), start_time)
-
         rsi_fig = go.Figure([
             go.Scatter(
                 x=rsi_today['time'], 
                 y=rsi_today['value'],
-                mode="lines+markers"
+                mode="lines"
             )
         ])
 
@@ -298,8 +293,6 @@ class Graphs:
         return rsi_fig
 
     def plot_bull_bears_graph(self, indicators_df, start_time):
-
-        indicators_df = self._filter_data(indicators_df.copy(), start_time)
 
         bull_bear_power_fig = go.Figure(
             data=[
