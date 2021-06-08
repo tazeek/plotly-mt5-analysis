@@ -245,7 +245,7 @@ class Graphs:
         )
 
         candlesticks_minute_fig.update_layout(
-            title=f"{self._currency} - Series for today ({timeframe})",
+            title=f"{self._currency} - Series ({timeframe})",
             xaxis_title="Time",
             yaxis_title="Price",
             hovermode='x',
@@ -315,7 +315,7 @@ class Graphs:
 
         bull_bear_power_fig.update_layout(
             template='simple_white',
-            title=f"{self._currency} - Bull-Bear measurement (15 minute intervals)",
+            title=f"{self._currency} - Bull-Bear measurement",
             hovermode='x',
             yaxis_tickformat='.5f'
         )
