@@ -117,10 +117,10 @@ class ForexAnalyzer:
     def get_indicator_stats(self, timeframe):
         return self._indicators_stats_df[timeframe]
 
-    def get_daily_stats(self, timeframe='15M'):
+    def get_daily_stats(self, timeframe='15M', bar_count=100):
 
         # Last 24 hours, in 15-minute intervals
-        rates_df = self._fetch_data_mt5(timeframe, 4*24)
+        rates_df = self._fetch_data_mt5(timeframe, bar_count)
 
         if timeframe == '15M':
             self._calculate_rsi(rates_df)
