@@ -18,10 +18,10 @@ class Graphs:
         if timeframe not in data:
 
             # build complete timeline from start date to end date
-            dt_all = pd.date_range(start=data['Date'].iloc[0],end=data['Date'].iloc[-1])
+            dt_all = pd.date_range(start=data['time'].iloc[0],end=data['time'].iloc[-1])
 
             # retrieve the dates that ARE in the original datset
-            original_dates = [d.strftime("%Y-%m-%d") for d in data['Date']]
+            original_dates = [d.strftime("%Y-%m-%d") for d in data['time']]
 
             # define dates with missing values
             break_dates = [d for d in dt_all.strftime("%Y-%m-%d").tolist() if not d in original_dates]
@@ -309,7 +309,7 @@ class Graphs:
 
         return rsi_fig
 
-    def plot_bull_bears_graph(self, indicators_df, start_time):
+    def plot_bull_bears_graph(self, indicators_df):
 
         bull_bear_power_fig = go.Figure(
             data=[
@@ -334,8 +334,15 @@ class Graphs:
             template='simple_white',
             title=f"{self._currency} - Bull-Bear measurement",
             hovermode='x',
-            yaxis_tickformat='.5f',
-            xaxis = dict(type="category")
+            yaxis_tickformat='.5f'
+        )
+
+        bull_bear_power_fig.update_xaxes(
+            rangebreaks=[
+                dict(
+                    values=self._filter_missing_dates(indicators_df, '1H')
+                )
+            ]
         )
 
         return bull_bear_power_fig
