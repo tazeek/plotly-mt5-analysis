@@ -56,8 +56,8 @@ class Graphs:
     def plot_candlestick_today(self, data):
 
         info_text = f"Candlestick width: {data['width_candlestick']}<br>" + \
-            f"Gap (High-Open): {data['gap_high_open']}<br>" + \
-            f"Gap (Low-Open): {data['gap_open_low']}<br>" + \
+            f"Gap (High-Close): {data['gap_high_close']}<br>" + \
+            f"Gap (Low-Close): {data['gap_close_low']}<br>" + \
             f"Current gap (Open-close): {data['gap_close_open']}"
 
         candlestick_today_fig = go.Figure(
