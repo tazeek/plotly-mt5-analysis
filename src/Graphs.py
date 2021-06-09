@@ -222,7 +222,7 @@ class Graphs:
 
         return percentage_change_fig
 
-    def plot_candlesticks_fullday(self, data_day, indicators_df, timeframe, draw_bollinger=True):
+    def plot_candlesticks_fullday(self, data_day, start_time, indicators_df, timeframe, draw_bollinger=True):
 
         hover_list= data_day.apply(lambda data_row:self._candlestick_text(data_row), axis=1)
 
@@ -282,6 +282,13 @@ class Graphs:
                     values=self._filter_missing_dates(data_day, timeframe)
                 )
             ]
+        )
+        
+        candlesticks_minute_fig.add_vline(
+            x=start_time,
+            line_dash="solid",
+            line_color="black",
+            line_width=0.75
         )
 
         return candlesticks_minute_fig
