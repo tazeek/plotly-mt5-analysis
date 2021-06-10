@@ -156,8 +156,8 @@ class ForexAnalyzer:
             stats_dict = rates_df.to_dict('records')[0]
 
         stats_dict['width_candlestick'] = self._calculate_pip(stats_dict['low'], stats_dict['high'])
-        stats_dict['gap_high_open'] = self._calculate_pip(stats_dict['open'],stats_dict['high'])
-        stats_dict['gap_open_low'] = self._calculate_pip(stats_dict['low'], stats_dict['open'])
+        stats_dict['gap_high_close'] = self._calculate_pip(stats_dict['close'],stats_dict['high'])
+        stats_dict['gap_close_low'] = self._calculate_pip(stats_dict['low'], stats_dict['close'])
         stats_dict['gap_close_open'] = self._calculate_pip(stats_dict['open'], stats_dict['close'])
         
         return stats_dict

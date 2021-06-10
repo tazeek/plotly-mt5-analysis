@@ -56,8 +56,8 @@ class Graphs:
     def plot_candlestick_today(self, data):
 
         info_text = f"Candlestick width: {data['width_candlestick']}<br>" + \
-            f"Gap (High-Open): {data['gap_high_open']}<br>" + \
-            f"Gap (Low-Open): {data['gap_open_low']}<br>" + \
+            f"Gap (High-Close): {data['gap_high_close']}<br>" + \
+            f"Gap (Low-Close): {data['gap_close_low']}<br>" + \
             f"Current gap (Open-close): {data['gap_close_open']}"
 
         candlestick_today_fig = go.Figure(
@@ -222,7 +222,7 @@ class Graphs:
 
         return percentage_change_fig
 
-    def plot_candlesticks_fullday(self, data_day, indicators_df, timeframe, draw_bollinger=True):
+    def plot_candlesticks_fullday(self, data_day, start_time, indicators_df, timeframe, draw_bollinger=True):
 
         hover_list= data_day.apply(lambda data_row:self._candlestick_text(data_row), axis=1)
 
@@ -282,6 +282,13 @@ class Graphs:
                     values=self._filter_missing_dates(data_day, timeframe)
                 )
             ]
+        )
+        
+        candlesticks_minute_fig.add_vline(
+            x=start_time,
+            line_dash="solid",
+            line_color="black",
+            line_width=0.75
         )
 
         return candlesticks_minute_fig

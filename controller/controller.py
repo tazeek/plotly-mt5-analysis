@@ -42,7 +42,6 @@ def register_callbacks(app):
             Output("percentage-changes-fig","figure"),
             Output("candlestick-1H-fig","figure"),
             Output("candlestick-4H-fig","figure"),
-            Output("candlestick-15M-fig","figure"),
             Output("rsi-fig","figure"),
             Output("bull-bear-fig","figure")
         ],
@@ -53,10 +52,10 @@ def register_callbacks(app):
     )
     def update_all_graphs(value, clicks):
         
+        start_time = forex_analyzer.get_start_day()
         quarterly_stats = forex_analyzer.get_quarterly_stats()
-        stats_15M = forex_analyzer.get_daily_stats('15M',400)
-        stats_1H = forex_analyzer.get_daily_stats('1H',400)
-        stats_4H = forex_analyzer.get_daily_stats('4H',200)
+        stats_1H = forex_analyzer.get_daily_stats('1H',200)
+        stats_4H = forex_analyzer.get_daily_stats('4H',100)
         start_day = forex_analyzer.get_start_day()
         today_stats = forex_analyzer.get_d1_stats(quarterly_stats.to_dict('records')[-1])
 
@@ -65,9 +64,8 @@ def register_callbacks(app):
             graph_generator.plot_tick_volume_fullday(stats_1H, start_day),
             graph_generator.plot_heatmap_fullday(stats_1H, start_day),
             graph_generator.plot_percentage_change(stats_1H, start_day),
-            graph_generator.plot_candlesticks_fullday(stats_1H, forex_analyzer.get_indicator_stats('1H'), '1H'),
-            graph_generator.plot_candlesticks_fullday(stats_4H, forex_analyzer.get_indicator_stats('4H'), '4H', False),
-            graph_generator.plot_candlesticks_fullday(stats_15M, forex_analyzer.get_indicator_stats('15M'), '15M', False),
+            graph_generator.plot_candlesticks_fullday(stats_1H, start_time, forex_analyzer.get_indicator_stats('1H'), '1H', False),
+            graph_generator.plot_candlesticks_fullday(stats_4H, start_time, forex_analyzer.get_indicator_stats('4H'), '4H', False),
             graph_generator.plot_rsi_figure(forex_analyzer.get_rsi_today()),
             graph_generator.plot_bull_bears_graph(forex_analyzer.get_indicator_stats('1H'))
         ]
