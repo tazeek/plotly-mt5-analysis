@@ -130,7 +130,7 @@ def generate_layout():
 
     forex_list, last_updated_time = _fetch_forex_pairs()
 
-    draw_config = {'modeBarButtonsToAdd': ['drawline','eraseshape']}
+    draw_config = {'modeBarButtonsToAdd': ['drawline','eraseshape', 'drawopenpath']}
 
     return html.Div([
         _generate_profit_pip_calculator(),
