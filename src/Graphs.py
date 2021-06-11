@@ -48,7 +48,7 @@ class Graphs:
             line_dash=line_dash,
             line_color=line_col,
             annotation_text=annotation or '',
-            line_width=0.5
+            line_width=3
         )
         
         return None
