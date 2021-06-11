@@ -45,7 +45,8 @@ def register_callbacks(app):
             Output("candlestick-15M-fig","figure"),
             Output("rsi-1H-fig","figure"),
             Output("rsi-15M-fig","figure"),
-            Output("bull-bear-fig","figure")
+            Output("bull-bear-1H-fig","figure"),
+            Output("bull-bear-15M-fig", "figure")
         ],
         [
             Input("current-currency", "data"),
@@ -72,7 +73,8 @@ def register_callbacks(app):
             graph_generator.plot_candlesticks_fullday(stats_15M, start_time, forex_analyzer.get_indicator_stats('15M'), '15M'),
             graph_generator.plot_rsi_figure(forex_analyzer.get_rsi_today('1H')),
             graph_generator.plot_rsi_figure(forex_analyzer.get_rsi_today('15M')),
-            graph_generator.plot_bull_bears_graph(forex_analyzer.get_indicator_stats('1H'))
+            graph_generator.plot_bull_bears_graph(forex_analyzer.get_indicator_stats('1H')),
+            graph_generator.plot_bull_bears_graph(forex_analyzer.get_indicator_stats('15M'))
         ]
 
     @app.callback(
