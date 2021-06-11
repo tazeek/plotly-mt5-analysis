@@ -222,7 +222,7 @@ class Graphs:
 
         return percentage_change_fig
 
-    def plot_candlesticks_fullday(self, data_day, start_time, indicators_df, timeframe, draw_bollinger=True):
+    def plot_candlesticks_fullday(self, data_day, start_time, indicators_df, timeframe):
 
         hover_list= data_day.apply(lambda data_row:self._candlestick_text(data_row), axis=1)
 
@@ -236,6 +236,12 @@ class Graphs:
                     close=data_day['close'],
                     text=hover_list,
                     hoverinfo='text'
+                ),
+                go.Scatter(
+                    x=indicators_df['time'], 
+                    y=indicators_df['sma'],
+                    line=dict(color='black', width=5),
+                    name=""
                 )
             ]
         )
