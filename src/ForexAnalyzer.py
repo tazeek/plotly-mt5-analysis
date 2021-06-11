@@ -22,7 +22,7 @@ class ForexAnalyzer:
         
         self._timezone = pytz.timezone('Europe/Moscow') # MT5 timezone
 
-        self._rsi_today = None
+        self._rsi_df = {}
 
         self._indicators_stats_df = {}
 
@@ -46,9 +46,9 @@ class ForexAnalyzer:
         pips = round((close_price - open_price) / self._get_multiplier())
         return int(pips)
 
-    def _calculate_rsi(self, day_stats):
+    def _calculate_rsi(self, day_stats, timeframe):
 
-        self._rsi_df = pd.DataFrame({
+        self._rsi_df[timeframe] = pd.DataFrame({
             'time': day_stats['time'],
             'value': talib.RSI(day_stats["close"], timeperiod=14)
         })
@@ -110,8 +110,8 @@ class ForexAnalyzer:
     def get_start_day(self):
         return datetime.now(self._timezone).replace(hour=0,minute=0,second=0).strftime("%Y-%m-%d %H:%M:%S")
 
-    def get_rsi_today(self):
-        return self._rsi_df
+    def get_rsi_today(self, timeframe):
+        return self._rsi_df[timeframe]
 
     def get_indicator_stats(self, timeframe):
         return self._indicators_stats_df[timeframe]
@@ -120,8 +120,7 @@ class ForexAnalyzer:
 
         rates_df = self._fetch_data_mt5(timeframe, bar_count)
 
-        if timeframe == '1H':
-            self._calculate_rsi(rates_df)
+        self._calculate_rsi(rates_df, timeframe)
             
         self._create_indicators(rates_df.copy(), timeframe)
 
