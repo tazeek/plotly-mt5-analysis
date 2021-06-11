@@ -240,32 +240,6 @@ class Graphs:
             ]
         )
 
-        if draw_bollinger:
-            
-            candlesticks_minute_fig.add_traces([
-                go.Scatter(
-                    x=indicators_df['time'], 
-                    y=indicators_df['sma'],
-                    line=dict(color='black', width=2),
-                    name="",
-                    hoverinfo='none'
-                ),
-                go.Scatter(
-                    x=indicators_df['time'],
-                    y=indicators_df['bollinger_top'],
-                    line=dict(color='purple',width=2),
-                    name="",
-                    hoverinfo='none'
-                ),
-                go.Scatter(
-                    x=indicators_df['time'],
-                    y=indicators_df['bollinger_bottom'],
-                    line=dict(color='purple',width=2),
-                    name="",
-                    hoverinfo='none'
-                )
-            ])
-
         candlesticks_minute_fig.update_layout(
             title=f"{self._currency} - Series ({timeframe})",
             xaxis_title="Time",
