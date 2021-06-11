@@ -254,7 +254,8 @@ class Graphs:
             hovermode='x',
             yaxis_tickformat='.5f',
             xaxis_rangeslider_visible=False,
-            showlegend=False
+            showlegend=False,
+            yaxis={'visible': False, 'showticklabels': False}
         )
 
         candlesticks_minute_fig.update_xaxes(
@@ -344,7 +345,8 @@ class Graphs:
             template='simple_white',
             title=f"{self._currency} - Bull-Bear measurement",
             hovermode='x',
-            yaxis_tickformat='.5f'
+            yaxis_tickformat='.5f',
+            yaxis={'visible': False, 'showticklabels': False}
         )
 
         bull_bear_power_fig.update_xaxes(
