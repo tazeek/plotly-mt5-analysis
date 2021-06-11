@@ -248,6 +248,7 @@ class Graphs:
 
         candlesticks_minute_fig.update_layout(
             title=f"{self._currency} - Series ({timeframe})",
+            template='simple_white',
             xaxis_title="Time",
             yaxis_title="Price",
             hovermode='x',
@@ -268,7 +269,7 @@ class Graphs:
             x=start_time,
             line_dash="solid",
             line_color="black",
-            line_width=0.75
+            line_width=3
         )
 
         return candlesticks_minute_fig
@@ -284,6 +285,7 @@ class Graphs:
         ])
 
         rsi_fig.update_layout(
+            template='simple_white',
             xaxis_title="Time",
             yaxis_title="RSI Value",
             title=f"RSI of {self._currency}",
