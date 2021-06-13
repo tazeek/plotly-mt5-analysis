@@ -85,9 +85,9 @@ def register_callbacks(app):
             Input('start-calculation','n_clicks')
         ],
         [
-            State('input_profit_target','value'),
+            State('input_target','value'),
             State('input_leverage','value'),
-            State('input_minimum_trade','value')
+            State('input_trade','value')
         ],
         prevent_initial_call=True
     )

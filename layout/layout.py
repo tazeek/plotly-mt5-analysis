@@ -37,7 +37,7 @@ def _loading_figure_layout(fig_id, config=None):
 
 def _generate_profit_pip_calculator():
 
-    field_list = ['profit_target','leverage','minimum_trade']
+    field_list = ['target','leverage','trade']
 
     return html.Div(
         [
