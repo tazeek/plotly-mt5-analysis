@@ -17,7 +17,7 @@ def register_callbacks(app):
         [
             Output("current-currency","data"),
             Output("ask-value","children"),
-            Output("bid-value","chidlren")
+            Output("bid-value","children")
         ],
         [
             Input("currency-dropdown", "value")
