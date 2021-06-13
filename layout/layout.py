@@ -122,7 +122,7 @@ def _generate_dropdown(forex_list):
         html.Button(
             'Refresh Page', 
             id='refresh-stats',
-            style={"margin-top": "15px"}
+            style={"margin-top": "15px", "margin-bottom": "15px"}
         ),
     ])
 
