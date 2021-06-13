@@ -90,12 +90,11 @@ class ForexAnalyzer:
 
         return rates
 
-    def find_spread(self):
+    def find_ask_bid(self):
 
         last_tick_info = mt5.symbol_info_tick(self._forex_pair)
-        spread_num = self._calculate_pip(last_tick_info.bid, last_tick_info.ask)
 
-        return spread_num
+        return last_tick_info.ask, last_tick_info.bid
 
 
     def update_forex_pair(self, forex_pair):

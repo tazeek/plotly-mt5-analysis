@@ -114,10 +114,17 @@ def _generate_dropdown(forex_list):
                 style={"width": "15%"}
         ),
 
-        html.Div(
-            id='spread-value',
-            style={"margin-top": 10}
-        ),
+        html.Div(children=[
+            html.Div(
+                id='ask-value',
+                style={"margin-top": 10}
+            ),
+
+            html.Div(
+                id='bid-value',
+                style={"margin-top": 10}
+            ),
+        ]),
 
         html.Button(
             'Refresh Page', 
@@ -153,7 +160,7 @@ def generate_layout():
                 _loading_figure_layout('percentage-changes-fig')
             ]),
 
-            dcc.Tab(label='Medium Timeframe (1H)', value='low-timeframe', children=[
+            dcc.Tab(label='Analysis Timeframe (1H)', value='low-timeframe', children=[
                 _loading_figure_layout('candlestick-1H-fig', draw_config),
                 _loading_figure_layout('rsi-1H-fig'),
                 _loading_figure_layout('bull-bear-1H-fig'),
