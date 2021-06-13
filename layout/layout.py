@@ -133,6 +133,10 @@ def generate_layout():
     draw_config = {'modeBarButtonsToAdd': ['drawline','eraseshape', 'drawopenpath']}
 
     return html.Div([
+        dcc.Tabs(id='tabs-example', value='tab-1', children=[
+            dcc.Tab(label='Tab one', value='tab-1'),
+            dcc.Tab(label='Tab two', value='tab-2'),
+        ]),
         _generate_profit_pip_calculator(),
         html.Hr(),
         _generate_candlesticks_info(last_updated_time),
