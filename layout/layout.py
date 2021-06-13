@@ -134,31 +134,36 @@ def generate_layout():
 
     return html.Div([
 
-        dcc.Tabs(id='tabs-example', value='tab-1', children=[
-
-            dcc.Tab(label='High Timeframe (4H)', value='high-timeframe'),
-            dcc.Tab(label='Medium Timeframe (1H)', value='low-timeframe'),
-            dcc.Tab(label='Entry Timeframe (15M)', value='medium-timeframe')
-            
-        ]),
-
         _generate_profit_pip_calculator(),
         html.Hr(),
         _generate_candlesticks_info(last_updated_time),
         html.Hr(),
         _generate_dropdown(forex_list),
-        _loading_figure_layout('candlestick-4H-fig', draw_config),
-        _loading_figure_layout('candlestick-today-stat'),
-        html.Hr(),
-        _loading_figure_layout('tick-volatility-fig'),
-        _loading_figure_layout('heatmap-price-changes-fig'),
-        _loading_figure_layout('percentage-changes-fig'),
-        html.Hr(),
-        _loading_figure_layout('candlestick-1H-fig', draw_config),
-        _loading_figure_layout('rsi-1H-fig'),
-        _loading_figure_layout('bull-bear-1H-fig'),
-        html.Hr(),
-        _loading_figure_layout('candlestick-15M-fig', draw_config),
-        _loading_figure_layout('rsi-15M-fig'),
-        _loading_figure_layout('bull-bear-15M-fig'),
+
+        dcc.Tabs(id='timeframe-tabs', value='high-timeframe', children=[
+
+            dcc.Tab(label='High Timeframe (4H)', value='high-timeframe', children=[
+                _loading_figure_layout('candlestick-4H-fig', draw_config),
+                _loading_figure_layout('candlestick-today-stat'),
+            ]),
+
+            dcc.Tab(label='Price Activtiy', value='price-activtiy', children=[
+                _loading_figure_layout('tick-volatility-fig'),
+                _loading_figure_layout('heatmap-price-changes-fig'),
+                _loading_figure_layout('percentage-changes-fig')
+            ]),
+
+            dcc.Tab(label='Medium Timeframe (1H)', value='low-timeframe', children=[
+                _loading_figure_layout('candlestick-1H-fig', draw_config),
+                _loading_figure_layout('rsi-1H-fig'),
+                _loading_figure_layout('bull-bear-1H-fig'),
+            ]),
+
+            dcc.Tab(label='Entry Timeframe (15M)', value='medium-timeframe', children=[
+                _loading_figure_layout('candlestick-15M-fig', draw_config),
+                _loading_figure_layout('rsi-15M-fig'),
+                _loading_figure_layout('bull-bear-15M-fig')
+            ])
+
+        ])
     ])
