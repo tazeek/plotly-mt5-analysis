@@ -137,7 +137,7 @@ def generate_layout():
 
     forex_list, last_updated_time = _fetch_forex_pairs()
 
-    draw_config = {'modeBarButtonsToAdd': ['drawline','eraseshape', 'drawopenpath']}
+    draw_config = {'modeBarButtonsToAdd': ['drawline','eraseshape', 'drawopenpath', 'drawrect']}
 
     return html.Div([
 

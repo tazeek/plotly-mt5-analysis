@@ -32,8 +32,8 @@ def register_callbacks(app):
 
         return [
             changed_currency, 
-            f"Ask value: {ask_value}",
-            f"Bid value: {bid_value}"
+            f"Ask value: {ask_value:.5f}",
+            f"Bid value: {bid_value:.5f}"
         ]
     
     @app.callback(
