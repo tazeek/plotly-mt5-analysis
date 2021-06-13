@@ -16,7 +16,8 @@ def register_callbacks(app):
     @app.callback(
         [
             Output("current-currency","data"),
-            Output("spread-value","children")
+            Output("ask-value","children"),
+            Output("bid-value","children")
         ],
         [
             Input("currency-dropdown", "value")
@@ -27,11 +28,12 @@ def register_callbacks(app):
         forex_analyzer.update_forex_pair(changed_currency)
         graph_generator.update_currency(changed_currency)
 
-        spread_num = forex_analyzer.find_spread()
+        ask_value, bid_value = forex_analyzer.find_ask_bid()
 
         return [
             changed_currency, 
-            f"Spread value: {spread_num}"
+            f"Ask value: {ask_value}",
+            f"Bid value: {bid_value}"
         ]
     
     @app.callback(
@@ -85,9 +87,9 @@ def register_callbacks(app):
             Input('start-calculation','n_clicks')
         ],
         [
-            State('input_profit_target','value'),
+            State('input_target','value'),
             State('input_leverage','value'),
-            State('input_minimum_trade','value')
+            State('input_trade','value')
         ],
         prevent_initial_call=True
     )

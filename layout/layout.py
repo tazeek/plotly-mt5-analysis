@@ -37,7 +37,7 @@ def _loading_figure_layout(fig_id, config=None):
 
 def _generate_profit_pip_calculator():
 
-    field_list = ['profit_target','leverage','minimum_trade']
+    field_list = ['target','leverage','trade']
 
     return html.Div(
         [
@@ -114,15 +114,22 @@ def _generate_dropdown(forex_list):
                 style={"width": "15%"}
         ),
 
-        html.Div(
-            id='spread-value',
-            style={"margin-top": 10}
-        ),
+        html.Div(children=[
+            html.Div(
+                id='ask-value',
+                style={"margin-top": 10}
+            ),
+
+            html.Div(
+                id='bid-value',
+                style={"margin-top": 10}
+            ),
+        ]),
 
         html.Button(
             'Refresh Page', 
             id='refresh-stats',
-            style={"margin-top": "15px"}
+            style={"margin-top": "15px", "margin-bottom": "15px"}
         ),
     ])
 
@@ -133,23 +140,37 @@ def generate_layout():
     draw_config = {'modeBarButtonsToAdd': ['drawline','eraseshape', 'drawopenpath']}
 
     return html.Div([
+
         _generate_profit_pip_calculator(),
         html.Hr(),
         _generate_candlesticks_info(last_updated_time),
         html.Hr(),
         _generate_dropdown(forex_list),
-        _loading_figure_layout('candlestick-4H-fig', draw_config),
-        _loading_figure_layout('candlestick-today-stat'),
-        html.Hr(),
-        _loading_figure_layout('tick-volatility-fig'),
-        _loading_figure_layout('heatmap-price-changes-fig'),
-        _loading_figure_layout('percentage-changes-fig'),
-        html.Hr(),
-        _loading_figure_layout('candlestick-1H-fig', draw_config),
-        _loading_figure_layout('rsi-1H-fig'),
-        _loading_figure_layout('bull-bear-1H-fig'),
-        html.Hr(),
-        _loading_figure_layout('candlestick-15M-fig', draw_config),
-        _loading_figure_layout('rsi-15M-fig'),
-        _loading_figure_layout('bull-bear-15M-fig'),
+
+        dcc.Tabs(id='timeframe-tabs', value='high-timeframe', children=[
+
+            dcc.Tab(label='High Timeframe (4H)', value='high-timeframe', children=[
+                _loading_figure_layout('candlestick-4H-fig', draw_config),
+                _loading_figure_layout('candlestick-today-stat'),
+            ]),
+
+            dcc.Tab(label='Price Activtiy', value='price-activtiy', children=[
+                _loading_figure_layout('tick-volatility-fig'),
+                _loading_figure_layout('heatmap-price-changes-fig'),
+                _loading_figure_layout('percentage-changes-fig')
+            ]),
+
+            dcc.Tab(label='Analysis Timeframe (1H)', value='low-timeframe', children=[
+                _loading_figure_layout('candlestick-1H-fig', draw_config),
+                _loading_figure_layout('rsi-1H-fig'),
+                _loading_figure_layout('bull-bear-1H-fig'),
+            ]),
+
+            dcc.Tab(label='Entry Timeframe (15M)', value='medium-timeframe', children=[
+                _loading_figure_layout('candlestick-15M-fig', draw_config),
+                _loading_figure_layout('rsi-15M-fig'),
+                _loading_figure_layout('bull-bear-15M-fig')
+            ])
+
+        ])
     ])
