@@ -62,6 +62,7 @@ def _generate_profit_pip_calculator():
                     id='settlement-currency',
                     options=dropdown_options,
                     clearable=False,
+                    searchable=False,
                     value='USD'
                 ),
 
