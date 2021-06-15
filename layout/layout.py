@@ -37,7 +37,21 @@ def _loading_figure_layout(fig_id, config=None):
 
 def _generate_profit_pip_calculator():
 
-    field_list = ['target','leverage','trade']
+    dropdown_options = []
+
+    settlement_conversion = {
+        'JPY': 0.90,
+        'CAD': 0.80,
+        'USD': 1.00,
+        'GBP': 1.14
+    }
+
+    for currency, rate in settlement_conversion.items():
+
+        dropdown_options.append({
+            'label': currency,
+            'value': rate
+        })
 
     return html.Div(
         [
@@ -47,8 +61,22 @@ def _generate_profit_pip_calculator():
                     type="text",
                     placeholder=f"{field}",
                     style={"margin-right": "15px"}
-                ) for field in field_list
+                ) for field in ['target','leverage','trade']
             ]),
+
+            html.Div([
+                dcc.Dropdown(
+                    id='settlement-currency',
+                    options=dropdown_options,
+                    clearable=False,
+                    searchable=False,
+                    value='USD'
+                ),
+
+                
+            ], style={"width": "5%", 'margin-top': 10}
+            
+            ),
 
             html.Button(
                 'Calculate pip count', 

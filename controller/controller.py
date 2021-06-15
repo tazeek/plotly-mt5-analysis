@@ -87,13 +87,14 @@ def register_callbacks(app):
             Input('start-calculation','n_clicks')
         ],
         [
+            State('settlement-currency','value'),
             State('input_target','value'),
             State('input_leverage','value'),
             State('input_trade','value')
         ],
         prevent_initial_call=True
     )
-    def perform_average_pip_calculation(click_count, target=0, leverage=0, min_trade=0):
+    def perform_average_pip_calculation(click_count, rate, target=0, leverage=0, min_trade=0):
         avg_pip = 0
 
         leverage = float(leverage)
@@ -102,7 +103,9 @@ def register_callbacks(app):
 
         if leverage > 0 and min_trade > 0:
 
-            avg_pip = math.ceil(target / (min_trade * leverage))
+            avg_pip = math.ceil(
+                (target / (min_trade * leverage))/rate
+            )
 
         return [
             f"Average pip per trade: {avg_pip}"
