@@ -39,11 +39,18 @@ def _generate_profit_pip_calculator():
 
     dropdown_options = []
 
-    for currency in ['CAD','JPY','USD','GBP']:
+    settlement_conversion = {
+        'JPY': 0.90,
+        'CAD': 0.80,
+        'USD': 1.00,
+        'GBP': 1.14
+    }
+
+    for currency, rate in settlement_conversion.items():
 
         dropdown_options.append({
             'label': currency,
-            'value': currency
+            'value': rate
         })
 
     return html.Div(
