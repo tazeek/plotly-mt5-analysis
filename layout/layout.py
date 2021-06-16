@@ -43,7 +43,7 @@ def _generate_profit_pip_calculator():
         'JPY': 0.90,
         'CAD': 0.80,
         'USD': 1.00,
-        'GBP': 1.14
+        'GBP': 1.40
     }
 
     for currency, rate in settlement_conversion.items():

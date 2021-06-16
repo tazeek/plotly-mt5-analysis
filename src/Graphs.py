@@ -345,7 +345,7 @@ class Graphs:
             template='simple_white',
             title=f"{self._currency} - Bull-Bear measurement",
             hovermode='x',
-            yaxis_tickformat='.5f',
+            yaxis_tickformat='.3f',
             yaxis={'visible': False, 'showticklabels': False}
         )
 
