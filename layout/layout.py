@@ -70,7 +70,7 @@ def _generate_profit_pip_calculator():
                     options=dropdown_options,
                     clearable=False,
                     searchable=False,
-                    value='USD'
+                    value=1.00
                 ),
 
                 
