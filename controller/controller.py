@@ -13,6 +13,9 @@ def register_callbacks(app):
     forex_analyzer = ForexAnalyzer()
     graph_generator = Graphs()
 
+    def find_spread_value():
+        ...
+
     @app.callback(
         [
             Output("current-currency","data"),
