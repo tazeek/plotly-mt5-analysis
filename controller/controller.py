@@ -16,8 +16,6 @@ def register_callbacks(app):
     @app.callback(
         [
             Output("current-currency","data"),
-            Output("ask-value","children"),
-            Output("bid-value","children")
         ],
         [
             Input("currency-dropdown", "value")
@@ -28,16 +26,12 @@ def register_callbacks(app):
         forex_analyzer.update_forex_pair(changed_currency)
         graph_generator.update_currency(changed_currency)
 
-        ask_value, bid_value = forex_analyzer.find_ask_bid()
+        return [changed_currency]
 
-        return [
-            changed_currency, 
-            f"Ask value: {ask_value:.5f}",
-            f"Bid value: {bid_value:.5f}"
-        ]
-    
     @app.callback(
         [
+            Output("ask-value","children"),
+            Output("bid-value","children"),
             Output("candlestick-today-stat","figure"),
             Output("tick-volatility-fig","figure"),
             Output("heatmap-price-changes-fig","figure"),
@@ -56,6 +50,8 @@ def register_callbacks(app):
         ]
     )
     def update_all_graphs(value, clicks):
+
+        ask_value, bid_value = forex_analyzer.find_ask_bid()
         
         start_time = forex_analyzer.get_start_day()
         quarterly_stats = forex_analyzer.get_quarterly_stats()
@@ -66,6 +62,8 @@ def register_callbacks(app):
         today_stats = forex_analyzer.get_d1_stats(quarterly_stats.to_dict('records')[-1])
 
         return [
+            f"Ask value: {ask_value:.5f}",
+            f"Bid value: {bid_value:.5f}",
             graph_generator.plot_candlestick_today(today_stats),
             graph_generator.plot_tick_volume_fullday(stats_1H, start_day),
             graph_generator.plot_heatmap_fullday(stats_1H, start_day),
