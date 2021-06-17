@@ -43,6 +43,7 @@ def _generate_profit_pip_calculator():
         'JPY': 0.90,
         'CAD': 0.80,
         'USD': 1.00,
+        'CHF': 1.10,
         'GBP': 1.40
     }
 
