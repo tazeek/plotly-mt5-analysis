@@ -13,8 +13,13 @@ def register_callbacks(app):
     forex_analyzer = ForexAnalyzer()
     graph_generator = Graphs()
 
-    def find_spread_value():
-        ...
+    def find_ask_bid(forex_analyzer):
+         ask_value, bid_value = forex_analyzer.find_ask_bid()
+
+         return [
+             f"Ask value: {ask_value:.5f}", 
+             f"Bid value: {bid_value:.5f}"
+        ]
 
     @app.callback(
         [
@@ -31,14 +36,8 @@ def register_callbacks(app):
         forex_analyzer.update_forex_pair(changed_currency)
         graph_generator.update_currency(changed_currency)
 
-        ask_value, bid_value = forex_analyzer.find_ask_bid()
+        return [changed_currency] + find_ask_bid(forex_analyzer)
 
-        return [
-            changed_currency, 
-            f"Ask value: {ask_value:.5f}",
-            f"Bid value: {bid_value:.5f}"
-        ]
-    
     @app.callback(
         [
             Output("candlestick-today-stat","figure"),
