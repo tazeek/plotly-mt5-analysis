@@ -57,7 +57,7 @@ class ForexAnalyzer:
     
     def _create_indicators(self, day_stats, timeframe):
 
-        period = 15
+        period = 14
 
         day_stats.rename(
             columns={
