@@ -53,50 +53,6 @@ class Graphs:
         
         return None
 
-    def plot_candlesticks_quarterly(self, data, indicator_df):
-
-        hover_list= data.apply(lambda data_row:self._candlestick_text(data_row), axis=1)
-
-        candlestick_week_fig = go.Figure(
-            data=[
-                go.Candlestick(
-                    x=data['time'],
-                    open=data['open'], 
-                    high=data['high'],
-                    low=data['low'], 
-                    close=data['close'],
-                    text=hover_list,
-                    hoverinfo='text'
-                ),
-                 go.Scatter(
-                    x=indicator_df['time'],
-                    y=indicator_df['bollinger_top'],
-                    line=dict(color='purple',width=2),
-                    name="",
-                    hoverinfo='none'
-                ),
-                go.Scatter(
-                    x=indicator_df['time'],
-                    y=indicator_df['bollinger_bottom'],
-                    line=dict(color='purple',width=2),
-                    name="",
-                    hoverinfo='none'
-                )
-            ]
-        )
-
-        candlestick_week_fig.update_layout(
-            title=f"{self._currency} - Series for last 100 working days",
-            xaxis_title="Date",
-            yaxis_title="Price",
-            hovermode='x',
-            yaxis_tickformat='.5f',
-            xaxis_rangeslider_visible=False,
-            showlegend=False,
-        )
-
-        return candlestick_week_fig
-
     def plot_tick_volume_fullday(self, data, start_time):
 
         data = self._filter_data(data.copy(), start_time)
