@@ -32,8 +32,8 @@ def register_callbacks(app):
         [
             Output("ask-value","children"),
             Output("bid-value","children"),
-            Output("candlestick-today-stat","figure"),
             Output("tick-volatility-fig","figure"),
+            Output("atr-graph-4H","figure"),
             Output("heatmap-price-changes-fig","figure"),
             Output("percentage-changes-fig","figure"),
             Output("candlestick-1H-fig","figure"),
@@ -54,18 +54,16 @@ def register_callbacks(app):
         ask_value, bid_value = forex_analyzer.find_ask_bid()
         
         start_time = forex_analyzer.get_start_day()
-        quarterly_stats = forex_analyzer.get_quarterly_stats()
         stats_15M = forex_analyzer.get_daily_stats('15M',100)
         stats_1H = forex_analyzer.get_daily_stats('1H',100)
-        stats_4H = forex_analyzer.get_daily_stats('4H',100)
+        stats_4H = forex_analyzer.get_daily_stats('4H',200)
         start_day = forex_analyzer.get_start_day()
-        today_stats = forex_analyzer.get_d1_stats(quarterly_stats.to_dict('records')[-1])
 
         return [
             f"Ask value: {ask_value:.5f}",
             f"Bid value: {bid_value:.5f}",
-            graph_generator.plot_candlestick_today(today_stats),
             graph_generator.plot_tick_volume_fullday(stats_1H, start_day),
+            graph_generator.plot_atr(forex_analyzer.get_indicator_stats('4H'), start_time),
             graph_generator.plot_heatmap_fullday(stats_1H, start_day),
             graph_generator.plot_percentage_change(stats_1H, start_day),
             graph_generator.plot_candlesticks_fullday(stats_1H, start_time, forex_analyzer.get_indicator_stats('1H'), '1H'),

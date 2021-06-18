@@ -57,6 +57,8 @@ class ForexAnalyzer:
     
     def _create_indicators(self, day_stats, timeframe):
 
+        period = 14
+
         day_stats.rename(
             columns={
                 "close": "Close", 
@@ -68,9 +70,10 @@ class ForexAnalyzer:
         )
 
         indicators = Indicators(day_stats)
-        indicators.sma(period=15, column_name='sma')
-        indicators.bears_power(period=15, column_name='bears_power')
-        indicators.bulls_power(period=15, column_name='bulls_power')
+        indicators.sma(period=period, column_name='sma')
+        indicators.bears_power(period=period, column_name='bears_power')
+        indicators.bulls_power(period=period, column_name='bulls_power')
+        indicators.atr(period=period, column_name='atr')
 
         self._indicators_stats_df[timeframe] = indicators.df
 
@@ -157,14 +160,3 @@ class ForexAnalyzer:
         stats_dict['gap_close_open'] = self._calculate_pip(stats_dict['open'], stats_dict['close'])
         
         return stats_dict
-    
-    def get_quarterly_stats(self):
-
-        rates_df =  self._fetch_data_mt5('1D', 100)
-
-        pip_lambda = lambda open_price, close_price: self._calculate_pip(open_price, close_price)
-        rates_df['pip_difference'] = rates_df.apply(lambda x: pip_lambda(x['low'], x['high']), axis=1)
-
-        self._create_indicators(rates_df.copy(), '1D')
-
-        return rates_df
