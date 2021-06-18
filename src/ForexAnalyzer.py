@@ -57,6 +57,8 @@ class ForexAnalyzer:
     
     def _create_indicators(self, day_stats, timeframe):
 
+        period = 15
+
         day_stats.rename(
             columns={
                 "close": "Close", 
@@ -68,9 +70,10 @@ class ForexAnalyzer:
         )
 
         indicators = Indicators(day_stats)
-        indicators.sma(period=15, column_name='sma')
-        indicators.bears_power(period=15, column_name='bears_power')
-        indicators.bulls_power(period=15, column_name='bulls_power')
+        indicators.sma(period=period, column_name='sma')
+        indicators.bears_power(period=period, column_name='bears_power')
+        indicators.bulls_power(period=period, column_name='bulls_power')
+        indicators.atr(period=period, column_name='atr')
 
         self._indicators_stats_df[timeframe] = indicators.df
 
