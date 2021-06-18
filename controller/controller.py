@@ -32,7 +32,6 @@ def register_callbacks(app):
         [
             Output("ask-value","children"),
             Output("bid-value","children"),
-            Output("candlestick-today-stat","figure"),
             Output("tick-volatility-fig","figure"),
             Output("heatmap-price-changes-fig","figure"),
             Output("percentage-changes-fig","figure"),
@@ -59,12 +58,10 @@ def register_callbacks(app):
         stats_1H = forex_analyzer.get_daily_stats('1H',100)
         stats_4H = forex_analyzer.get_daily_stats('4H',100)
         start_day = forex_analyzer.get_start_day()
-        today_stats = forex_analyzer.get_d1_stats(quarterly_stats.to_dict('records')[-1])
 
         return [
             f"Ask value: {ask_value:.5f}",
             f"Bid value: {bid_value:.5f}",
-            graph_generator.plot_candlestick_today(today_stats),
             graph_generator.plot_tick_volume_fullday(stats_1H, start_day),
             graph_generator.plot_heatmap_fullday(stats_1H, start_day),
             graph_generator.plot_percentage_change(stats_1H, start_day),

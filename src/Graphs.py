@@ -53,38 +53,6 @@ class Graphs:
         
         return None
 
-    def plot_candlestick_today(self, data):
-
-        info_text = f"Candlestick width: {data['width_candlestick']}<br>" + \
-            f"Gap (High-Close): {data['gap_high_close']}<br>" + \
-            f"Gap (Low-Close): {data['gap_close_low']}<br>" + \
-            f"Current gap (Open-close): {data['gap_close_open']}"
-
-        candlestick_today_fig = go.Figure(
-            data=[
-                go.Candlestick(
-                    x=[data['time']],
-                    open=[data['open']], 
-                    high=[data['high']],
-                    low=[data['low']], 
-                    close=[data['close']],
-                    text=info_text,
-                    hoverinfo='text'
-                )
-            ]
-        )
-
-        candlestick_today_fig.update_layout(
-            title=f"{self._currency} - Today",
-            yaxis_title="Price",
-            hovermode='x',
-            yaxis_tickformat='.5f',
-            xaxis_rangeslider_visible=False,
-            showlegend=False,
-        )
-
-        return candlestick_today_fig
-
     def plot_candlesticks_quarterly(self, data, indicator_df):
 
         hover_list= data.apply(lambda data_row:self._candlestick_text(data_row), axis=1)
