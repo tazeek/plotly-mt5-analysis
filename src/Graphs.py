@@ -63,11 +63,15 @@ class Graphs:
             )
         ])
 
-        atr_fig.add_vline(
-            x=start_time,
-            line_dash="solid",
-            line_color="black",
-            line_width=3
+        atr_fig.update_layout(
+            title=f"{self._currency} - ATR",
+            template='simple_white',
+            xaxis_title="Time",
+            hovermode='x',
+            yaxis_tickformat='.5f',
+            xaxis_rangeslider_visible=False,
+            showlegend=False,
+            yaxis={'visible': False, 'showticklabels': False}
         )
 
         return atr_fig
