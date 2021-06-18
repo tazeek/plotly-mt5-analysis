@@ -53,6 +53,25 @@ class Graphs:
         
         return None
 
+    def plot_atr(self, data, start_time):
+        
+        atr_fig = go.Figure([
+            go.Scatter(
+                x=data['time'], 
+                y=data['atr'],
+                mode="lines"
+            )
+        ])
+
+        atr_fig.add_vline(
+            x=start_time,
+            line_dash="solid",
+            line_color="black",
+            line_width=3
+        )
+
+        return atr_fig
+
     def plot_tick_volume_fullday(self, data, start_time):
 
         data = self._filter_data(data.copy(), start_time)
