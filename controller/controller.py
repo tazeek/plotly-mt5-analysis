@@ -105,7 +105,7 @@ def register_callbacks(app):
 
         return [
             f"Average pip per trade: {avg_pip}",
-            f"Profit target (30% increase): {amount_target}"
+            f"Profit target (30% increase): {amount_target:.2f}"
         ]
 
     @app.callback(
