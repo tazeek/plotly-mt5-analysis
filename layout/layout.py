@@ -90,6 +90,12 @@ def _generate_profit_pip_calculator():
             ),
 
             html.Div(
+                id='loss-bound',
+                children='Minimum loss recommended (20% tolerance): 0',
+                style={'margin-top': 10}
+            ),
+
+            html.Div(
                 id='profit-target',
                 children='Profit target (30% increase): 0',
                 style={'margin-top': 10}
@@ -97,7 +103,7 @@ def _generate_profit_pip_calculator():
 
             html.Div(
                 id='average-pip-text',
-                children='Average pip per trade: 0',
+                children='Average pip per trade (Profit): 0',
                 style={'margin-top': 10}
             )
         ]

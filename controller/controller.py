@@ -89,19 +89,21 @@ def register_callbacks(app):
         ],
         prevent_initial_call=True
     )
-    def perform_profit_calculation(click_count, rate, bal=0, pct_tar=0.3, lev=0, min_trade=0):
+    def perform_profit_calculation(click_count, rate, bal=0, pct_tar=0.3, pct_loss=0.2, lev=0, min_trade=0):
         avg_pip = 0
         amount_target = 0
         amount_loss = 0
 
         bal = float(bal)
         lev = float(lev)
-        pct_tar=int(pct_tar)
+        pct_tar = int(pct_tar)
+        pct_loss = int(pct_loss)
         min_trade = float(min_trade)
 
         if bal > 0 and lev > 0 and min_trade > 0:
 
             amount_target = bal * (pct_tar / 100)
+            amount_loss = bal * (pct_loss / 100)
 
             avg_pip = math.ceil(
                 (amount_target / (min_trade * lev))/rate
