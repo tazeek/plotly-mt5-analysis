@@ -56,14 +56,29 @@ def _generate_profit_pip_calculator():
 
     return html.Div(
         [
+            html.H1(
+                children="Risk Management Calculator"
+            ),
+
             html.Div([
                 dcc.Input(
                     id=f"input_{field}",
                     type="text",
                     placeholder=f"{field}",
                     style={"margin-right": "15px"}
-                ) for field in ['balance', 'percentage_target','leverage','trade']
+                ) for field in ['balance', 'percentage_target','percentage_loss']
             ]),
+
+            html.Div([
+                dcc.Input(
+                    id=f"input_{field}",
+                    type="text",
+                    placeholder=f"{field}",
+                    style={"margin-right": "15px"}
+                ) for field in ['leverage','trade_count']
+            ],
+                style={'margin-top': 10}
+            ),
 
             html.Div([
                 dcc.Dropdown(
@@ -80,8 +95,14 @@ def _generate_profit_pip_calculator():
             ),
 
             html.Button(
-                'Calculate pip count', 
-                id='start-calculation', 
+                'Calculate', 
+                id='start-profit-calculation', 
+                style={'margin-top': 10}
+            ),
+
+            html.Div(
+                id='loss-bound',
+                children='Minimum loss recommended (20% tolerance): 0',
                 style={'margin-top': 10}
             ),
 
@@ -93,7 +114,7 @@ def _generate_profit_pip_calculator():
 
             html.Div(
                 id='average-pip-text',
-                children='Average pip per trade: 0',
+                children='Average pip per trade (Profit): 0',
                 style={'margin-top': 10}
             )
         ]

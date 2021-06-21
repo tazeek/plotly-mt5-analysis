@@ -74,41 +74,48 @@ def register_callbacks(app):
     @app.callback(
         [
             Output('average-pip-text','children'),
-            Output('profit-target', 'children')
+            Output('profit-target', 'children'),
+            Output('loss-bound', 'children')
         ],
         [
-            Input('start-calculation','n_clicks')
+            Input('start-profit-calculation','n_clicks')
         ],
         [
             State('settlement-currency','value'),
             State('input_balance','value'),
             State('input_percentage_target','value'),
+            State('input_percentage_loss','value'),
             State('input_leverage','value'),
-            State('input_trade','value')
+            State('input_trade_count','value')
         ],
         prevent_initial_call=True
     )
-    def perform_average_pip_calculation(click_count, rate, balance=0, percentage_target=0.3,leverage=0, min_trade=0):
+    def perform_profit_calculation(click_count, rate, bal=0.0, pct_tar=0.3, pct_loss=0.2, lev=0, min_trade=0):
         avg_pip = 0
         amount_target = 0
+        amount_loss = 0
 
-        balance = float(balance)
-        leverage = float(leverage)
-        percentage_target=int(percentage_target)
+        bal = float(bal)
+        lev = float(lev)
+        pct_tar = int(pct_tar)
+        pct_loss = int(pct_loss)
         min_trade = float(min_trade)
 
-        if balance > 0 and leverage > 0 and min_trade > 0:
+        if bal > 0 and lev > 0 and min_trade > 0:
 
-            amount_target = balance * (percentage_target / 100)
+            amount_target = bal * (pct_tar / 100)
+            amount_loss = bal * (pct_loss / 100)
 
             avg_pip = math.ceil(
-                (amount_target / (min_trade * leverage))/rate
+                (amount_target / (min_trade * lev))/rate
             )
 
         return [
-            f"Average pip per trade: {avg_pip}",
-            f"Profit target ({percentage_target}% increase): {amount_target:.2f}"
+            f"Average pip per trade (Profit): {avg_pip}",
+            f"Profit target ({pct_tar}% increase): {amount_target:.2f}",
+            f"Minimum loss recommended ({pct_loss}% tolerance): {amount_loss:.2f}"
         ]
+    
 
     @app.callback(
         [
