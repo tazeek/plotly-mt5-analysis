@@ -257,6 +257,8 @@ class Graphs:
             opacity=0.25
         )
 
+        self._draw_hline(rsi_fig, 50, "solid", "black")
+
         rsi_fig.update_xaxes(
             rangebreaks=[
                 dict(

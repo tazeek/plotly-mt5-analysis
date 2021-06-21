@@ -62,7 +62,7 @@ def _generate_profit_pip_calculator():
                     type="text",
                     placeholder=f"{field}",
                     style={"margin-right": "15px"}
-                ) for field in ['target','leverage','trade']
+                ) for field in ['balance', 'percentage_target','leverage','trade']
             ]),
 
             html.Div([
@@ -82,6 +82,12 @@ def _generate_profit_pip_calculator():
             html.Button(
                 'Calculate pip count', 
                 id='start-calculation', 
+                style={'margin-top': 10}
+            ),
+
+            html.Div(
+                id='profit-target',
+                children='Profit target (30% increase): 0',
                 style={'margin-top': 10}
             ),
 
