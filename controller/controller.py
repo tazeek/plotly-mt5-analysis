@@ -74,7 +74,8 @@ def register_callbacks(app):
     @app.callback(
         [
             Output('average-pip-text','children'),
-            Output('profit-target', 'children')
+            Output('profit-target', 'children'),
+            Output('loss-bound', 'children')
         ],
         [
             Input('start-profit-calculation','n_clicks')
@@ -85,7 +86,7 @@ def register_callbacks(app):
             State('input_percentage_target','value'),
             State('input_percentage_loss','value'),
             State('input_leverage','value'),
-            State('input_trade','value')
+            State('input_trade_count','value')
         ],
         prevent_initial_call=True
     )
@@ -110,8 +111,9 @@ def register_callbacks(app):
             )
 
         return [
-            f"Average pip per trade: {avg_pip}",
-            f"Profit target ({pct_tar}% increase): {amount_target:.2f}"
+            f"Average pip per trade (Profit): {avg_pip}",
+            f"Profit target ({pct_tar}% increase): {amount_target:.2f}",
+            f"Minimum loss recommended ({pct_loss}% tolerance): {amount_loss:.2f}"
         ]
     
 
