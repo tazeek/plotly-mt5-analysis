@@ -81,7 +81,7 @@ def register_callbacks(app):
         ],
         [
             State('settlement-currency','value'),
-            State('input_percentage','value'),
+            State('input_balance','value'),
             State('input_leverage','value'),
             State('input_trade','value')
         ],
