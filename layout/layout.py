@@ -90,7 +90,7 @@ def _generate_profit_pip_calculator():
                 ),
 
                 
-            ], style={"width": "5%", 'margin-top': 10}
+            ], style={"width": "8%", 'margin-top': 10}
             
             ),
 
