@@ -35,6 +35,37 @@ def _loading_figure_layout(fig_id, config=None):
         ])
     )
 
+def _generate_loss_calculator():
+
+    return html.Div(
+        [
+            html.H1(
+                children="Loss Calculator"
+            ),
+
+            html.Div([
+                dcc.Input(
+                    id=f"input_{field}",
+                    type="text",
+                    placeholder=f"{field}",
+                    style={"margin-right": "15px"}
+                ) for field in ['balance', 'percentage_loss']
+            ]),
+
+            html.Button(
+                'Calculate loss count', 
+                id='start-loss-calculation', 
+                style={'margin-top': 10}
+            ),
+
+            html.Div(
+                id='loss-target',
+                children='Loss target (30%): 0',
+                style={'margin-top': 10}
+            )
+        ]
+    )
+
 def _generate_profit_pip_calculator():
 
     dropdown_options = []
@@ -56,6 +87,10 @@ def _generate_profit_pip_calculator():
 
     return html.Div(
         [
+            html.H1(
+                children="Profit Calculator"
+            ),
+
             html.Div([
                 dcc.Input(
                     id=f"input_{field}",
@@ -81,7 +116,7 @@ def _generate_profit_pip_calculator():
 
             html.Button(
                 'Calculate pip count', 
-                id='start-calculation', 
+                id='start-profit-calculation', 
                 style={'margin-top': 10}
             ),
 

@@ -77,7 +77,7 @@ def register_callbacks(app):
             Output('profit-target', 'children')
         ],
         [
-            Input('start-calculation','n_clicks')
+            Input('start-profit-calculation','n_clicks')
         ],
         [
             State('settlement-currency','value'),
