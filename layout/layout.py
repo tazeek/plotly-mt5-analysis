@@ -62,7 +62,7 @@ def _generate_profit_pip_calculator():
                     type="text",
                     placeholder=f"{field}",
                     style={"margin-right": "15px"}
-                ) for field in ['balance','target','leverage','trade']
+                ) for field in ['balance','leverage','trade']
             ]),
 
             html.Div([

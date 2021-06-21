@@ -73,34 +73,39 @@ def register_callbacks(app):
 
     @app.callback(
         [
-            Output('average-pip-text','children')
+            Output('average-pip-text','children'),
+            Output('profit-target', 'children')
         ],
         [
             Input('start-calculation','n_clicks')
         ],
         [
             State('settlement-currency','value'),
-            State('input_target','value'),
+            State('input_percentage','value'),
             State('input_leverage','value'),
             State('input_trade','value')
         ],
         prevent_initial_call=True
     )
-    def perform_average_pip_calculation(click_count, rate, target=0, leverage=0, min_trade=0):
+    def perform_average_pip_calculation(click_count, rate, balance=0, leverage=0, min_trade=0):
         avg_pip = 0
+        amount_target = 0
 
+        balance = float(balance)
         leverage = float(leverage)
-        target = float(target)
         min_trade = float(min_trade)
 
-        if leverage > 0 and min_trade > 0:
+        if balance > 0 and leverage > 0 and min_trade > 0:
+
+            amount_target = balance * (30 / 100)
 
             avg_pip = math.ceil(
-                (target / (min_trade * leverage))/rate
+                (amount_target / (min_trade * leverage))/rate
             )
 
         return [
-            f"Average pip per trade: {avg_pip}"
+            f"Average pip per trade: {avg_pip}",
+            f"Profit target (30% increase): {amount_target}"
         ]
 
     @app.callback(
