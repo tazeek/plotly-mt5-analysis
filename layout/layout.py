@@ -57,7 +57,7 @@ def _generate_profit_pip_calculator():
     return html.Div(
         [
             html.H1(
-                children="Profit Calculator"
+                children="Risk Management Calculator"
             ),
 
             html.Div([
@@ -95,7 +95,7 @@ def _generate_profit_pip_calculator():
             ),
 
             html.Button(
-                'Calculate pip count', 
+                'Calculate', 
                 id='start-profit-calculation', 
                 style={'margin-top': 10}
             ),

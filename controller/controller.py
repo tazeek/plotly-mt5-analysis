@@ -90,7 +90,7 @@ def register_callbacks(app):
         ],
         prevent_initial_call=True
     )
-    def perform_profit_calculation(click_count, rate, bal=0, pct_tar=0.3, pct_loss=0.2, lev=0, min_trade=0):
+    def perform_profit_calculation(click_count, rate, bal=0.0, pct_tar=0.3, pct_loss=0.2, lev=0, min_trade=0):
         avg_pip = 0
         amount_target = 0
         amount_loss = 0
