@@ -103,8 +103,8 @@ def register_callbacks(app):
 
         if bal > 0 and lev > 0 and min_trade > 0:
 
-            amount_target = bal * (pct_tar / 100)
-            amount_loss = bal * (pct_loss / 100)
+            amount_target += bal * (pct_tar / 100)
+            amount_loss += bal * (pct_loss / 100)
 
             avg_pip = math.ceil(
                 (amount_target / (min_trade * lev))/rate
@@ -112,8 +112,8 @@ def register_callbacks(app):
 
         return [
             f"Average pip per trade (Profit): {avg_pip}",
-            f"Profit target ({pct_tar}% increase): {amount_target:.2f}",
-            f"Minimum loss recommended ({pct_loss}% tolerance): {amount_loss:.2f}"
+            f"Target balance ({pct_tar}% increase): {amount_target:.2f}",
+            f"Minimum balance ({pct_loss}% loss tolerance): {amount_loss:.2f}"
         ]
     
 

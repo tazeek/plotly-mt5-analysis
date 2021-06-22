@@ -102,13 +102,13 @@ def _generate_profit_pip_calculator():
 
             html.Div(
                 id='loss-bound',
-                children='Minimum loss recommended (20% tolerance): 0',
+                children='Minimum balance (0% loss tolerance): 0',
                 style={'margin-top': 10}
             ),
 
             html.Div(
                 id='profit-target',
-                children='Profit target (30% increase): 0',
+                children='Target balance (0% increase): 0',
                 style={'margin-top': 10}
             ),
 
