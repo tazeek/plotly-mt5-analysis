@@ -53,7 +53,7 @@ class Graphs:
         
         return None
 
-    def plot_atr(self, data, start_time):
+    def plot_atr(self, data):
         
         atr_fig = go.Figure([
             go.Scatter(
@@ -64,7 +64,7 @@ class Graphs:
         ])
 
         atr_fig.update_layout(
-            title=f"{self._currency} - ATR",
+            title=f"{self._currency} - ATR (Current value: {data['atr'].iloc[-1]})",
             template='simple_white',
             xaxis_title="Time",
             hovermode='x',

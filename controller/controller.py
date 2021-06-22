@@ -61,7 +61,7 @@ def register_callbacks(app):
             f"Ask value: {ask_value:.5f}",
             f"Bid value: {bid_value:.5f}",
             graph_generator.plot_tick_volume_fullday(stats_1H, start_day),
-            graph_generator.plot_atr(forex_analyzer.get_indicator_stats('4H'), start_time),
+            graph_generator.plot_atr(forex_analyzer.get_indicator_stats('4H')),
             graph_generator.plot_heatmap_fullday(stats_1H, start_day),
             graph_generator.plot_percentage_change(stats_1H, start_day),
             graph_generator.plot_candlesticks_fullday(stats_1H, start_time, forex_analyzer.get_indicator_stats('1H'), '1H'),
