@@ -63,8 +63,12 @@ class Graphs:
             )
         ])
 
+        current_atr = str(data['atr'].iloc[-1]).split('.')
+        current_atr = [num for num in current_atr[1] if num != '0']
+        current_atr = ''.join(current_atr[:2])
+
         atr_fig.update_layout(
-            title=f"{self._currency} - ATR (Current value: {data['atr'].iloc[-1]})",
+            title=f"{self._currency} - ATR (Current value: {current_atr})",
             template='simple_white',
             xaxis_title="Time",
             hovermode='x',
