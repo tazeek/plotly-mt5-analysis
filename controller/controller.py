@@ -51,9 +51,9 @@ def register_callbacks(app):
         ask_value, bid_value = forex_analyzer.find_ask_bid()
         
         start_time = forex_analyzer.get_start_day()
-        stats_15M = forex_analyzer.get_daily_stats('15M',100)
-        stats_1H = forex_analyzer.get_daily_stats('1H',100)
-        stats_4H = forex_analyzer.get_daily_stats('4H',200)
+        stats_15M = forex_analyzer.get_daily_stats('15M',300)
+        stats_1H = forex_analyzer.get_daily_stats('1H',400)
+        stats_4H = forex_analyzer.get_daily_stats('4H',100)
         start_day = forex_analyzer.get_start_day()
 
         return [
@@ -62,9 +62,9 @@ def register_callbacks(app):
             graph_generator.plot_tick_volume_fullday(stats_1H, start_day),
             graph_generator.plot_atr(forex_analyzer.get_indicator_stats('4H')),
             graph_generator.plot_percentage_change(stats_1H, start_day),
-            graph_generator.plot_candlesticks_fullday(stats_1H, start_time, forex_analyzer.get_indicator_stats('1H'), '1H'),
-            graph_generator.plot_candlesticks_fullday(stats_4H, start_time, forex_analyzer.get_indicator_stats('4H'), '4H'),
-            graph_generator.plot_candlesticks_fullday(stats_15M, start_time, forex_analyzer.get_indicator_stats('15M'), '15M'),
+            graph_generator.plot_candlesticks_fullday(stats_1H, start_time, '1H'),
+            graph_generator.plot_candlesticks_fullday(stats_4H, start_time, '4H'),
+            graph_generator.plot_candlesticks_fullday(stats_15M, start_time, '15M'),
             graph_generator.plot_rsi_figure(forex_analyzer.get_rsi_today('1H')),
             graph_generator.plot_rsi_figure(forex_analyzer.get_rsi_today('15M')),
         ]
@@ -111,8 +111,8 @@ def register_callbacks(app):
 
         return [
             f"Average pip per trade (Profit): {avg_pip}",
-            f"Target balance ({pct_tar}% increase): {(bal + amount_target):.2f}",
-            f"Minimum balance ({pct_loss}% loss tolerance): {(bal - amount_loss):.2f}"
+            f"Target balance ({pct_tar}% increase): {(bal + amount_target):.2f} (+{amount_target:.2f})",
+            f"Minimum balance ({pct_loss}% loss tolerance): {(bal - amount_loss):.2f} (-{amount_loss:.2f})"
         ]
     
 
