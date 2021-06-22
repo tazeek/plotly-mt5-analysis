@@ -212,7 +212,6 @@ def generate_layout():
 
             dcc.Tab(label='Price Activtiy', value='price-activtiy', children=[
                 _loading_figure_layout('tick-volatility-fig'),
-                _loading_figure_layout('heatmap-price-changes-fig'),
                 _loading_figure_layout('percentage-changes-fig')
             ]),
 
