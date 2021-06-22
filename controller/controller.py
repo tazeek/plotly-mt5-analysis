@@ -114,7 +114,7 @@ def register_callbacks(app):
         return [
             f"Average pip per trade (Profit): {avg_pip}",
             f"Target balance ({pct_tar}% increase): {(bal + amount_target):.2f}",
-            f"Minimum balance ({pct_loss}% loss tolerance): {(bal + amount_loss):.2f}"
+            f"Minimum balance ({pct_loss}% loss tolerance): {(bal - amount_loss):.2f}"
         ]
     
 
