@@ -91,11 +91,12 @@ def register_callbacks(app):
         prevent_initial_call=True
     )
     def perform_profit_calculation(click_count, rate, bal=0.0, pct_tar=0.3, pct_loss=0.2, lev=0, min_trade=0):
+        bal = float(bal)
+
         avg_pip = 0
         amount_target = 0
         amount_loss = 0
 
-        bal = float(bal)
         lev = float(lev)
         pct_tar = int(pct_tar)
         pct_loss = int(pct_loss)
@@ -112,8 +113,8 @@ def register_callbacks(app):
 
         return [
             f"Average pip per trade (Profit): {avg_pip}",
-            f"Profit target ({pct_tar}% increase): {amount_target:.2f}",
-            f"Minimum loss recommended ({pct_loss}% tolerance): {amount_loss:.2f}"
+            f"Target balance ({pct_tar}% increase): {(bal + amount_target):.2f}",
+            f"Minimum balance ({pct_loss}% loss tolerance): {(bal - amount_loss):.2f}"
         ]
     
 
