@@ -144,6 +144,24 @@ class Graphs:
             ]
         )
 
+        trend_fig.update_layout(
+            title=f"{self._currency} - Trend analysis",
+            template='simple_white',
+            xaxis_title="Time",
+            hovermode='x',
+            xaxis_rangeslider_visible=False,
+            showlegend=False,
+            yaxis={'visible': False, 'showticklabels': False}
+        )
+
+        trend_fig.update_xaxes(
+            rangebreaks=[
+                dict(
+                    values=self._filter_missing_dates(data_day, '4H')
+                )
+            ]
+        )
+
         trend_fig.add_vline(
             x=start_time,
             line_dash="solid",
