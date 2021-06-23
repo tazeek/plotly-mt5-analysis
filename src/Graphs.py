@@ -134,6 +134,25 @@ class Graphs:
 
         return percentage_change_fig
 
+    def plot_trend_line_graph(self, data_day, start_time):
+        
+        trend_fig = go.Figure(
+            [
+                go.Scatter(
+                    x=data_day['time'], 
+                    y=data_day['close'])
+            ]
+        )
+
+        trend_fig.add_vline(
+            x=start_time,
+            line_dash="solid",
+            line_color="black",
+            line_width=3
+        )
+        
+        return trend_fig
+
     def plot_candlesticks_fullday(self, data_day, start_time, timeframe):
 
         hover_list= data_day.apply(lambda data_row:self._candlestick_text(data_row), axis=1)
