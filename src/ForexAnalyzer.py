@@ -30,20 +30,15 @@ class ForexAnalyzer:
             print("initialize() failed, error code =",mt5.last_error())
             quit()
 
-    def _get_multiplier(self):
+    def _get_multiplier(self, price):
+        
+        decimal_num = str(price)[::-1].find('.')
 
-        multiplier = 0.00001
-
-        if 'JPY' in self._forex_pair:
-            multiplier = 0.001
-        elif 'XAU' in self._forex_pair:
-            multiplier = 0.01
-
-        return multiplier
+        return 10 ** -decimal_num
 
     def _calculate_pip(self, open_price, close_price):
 
-        pips = round((close_price - open_price) / self._get_multiplier())
+        pips = round((close_price - open_price) / self._get_multiplier(open_price))
         return int(pips)
 
     def _calculate_rsi(self, day_stats, timeframe):
