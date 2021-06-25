@@ -30,15 +30,15 @@ class ForexAnalyzer:
             print("initialize() failed, error code =",mt5.last_error())
             quit()
 
-    def _get_multiplier(self, price):
-        
-        decimal_num = str(price)[::-1].find('.')
+    def _get_multiplier(self):
 
-        return 10 ** -decimal_num
+        symbol_info = mt5.symbol_info(self._forex_pair)
+
+        return 10 ** -symbol_info.digits
 
     def _calculate_pip(self, open_price, close_price):
 
-        pips = round((close_price - open_price) / self._get_multiplier(open_price))
+        pips = round((close_price - open_price) / self._get_multiplier())
         return int(pips)
 
     def _calculate_rsi(self, day_stats, timeframe):
