@@ -32,14 +32,9 @@ class ForexAnalyzer:
 
     def _get_multiplier(self):
 
-        multiplier = 0.00001
+        symbol_info = mt5.symbol_info(self._forex_pair)
 
-        if 'JPY' in self._forex_pair:
-            multiplier = 0.001
-        elif 'XAU' in self._forex_pair:
-            multiplier = 0.01
-
-        return multiplier
+        return 10 ** -symbol_info.digits
 
     def _calculate_pip(self, open_price, close_price):
 
