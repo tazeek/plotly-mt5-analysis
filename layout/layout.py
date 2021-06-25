@@ -203,9 +203,9 @@ def generate_layout():
         html.Hr(),
         _generate_dropdown(forex_list),
 
-        dcc.Tabs(id='timeframe-tabs', value='high-timeframe', children=[
+        dcc.Tabs(id='timeframe-tabs', value='price-activity', children=[
 
-            dcc.Tab(label='Price Activtiy', value='price-activtiy', children=[
+            dcc.Tab(label='Price Activtiy', value='price-activity', children=[
                 _loading_figure_layout('tick-volatility-fig'),
                 _loading_figure_layout('percentage-changes-fig'),
                 _loading_figure_layout('atr-graph-4H')
