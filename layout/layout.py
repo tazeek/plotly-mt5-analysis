@@ -198,15 +198,16 @@ def generate_layout():
     return html.Div([
 
         dcc.Tabs(id='analysis-tabs', value='risk-management-tab', children=[
+            
             dcc.Tab(label='Risk Management', value='risk-management-tab', children=[
                 _generate_profit_pip_calculator(),
-                html.Hr(),
-                _generate_candlesticks_info(last_updated_time),
-                html.Hr(),
-                _generate_dropdown(forex_list)
             ]),
 
             dcc.Tab(label='Price Analysis', value='price-analysis-tab', children=[
+                
+                _generate_candlesticks_info(last_updated_time),
+                html.Hr(),
+                _generate_dropdown(forex_list),
 
                 dcc.Tabs(id='timeframe-tabs', value='price-activity', children=[
 
