@@ -80,20 +80,6 @@ def _generate_profit_pip_calculator():
                 style={'margin-top': 10}
             ),
 
-            html.Div([
-                dcc.Dropdown(
-                    id='settlement-currency',
-                    options=dropdown_options,
-                    clearable=False,
-                    searchable=False,
-                    value=1.00
-                ),
-
-                
-            ], style={"width": "8%", 'margin-top': 10}
-            
-            ),
-
             html.Button(
                 'Calculate', 
                 id='start-profit-calculation', 
@@ -109,12 +95,6 @@ def _generate_profit_pip_calculator():
             html.Div(
                 id='profit-target',
                 children='Target balance (0% increase): 0',
-                style={'margin-top': 10}
-            ),
-
-            html.Div(
-                id='average-pip-text',
-                children='Average pip per trade (Profit): 0',
                 style={'margin-top': 10}
             )
         ]
@@ -201,6 +181,7 @@ def generate_layout():
             
             dcc.Tab(label='Risk Management', value='risk-management-tab', children=[
                 _generate_profit_pip_calculator(),
+                _loading_figure_layout('bar-average-pip-fig')
             ]),
 
             dcc.Tab(label='Price Analysis', value='price-analysis-tab', children=[

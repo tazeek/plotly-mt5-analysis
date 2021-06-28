@@ -270,3 +270,27 @@ class Graphs:
         )
 
         return rsi_fig
+
+    def plot_pip_target(self, data):
+        
+        bar_fig = go.Figure(
+            [
+                go.Bar(
+                    x=list(data.keys()), 
+                    y=list(data.values()),
+                    marker_color='green',
+                    opacity=0.5
+                )
+            ]
+        )
+
+        bar_fig.update_layout(
+            template='simple_white',
+            xaxis_title="Currency",
+            yaxis_title="Pip",
+            title=f"Average pip target",
+            hovermode='x',
+            height=700
+        )
+
+        return bar_fig

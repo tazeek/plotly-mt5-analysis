@@ -73,15 +73,14 @@ def register_callbacks(app):
 
     @app.callback(
         [
-            Output('average-pip-text','children'),
             Output('profit-target', 'children'),
-            Output('loss-bound', 'children')
+            Output('loss-bound', 'children'),
+            Output('bar-average-pip-fig','figure')
         ],
         [
             Input('start-profit-calculation','n_clicks')
         ],
         [
-            State('settlement-currency','value'),
             State('input_balance','value'),
             State('input_percentage_target','value'),
             State('input_percentage_loss','value'),
@@ -90,10 +89,9 @@ def register_callbacks(app):
         ],
         prevent_initial_call=True
     )
-    def perform_profit_calculation(click_count, rate, bal=0.0, pct_tar=0.3, pct_loss=0.2, lev=0, min_trade=0):
+    def perform_profit_calculation(click_count, bal=0.0, pct_tar=0.3, pct_loss=0.2, lev=0, min_trade=0):
         bal = float(bal)
 
-        avg_pip = 0
         amount_target = 0
         amount_loss = 0
 
@@ -101,20 +99,30 @@ def register_callbacks(app):
         pct_tar = int(pct_tar)
         pct_loss = int(pct_loss)
         min_trade = float(min_trade)
+        avg_pip_list = {}
+
+        settlement_conversion = {
+            'GBP': 1.40,
+            'CHF': 1.10,
+            'USD': 1.00,
+            'JPY': 0.90,
+            'CAD': 0.80,
+        }
 
         if bal > 0 and lev > 0 and min_trade > 0:
 
             amount_target = bal * (pct_tar / 100)
             amount_loss = bal * (pct_loss / 100)
+            divisor = min_trade * lev
 
-            avg_pip = math.ceil(
-                (amount_target / (min_trade * lev))/rate
-            )
+            for currency, cur_rate in settlement_conversion.items():
+                avg_pip_req = math.ceil((amount_target / divisor)/cur_rate)
+                avg_pip_list[currency] = avg_pip_req
 
         return [
-            f"Average pip per trade (Profit): {avg_pip}",
             f"Target balance ({pct_tar}% increase): {(bal + amount_target):.2f} (+{amount_target:.2f})",
-            f"Minimum balance ({pct_loss}% loss tolerance): {(bal - amount_loss):.2f} (-{amount_loss:.2f})"
+            f"Minimum balance ({pct_loss}% loss tolerance): {(bal - amount_loss):.2f} (-{amount_loss:.2f})",
+            graph_generator.plot_pip_target(avg_pip_list)
         ]
     
 
