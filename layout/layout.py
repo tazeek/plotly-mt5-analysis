@@ -201,6 +201,7 @@ def generate_layout():
             
             dcc.Tab(label='Risk Management', value='risk-management-tab', children=[
                 _generate_profit_pip_calculator(),
+                _loading_figure_layout('bar-average-pip-fig')
             ]),
 
             dcc.Tab(label='Price Analysis', value='price-analysis-tab', children=[
