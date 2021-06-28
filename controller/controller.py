@@ -102,11 +102,11 @@ def register_callbacks(app):
         avg_pip_list = {}
 
         settlement_conversion = {
-            'CAD': 0.80,
-            'JPY': 0.90,
-            'USD': 1.00,
+            'GBP': 1.40,
             'CHF': 1.10,
-            'GBP': 1.40
+            'USD': 1.00,
+            'JPY': 0.90,
+            'CAD': 0.80,
         }
 
         if bal > 0 and lev > 0 and min_trade > 0:

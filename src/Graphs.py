@@ -277,7 +277,9 @@ class Graphs:
             [
                 go.Bar(
                     x=list(data.keys()), 
-                    y=list(data.values())
+                    y=list(data.values()),
+                    marker_color='green',
+                    opacity=0.5
                 )
             ]
         )
