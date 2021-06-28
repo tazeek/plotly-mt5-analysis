@@ -101,6 +101,7 @@ def register_callbacks(app):
         pct_tar = int(pct_tar)
         pct_loss = int(pct_loss)
         min_trade = float(min_trade)
+        avg_pip_list = {}
 
         settlement_conversion = {
             'JPY': 0.90,
@@ -114,10 +115,15 @@ def register_callbacks(app):
 
             amount_target = bal * (pct_tar / 100)
             amount_loss = bal * (pct_loss / 100)
+            divisor = min_trade * lev
 
             avg_pip = math.ceil(
-                (amount_target / (min_trade * lev))/rate
+                (amount_target / divisor)/rate
             )
+
+            for currency, cur_rate in settlement_conversion.items():
+                avg_pip_req = math.ceil((amount_target / divisor)/cur_rate)
+                avg_pip_list[currency] = avg_pip_req
 
         return [
             f"Average pip per trade (Profit): {avg_pip}",
