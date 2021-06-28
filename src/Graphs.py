@@ -282,4 +282,13 @@ class Graphs:
             ]
         )
 
+        bar_fig.update_layout(
+            template='simple_white',
+            xaxis_title="Currency",
+            yaxis_title="Pip",
+            title=f"Average pip target",
+            hovermode='x',
+            height=700
+        )
+
         return bar_fig

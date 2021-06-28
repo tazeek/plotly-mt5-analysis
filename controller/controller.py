@@ -102,8 +102,8 @@ def register_callbacks(app):
         avg_pip_list = {}
 
         settlement_conversion = {
-            'JPY': 0.90,
             'CAD': 0.80,
+            'JPY': 0.90,
             'USD': 1.00,
             'CHF': 1.10,
             'GBP': 1.40
