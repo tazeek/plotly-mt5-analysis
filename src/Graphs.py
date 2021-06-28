@@ -270,3 +270,16 @@ class Graphs:
         )
 
         return rsi_fig
+
+    def plot_pip_target(self, data):
+        
+        bar_fig = go.Figure(
+            [
+                go.Bar(
+                    x=list(data.keys()), 
+                    y=list(data.values())
+                )
+            ]
+        )
+
+        return bar_fig

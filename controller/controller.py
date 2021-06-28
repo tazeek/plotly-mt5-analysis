@@ -75,7 +75,8 @@ def register_callbacks(app):
         [
             Output('average-pip-text','children'),
             Output('profit-target', 'children'),
-            Output('loss-bound', 'children')
+            Output('loss-bound', 'children'),
+            Output('bar-average-pip-fig','figure')
         ],
         [
             Input('start-profit-calculation','n_clicks')
@@ -128,7 +129,8 @@ def register_callbacks(app):
         return [
             f"Average pip per trade (Profit): {avg_pip}",
             f"Target balance ({pct_tar}% increase): {(bal + amount_target):.2f} (+{amount_target:.2f})",
-            f"Minimum balance ({pct_loss}% loss tolerance): {(bal - amount_loss):.2f} (-{amount_loss:.2f})"
+            f"Minimum balance ({pct_loss}% loss tolerance): {(bal - amount_loss):.2f} (-{amount_loss:.2f})",
+            graph_generator.plot_pip_target(avg_pip_list)
         ]
     
 
