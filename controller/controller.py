@@ -102,6 +102,14 @@ def register_callbacks(app):
         pct_loss = int(pct_loss)
         min_trade = float(min_trade)
 
+        settlement_conversion = {
+            'JPY': 0.90,
+            'CAD': 0.80,
+            'USD': 1.00,
+            'CHF': 1.10,
+            'GBP': 1.40
+        }
+
         if bal > 0 and lev > 0 and min_trade > 0:
 
             amount_target = bal * (pct_tar / 100)
