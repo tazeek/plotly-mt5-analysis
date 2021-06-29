@@ -91,8 +91,11 @@ class Graphs:
             )
         ])
 
+        self._draw_hline(tick_vol_fig, data['tick_volume'].mean(), "solid", "black")
+
         tick_vol_fig.update_layout(
             title=f"{self._currency} - Tick Volume for today (1H)",
+            template='simple_white',
             xaxis_title="Time",
             yaxis_title="Volume",
             hovermode='x',
@@ -114,6 +117,7 @@ class Graphs:
 
         percentage_change_fig.update_layout(
             title=f"{self._currency} - Price Percentage Change for today (1H)",
+            template='simple_white',
             xaxis_title="Time",
             yaxis_title="Percentage change",
             hovermode='x',

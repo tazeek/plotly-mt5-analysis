@@ -75,7 +75,8 @@ def register_callbacks(app):
         [
             Output('profit-target', 'children'),
             Output('loss-bound', 'children'),
-            Output('bar-average-pip-fig','figure')
+            Output('bar-average-pip-fig','figure'),
+            Output('bar-average-pip-fig','style')
         ],
         [
             Input('start-profit-calculation','n_clicks')
@@ -89,7 +90,7 @@ def register_callbacks(app):
         ],
         prevent_initial_call=True
     )
-    def perform_profit_calculation(click_count, bal=0.0, pct_tar=0.3, pct_loss=0.2, lev=0, min_trade=0):
+    def perform_profit_calculation(click_count, bal, pct_tar, pct_loss, lev, min_trade):
         bal = float(bal)
 
         amount_target = 0
@@ -127,7 +128,8 @@ def register_callbacks(app):
         return [
             f"Target balance ({pct_tar}% increase): {(bal + amount_target):.2f} (+{amount_target:.2f})",
             f"Minimum balance ({pct_loss}% loss tolerance): {(bal - amount_loss):.2f} (-{amount_loss:.2f})",
-            graph_generator.plot_pip_target(avg_pip_list)
+            graph_generator.plot_pip_target(avg_pip_list),
+            {'display':'block'}
         ]
     
 
