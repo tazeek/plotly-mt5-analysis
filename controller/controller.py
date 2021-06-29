@@ -116,8 +116,13 @@ def register_callbacks(app):
             divisor = min_trade * lev
 
             for currency, cur_rate in settlement_conversion.items():
-                avg_pip_req = math.ceil((amount_target / divisor)/cur_rate)
-                avg_pip_list[currency] = avg_pip_req
+                avg_pip_profit = math.ceil((amount_target / divisor)/cur_rate)
+                avg_pip_loss = math.ceil((amount_loss / divisor)/cur_rate)
+
+                avg_pip_list[currency] = {
+                    'profit': avg_pip_profit,
+                    'loss': avg_pip_loss
+                }
 
         return [
             f"Target balance ({pct_tar}% increase): {(bal + amount_target):.2f} (+{amount_target:.2f})",
