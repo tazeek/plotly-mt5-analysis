@@ -273,11 +273,15 @@ class Graphs:
 
     def plot_pip_target(self, data):
         
+        x_axis_val = list(data.keys())
+
+        profit_targets = [target['profit'] for target in data.values()]
+
         bar_fig = go.Figure(
             [
                 go.Bar(
-                    x=list(data.keys()), 
-                    y=list(data.values()),
+                    x=x_axis_val, 
+                    y=profit_targets,
                     marker_color='green',
                     opacity=0.5
                 )
