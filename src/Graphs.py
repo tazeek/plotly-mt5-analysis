@@ -284,12 +284,14 @@ class Graphs:
                     x=x_axis_val, 
                     y=profit_targets,
                     marker_color='green',
+                    name='Average profit (points)',
                     opacity=0.5
                 ),
                 go.Bar(
                     x=x_axis_val,
                     y=loss_targets,
                     marker_color='indianred',
+                    name='Average loss (points)',
                     opacity=0.5
                 )
             ]
