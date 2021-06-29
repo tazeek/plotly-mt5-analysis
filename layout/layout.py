@@ -54,6 +54,17 @@ def _generate_profit_pip_calculator():
             'value': rate
         })
 
+    profit_loss_rm_dict = {
+        'balance': 0.00,
+        'percentage_target': 30,
+        'percentage_loss': 20
+    }
+
+    leverage_trade_dict = {
+        'leverage': 0.01,
+        'trade_count': 1
+    }
+
     return html.Div(
         [
             html.H1(
@@ -65,8 +76,9 @@ def _generate_profit_pip_calculator():
                     id=f"input_{field}",
                     type="text",
                     placeholder=f"{field}",
+                    value=f"{value}",
                     style={"margin-right": "15px"}
-                ) for field in ['balance', 'percentage_target','percentage_loss']
+                ) for field,value in profit_loss_rm_dict.items()
             ]),
 
             html.Div([
@@ -74,8 +86,9 @@ def _generate_profit_pip_calculator():
                     id=f"input_{field}",
                     type="text",
                     placeholder=f"{field}",
+                    value=f"{value}",
                     style={"margin-right": "15px"}
-                ) for field in ['leverage','trade_count']
+                ) for field,value in leverage_trade_dict.items()
             ],
                 style={'margin-top': 10}
             ),
@@ -87,14 +100,14 @@ def _generate_profit_pip_calculator():
             ),
 
             html.Div(
-                id='loss-bound',
-                children='Minimum balance (0% loss tolerance): 0',
+                id='profit-target',
+                children='Target balance (0% increase): 0',
                 style={'margin-top': 10}
             ),
 
             html.Div(
-                id='profit-target',
-                children='Target balance (0% increase): 0',
+                id='loss-bound',
+                children='Minimum balance (0% loss tolerance): 0',
                 style={'margin-top': 10}
             )
         ]

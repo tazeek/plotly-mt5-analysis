@@ -273,12 +273,25 @@ class Graphs:
 
     def plot_pip_target(self, data):
         
+        x_axis_val = list(data.keys())
+
+        profit_targets = [target['profit'] for target in data.values()]
+        loss_targets = [target['loss'] for target in data.values()]
+
         bar_fig = go.Figure(
             [
                 go.Bar(
-                    x=list(data.keys()), 
-                    y=list(data.values()),
+                    x=x_axis_val, 
+                    y=profit_targets,
                     marker_color='green',
+                    name='Profit',
+                    opacity=0.5
+                ),
+                go.Bar(
+                    x=x_axis_val,
+                    y=loss_targets,
+                    marker_color='indianred',
+                    name='Loss',
                     opacity=0.5
                 )
             ]
@@ -287,9 +300,9 @@ class Graphs:
         bar_fig.update_layout(
             template='simple_white',
             xaxis_title="Currency",
-            yaxis_title="Pip",
-            title=f"Average pip target",
-            hovermode='x',
+            yaxis_title="Points",
+            title=f"Average points target",
+            hovermode='x unified',
             height=700
         )
 
