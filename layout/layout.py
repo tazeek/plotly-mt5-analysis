@@ -100,14 +100,14 @@ def _generate_profit_pip_calculator():
             ),
 
             html.Div(
-                id='loss-bound',
-                children='Minimum balance (0% loss tolerance): 0',
+                id='profit-target',
+                children='Target balance (0% increase): 0',
                 style={'margin-top': 10}
             ),
 
             html.Div(
-                id='profit-target',
-                children='Target balance (0% increase): 0',
+                id='loss-bound',
+                children='Minimum balance (0% loss tolerance): 0',
                 style={'margin-top': 10}
             )
         ]

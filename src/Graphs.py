@@ -284,14 +284,14 @@ class Graphs:
                     x=x_axis_val, 
                     y=profit_targets,
                     marker_color='green',
-                    name='Average profit (points)',
+                    name='Profit',
                     opacity=0.5
                 ),
                 go.Bar(
                     x=x_axis_val,
                     y=loss_targets,
                     marker_color='indianred',
-                    name='Average loss (points)',
+                    name='Loss',
                     opacity=0.5
                 )
             ]
@@ -300,9 +300,9 @@ class Graphs:
         bar_fig.update_layout(
             template='simple_white',
             xaxis_title="Currency",
-            yaxis_title="Pip",
-            title=f"Average pip target",
-            hovermode='x',
+            yaxis_title="Points",
+            title=f"Average points target",
+            hovermode='x unified',
             height=700
         )
 
