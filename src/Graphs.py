@@ -276,6 +276,7 @@ class Graphs:
         x_axis_val = list(data.keys())
 
         profit_targets = [target['profit'] for target in data.values()]
+        loss_targets = [target['loss'] for target in data.values()]
 
         bar_fig = go.Figure(
             [
@@ -283,6 +284,12 @@ class Graphs:
                     x=x_axis_val, 
                     y=profit_targets,
                     marker_color='green',
+                    opacity=0.5
+                ),
+                go.Bar(
+                    x=x_axis_val,
+                    y=loss_targets,
+                    marker_color='indianred',
                     opacity=0.5
                 )
             ]
