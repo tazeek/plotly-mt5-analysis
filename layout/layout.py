@@ -24,13 +24,14 @@ def _fetch_forex_pairs():
     
     return forex_pairs, last_updated_time
 
-def _loading_figure_layout(fig_id, config=None):
+def _loading_figure_layout(fig_id, config=None, style=None):
     return dcc.Loading(
         type="default",
         children=html.Div([
             dcc.Graph(
                 id=fig_id,
-                config=config
+                config=config,
+                style=style
             )
         ])
     )
