@@ -31,6 +31,8 @@ class ForexAnalyzer:
             print("initialize() failed, error code =",mt5.last_error())
             quit()
 
+        self.get_currency_strength('USDJPY')
+
     def _get_multiplier(self):
 
         symbol_info = mt5.symbol_info(self._forex_pair)
@@ -73,10 +75,10 @@ class ForexAnalyzer:
 
         return None
 
-    def _fetch_data_mt5(self, timeframe, bars_num, pair=self._forex_pair):
+    def _fetch_data_mt5(self, timeframe, bars_num, pair=None):
 
         rates = mt5.copy_rates_from(
-            pair,
+            pair or self._forex_pair,
             self._mt5_timeframe_dict[timeframe],
             self.get_current_time(),
             bars_num
@@ -157,3 +159,7 @@ class ForexAnalyzer:
 
     def get_currency_strength(self, currency_pair):
         rates_df = self._fetch_data_mt5('1W', 5, currency_pair)
+        print(rates_df)
+
+        print('\n')
+        return None
