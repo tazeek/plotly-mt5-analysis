@@ -73,10 +73,10 @@ class ForexAnalyzer:
 
         return None
 
-    def _fetch_data_mt5(self, timeframe, bars_num):
+    def _fetch_data_mt5(self, timeframe, bars_num, pair=self._forex_pair):
 
         rates = mt5.copy_rates_from(
-            self._forex_pair,
+            pair,
             self._mt5_timeframe_dict[timeframe],
             self.get_current_time(),
             bars_num
@@ -156,4 +156,4 @@ class ForexAnalyzer:
         return stats_dict
 
     def get_currency_strength(self, currency_pair):
-        ...
+        rates_df = self._fetch_data_mt5('1W', 5, currency_pair)
