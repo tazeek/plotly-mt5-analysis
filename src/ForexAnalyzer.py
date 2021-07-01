@@ -31,8 +31,6 @@ class ForexAnalyzer:
             print("initialize() failed, error code =",mt5.last_error())
             quit()
 
-        self.get_currency_strength('USDJPY')
-
     def _get_multiplier(self):
 
         symbol_info = mt5.symbol_info(self._forex_pair)
@@ -169,7 +167,7 @@ class ForexAnalyzer:
         print(currency_pair)
         print(oldest_close_price)
         print(current_close_price)
-        print(rop_val)
+        print(round(rop_val, 3))
 
         print('\n')
-        return rop_val
+        return round(rop_val,3)

@@ -1,7 +1,7 @@
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 
-from currency_analysis import fetch_latest_candlesticks
+from currency_analysis import fetch_latest_candlesticks, calculate_currency_strength
 
 from src.Graphs import Graphs
 from src.ForexAnalyzer import ForexAnalyzer
@@ -101,6 +101,8 @@ def register_callbacks(app):
         pct_loss = int(pct_loss)
         min_trade = float(min_trade)
         avg_pip_list = {}
+
+        calculate_currency_strength()
 
         settlement_conversion = {
             'GBP': 1.40,
