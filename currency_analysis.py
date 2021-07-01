@@ -57,5 +57,12 @@ def calculate_currency_strength():
     )
 
     print(currency_strength)
-    
-    return None
+
+    currency_strength['last_updated'] = forex_analyzer.get_current_time(0).strftime("%Y/%m/%d %H:%M:%S")
+
+    # Write to new text file
+    with open('files\\currency_strength.txt', 'w+') as f:
+        for key, value in currency_strength.items():
+            f.writelines(f"{key}: {value}\n")
+
+    return currency_strength

@@ -102,8 +102,6 @@ def register_callbacks(app):
         min_trade = float(min_trade)
         avg_pip_list = {}
 
-        calculate_currency_strength()
-
         settlement_conversion = {
             'GBP': 1.40,
             'CHF': 1.10,
