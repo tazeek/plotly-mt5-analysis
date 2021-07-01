@@ -30,6 +30,15 @@ def register_callbacks(app):
 
     @app.callback(
         [
+            Output("bar-currency-strength-analysis","figure"),
+        ]
+    )
+    def update_new_forex():
+
+        return []
+
+    @app.callback(
+        [
             Output("ask-value","children"),
             Output("bid-value","children"),
             Output("line-chart-4H","figure"),

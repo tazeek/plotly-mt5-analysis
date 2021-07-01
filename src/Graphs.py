@@ -311,3 +311,6 @@ class Graphs:
         )
 
         return bar_fig
+
+    def display_currency_strength():
+        ...
