@@ -159,6 +159,14 @@ class ForexAnalyzer:
 
     def get_currency_strength(self, currency_pair):
         rates_df = self._fetch_data_mt5('1W', 5, currency_pair)
+
+        close_price_series = rates_df['close']
+
+        oldest_close_price = close_price_series.iat[0]
+        current_close_price = close_price_series.iat[-1]
+
+        print(oldest_close_price)
+        print(current_close_price)
         print(rates_df)
 
         print('\n')
