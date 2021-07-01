@@ -1,7 +1,7 @@
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 
-from daily_candlesticks_script import fetch_latest_candlesticks
+from currency_analysis import fetch_latest_candlesticks
 
 from src.Graphs import Graphs
 from src.ForexAnalyzer import ForexAnalyzer
