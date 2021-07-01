@@ -165,9 +165,11 @@ class ForexAnalyzer:
         oldest_close_price = close_price_series.iat[0]
         current_close_price = close_price_series.iat[-1]
 
+        rop_val = ((current_close_price - oldest_close_price)/oldest_close_price) * 100
+        print(currency_pair)
         print(oldest_close_price)
         print(current_close_price)
-        print(rates_df)
+        print(rop_val)
 
         print('\n')
-        return None
+        return rop_val
