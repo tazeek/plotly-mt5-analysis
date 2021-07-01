@@ -198,6 +198,10 @@ def generate_layout():
                 _loading_figure_layout('bar-average-pip-fig',None,{'display':'none'})
             ]),
 
+            dcc.Tab(label='Currency Strength Analysis', value='currency-strength-tab', children=[
+                _loading_figure_layout('bar-currency-strength-analysis')
+            ]),
+
             dcc.Tab(label='Price Analysis', value='price-analysis-tab', children=[
                 
                 _generate_candlesticks_info(last_updated_time),
