@@ -312,5 +312,32 @@ class Graphs:
 
         return bar_fig
 
-    def display_currency_strength():
-        ...
+    def display_currency_strength(self, data):
+
+        roc_values = list(data.values())
+        marker_colors = ['green' if roc > 0 else 'red' for roc in roc_values]
+
+        bar_fig = go.Figure(
+            [
+                go.Bar(
+                    x=list(data.keys()), 
+                    y=roc_values,
+                    marker_color=marker_colors,
+                    name='ROC',
+                    opacity=0.35
+                )
+            ]
+        )
+
+        self._draw_hline(bar_fig, 0, "solid", "black")
+
+        bar_fig.update_layout(
+            template='simple_white',
+            xaxis_title="Currency",
+            yaxis_title="Strength",
+            title=f"Currency Strength (with JPY as the apple)",
+            hovermode='x unified',
+            height=700
+        )
+
+        return bar_fig

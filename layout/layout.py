@@ -131,6 +131,16 @@ def _generate_candlesticks_info(last_updated_time):
         ),
     ])
 
+def _show_currency_strength_button():
+
+    return html.Div([
+        html.Button(
+            'Show currency strength',
+            id='show-currency-strength',
+            style={"margin-top": "15px"}
+        )
+    ])
+
 
 def _generate_dropdown(forex_list):
 
@@ -188,6 +198,7 @@ def generate_layout():
     forex_list, last_updated_time = _fetch_forex_pairs()
 
     draw_config = {'modeBarButtonsToAdd': ['drawline','eraseshape', 'drawopenpath', 'drawrect']}
+    hide_display = {'display':'none'}
 
     return html.Div([
 
@@ -195,11 +206,12 @@ def generate_layout():
             
             dcc.Tab(label='Risk Management', value='risk-management-tab', children=[
                 _generate_profit_pip_calculator(),
-                _loading_figure_layout('bar-average-pip-fig',None,{'display':'none'})
+                _loading_figure_layout('bar-average-pip-fig',None,hide_display)
             ]),
 
             dcc.Tab(label='Currency Strength Analysis', value='currency-strength-tab', children=[
-                _loading_figure_layout('bar-currency-strength-analysis')
+                _show_currency_strength_button(),
+                _loading_figure_layout('bar-currency-strength-analysis',None,hide_display)
             ]),
 
             dcc.Tab(label='Price Analysis', value='price-analysis-tab', children=[

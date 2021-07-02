@@ -56,13 +56,4 @@ def calculate_currency_strength():
         sorted(currency_strength.items(), key=lambda item: item[1], reverse=True)
     )
 
-    print(currency_strength)
-
-    currency_strength['last_updated'] = forex_analyzer.get_current_time(0).strftime("%Y/%m/%d %H:%M:%S")
-
-    # Write to new text file
-    with open('files\\currency_strength.txt', 'w+') as f:
-        for key, value in currency_strength.items():
-            f.writelines(f"{key}: {value}\n")
-
     return currency_strength
