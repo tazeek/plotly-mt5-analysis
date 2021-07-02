@@ -15,7 +15,8 @@ class ForexAnalyzer:
             '15M': mt5.TIMEFRAME_M15,
             '1H': mt5.TIMEFRAME_H1,
             '1D': mt5.TIMEFRAME_D1,
-            '4H': mt5.TIMEFRAME_H4
+            '4H': mt5.TIMEFRAME_H4,
+            '1W': mt5.TIMEFRAME_W1
         }
         
         self._forex_pair = forex_pair
@@ -72,10 +73,10 @@ class ForexAnalyzer:
 
         return None
 
-    def _fetch_data_mt5(self, timeframe, bars_num):
+    def _fetch_data_mt5(self, timeframe, bars_num, pair=None):
 
         rates = mt5.copy_rates_from(
-            self._forex_pair,
+            pair or self._forex_pair,
             self._mt5_timeframe_dict[timeframe],
             self.get_current_time(),
             bars_num
@@ -153,3 +154,15 @@ class ForexAnalyzer:
         stats_dict['gap_close_open'] = self._calculate_pip(stats_dict['open'], stats_dict['close'])
         
         return stats_dict
+
+    def get_currency_strength(self, currency_pair):
+        rates_df = self._fetch_data_mt5('1W', 5, currency_pair)
+
+        close_price_series = rates_df['close']
+
+        oldest_close_price = close_price_series.iat[0]
+        current_close_price = close_price_series.iat[-1]
+
+        rop_val = ((current_close_price - oldest_close_price)/oldest_close_price) * 100
+
+        return round(rop_val,3)

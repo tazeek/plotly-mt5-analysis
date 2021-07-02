@@ -1,7 +1,7 @@
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 
-from daily_candlesticks_script import fetch_latest_candlesticks
+from currency_analysis import fetch_latest_candlesticks, calculate_currency_strength
 
 from src.Graphs import Graphs
 from src.ForexAnalyzer import ForexAnalyzer
@@ -27,6 +27,15 @@ def register_callbacks(app):
         graph_generator.update_currency(changed_currency)
 
         return [changed_currency]
+
+    @app.callback(
+        [
+            Output("bar-currency-strength-analysis","figure"),
+        ]
+    )
+    def update_new_forex():
+
+        return []
 
     @app.callback(
         [
