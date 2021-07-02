@@ -314,14 +314,17 @@ class Graphs:
 
     def display_currency_strength(self, data):
 
+        roc_values = list(data.values())
+        marker_colors = ['green' if roc > 0 else 'red' for roc in roc_values]
+
         bar_fig = go.Figure(
             [
                 go.Bar(
                     x=list(data.keys()), 
-                    y=list(data.values()),
-                    marker_color='green',
-                    name='Profit',
-                    opacity=0.5
+                    y=roc_values,
+                    marker_color=marker_colors,
+                    name='ROC',
+                    opacity=0.35
                 )
             ]
         )
