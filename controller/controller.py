@@ -166,9 +166,6 @@ def register_callbacks(app):
     )
     def fetch_new_candlesticks_width(clicks, candlestick_data):
 
-        if clicks is None:
-            raise PreventUpdate
-
         updated_pairs = fetch_latest_candlesticks()
 
         last_updated_time = updated_pairs['last_updated']
