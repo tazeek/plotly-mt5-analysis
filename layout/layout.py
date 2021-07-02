@@ -131,17 +131,6 @@ def _generate_candlesticks_info(last_updated_time):
         ),
     ])
 
-def _show_currency_strength_button():
-
-    return html.Div([
-        html.Button(
-            'Show currency strength',
-            id='show-currency-strength',
-            style={"margin-top": "15px"}
-        )
-    ])
-
-
 def _generate_dropdown(forex_list):
 
     current_forex = forex_list[0]
@@ -210,7 +199,6 @@ def generate_layout():
             ]),
 
             dcc.Tab(label='Currency Strength Analysis', value='currency-strength-tab', children=[
-                _show_currency_strength_button(),
                 _loading_figure_layout('bar-currency-strength-analysis',None,hide_display)
             ]),
 

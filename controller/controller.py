@@ -1,5 +1,5 @@
+import dash
 from dash.dependencies import Input, Output, State
-from dash.exceptions import PreventUpdate
 
 from currency_analysis import fetch_latest_candlesticks, calculate_currency_strength
 
@@ -34,11 +34,18 @@ def register_callbacks(app):
             Output('bar-currency-strength-analysis','style'),
         ],
         [
-            Input('show-currency-strength','n_clicks')
+            Input('analysis-tabs', 'value')
         ],
         prevent_initial_call=True
     )
-    def update_new_forex(click_count):
+    def update_new_forex(tab_value):
+
+        # Only update for currency strength tab
+        if tab_value != 'currency-strength-tab':
+            return [
+                dash.no_update,
+                {'display':'none'}
+            ]
 
         currency_stregnth_dict = calculate_currency_strength()
 
@@ -165,9 +172,6 @@ def register_callbacks(app):
         prevent_initial_call=True
     )
     def fetch_new_candlesticks_width(clicks, candlestick_data):
-
-        if clicks is None:
-            raise PreventUpdate
 
         updated_pairs = fetch_latest_candlesticks()
 
