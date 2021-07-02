@@ -31,6 +31,7 @@ def register_callbacks(app):
     @app.callback(
         [
             Output("bar-currency-strength-analysis","figure"),
+            Output('bar-currency-strength-analysis','style'),
         ],
         [
             Input('show-currency-strength','n_clicks')
@@ -43,7 +44,8 @@ def register_callbacks(app):
         print(currency_stregnth_dict)
 
         return [
-            graph_generator.display_currency_strength(currency_stregnth_dict)
+            graph_generator.display_currency_strength(currency_stregnth_dict),
+            {'display':'block'}
         ]
 
     @app.callback(
