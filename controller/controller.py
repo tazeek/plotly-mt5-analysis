@@ -41,7 +41,6 @@ def register_callbacks(app):
     def update_new_forex(click_count):
 
         currency_stregnth_dict = calculate_currency_strength()
-        print(currency_stregnth_dict)
 
         return [
             graph_generator.display_currency_strength(currency_stregnth_dict),
