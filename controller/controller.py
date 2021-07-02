@@ -1,5 +1,5 @@
+import dash
 from dash.dependencies import Input, Output, State
-from dash.exceptions import PreventUpdate
 
 from currency_analysis import fetch_latest_candlesticks, calculate_currency_strength
 
@@ -39,6 +39,12 @@ def register_callbacks(app):
         prevent_initial_call=True
     )
     def update_new_forex(click_count):
+
+        if click_count:
+            return [
+                dash.no_update,
+                {'display':'none'}
+            ]
 
         currency_stregnth_dict = calculate_currency_strength()
 
