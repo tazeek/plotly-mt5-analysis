@@ -31,11 +31,20 @@ def register_callbacks(app):
     @app.callback(
         [
             Output("bar-currency-strength-analysis","figure"),
-        ]
+        ],
+        [
+            Input('show-currency-strength','n_clicks')
+        ],
+        prevent_initial_call=True
     )
-    def update_new_forex():
+    def update_new_forex(click_count):
 
-        return []
+        currency_stregnth_dict = calculate_currency_strength()
+        print(currency_stregnth_dict)
+
+        return [
+            graph_generator.display_currency_strength(currency_stregnth_dict)
+        ]
 
     @app.callback(
         [

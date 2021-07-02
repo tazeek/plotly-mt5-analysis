@@ -312,5 +312,27 @@ class Graphs:
 
         return bar_fig
 
-    def display_currency_strength():
-        ...
+    def display_currency_strength(self, data):
+
+        bar_fig = go.Figure(
+            [
+                go.Bar(
+                    x=list(data.keys()), 
+                    y=list(data.values()),
+                    marker_color='green',
+                    name='Profit',
+                    opacity=0.5
+                )
+            ]
+        )
+
+        bar_fig.update_layout(
+            template='simple_white',
+            xaxis_title="Currency",
+            yaxis_title="Strength",
+            title=f"Currency Strength",
+            hovermode='x unified',
+            height=700
+        )
+
+        return bar_fig
