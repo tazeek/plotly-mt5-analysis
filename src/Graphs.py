@@ -326,11 +326,13 @@ class Graphs:
             ]
         )
 
+        self._draw_hline(bar_fig, 0, "solid", "black")
+
         bar_fig.update_layout(
             template='simple_white',
             xaxis_title="Currency",
             yaxis_title="Strength",
-            title=f"Currency Strength",
+            title=f"Currency Strength (with JPY as the apple)",
             hovermode='x unified',
             height=700
         )
