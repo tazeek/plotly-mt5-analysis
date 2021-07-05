@@ -188,13 +188,14 @@ class Graphs:
                     low=data_day['low'], 
                     close=data_day['close'],
                     text=hover_list,
-                    hoverinfo='text'
+                    hoverinfo='text',
+                    name='Candlesticks'
                 ),
                 go.Scatter(
                     x=indicators_df['time'], 
                     y=indicators_df['sma'],
                     line=dict(color='black', width=5),
-                    name=""
+                    name="SMA"
                 )
             ]
         )
@@ -207,7 +208,6 @@ class Graphs:
             hovermode='x',
             yaxis_tickformat='.5f',
             xaxis_rangeslider_visible=False,
-            showlegend=False,
             yaxis={'visible': False, 'showticklabels': False}
         )
 
