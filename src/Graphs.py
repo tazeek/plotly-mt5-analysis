@@ -247,22 +247,6 @@ class Graphs:
             yaxis_tickformat='.2f'
         )
 
-        rsi_fig.add_hrect(
-            y0=0, 
-            y1=30,
-            fillcolor="palegreen",
-            layer="below", 
-            opacity=0.25
-        )
-
-        rsi_fig.add_hrect(
-            y0=100, 
-            y1=70,
-            fillcolor="palegreen",
-            layer="below", 
-            opacity=0.25
-        )
-
         self._draw_hline(rsi_fig, 50, "solid", "black")
 
         rsi_fig.update_xaxes(
