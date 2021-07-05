@@ -68,7 +68,7 @@ class Graphs:
         current_atr = ''.join(current_atr[:2])
 
         atr_fig.update_layout(
-            title=f"{self._currency} - ATR (Current value: {current_atr})",
+            title=f"{self._currency} - ATR (4H) (Current value: {current_atr})",
             template='simple_white',
             xaxis_title="Time",
             hovermode='x',
@@ -188,13 +188,14 @@ class Graphs:
                     low=data_day['low'], 
                     close=data_day['close'],
                     text=hover_list,
-                    hoverinfo='text'
+                    hoverinfo='text',
+                    showlegend=False
                 ),
                 go.Scatter(
                     x=indicators_df['time'], 
                     y=indicators_df['sma'],
                     line=dict(color='black', width=5),
-                    name=""
+                    name="SMA"
                 )
             ]
         )
@@ -207,7 +208,6 @@ class Graphs:
             hovermode='x',
             yaxis_tickformat='.5f',
             xaxis_rangeslider_visible=False,
-            showlegend=False,
             yaxis={'visible': False, 'showticklabels': False}
         )
 
@@ -228,7 +228,7 @@ class Graphs:
 
         return candlesticks_minute_fig
 
-    def plot_rsi_figure(self, rsi_today):
+    def plot_rsi_figure(self, rsi_today, start_time):
 
         rsi_fig = go.Figure([
             go.Scatter(
@@ -247,23 +247,14 @@ class Graphs:
             yaxis_tickformat='.2f'
         )
 
-        rsi_fig.add_hrect(
-            y0=0, 
-            y1=30,
-            fillcolor="palegreen",
-            layer="below", 
-            opacity=0.25
-        )
-
-        rsi_fig.add_hrect(
-            y0=100, 
-            y1=70,
-            fillcolor="palegreen",
-            layer="below", 
-            opacity=0.25
-        )
-
         self._draw_hline(rsi_fig, 50, "solid", "black")
+
+        rsi_fig.add_vline(
+            x=start_time,
+            line_dash="solid",
+            line_color="black",
+            line_width=3
+        )
 
         rsi_fig.update_xaxes(
             rangebreaks=[

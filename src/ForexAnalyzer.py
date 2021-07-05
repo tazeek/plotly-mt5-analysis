@@ -55,6 +55,9 @@ class ForexAnalyzer:
 
         period = 14
 
+        if timeframe == '4H':
+            period = 50
+
         day_stats.rename(
             columns={
                 "close": "Close", 
