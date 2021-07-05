@@ -202,13 +202,11 @@ class Graphs:
 
         candlesticks_minute_fig.update_layout(
             title=f"{self._currency} - Series ({timeframe})",
-            template='simple_white',
             xaxis_title="Time",
             yaxis_title="Price",
             hovermode='x',
             yaxis_tickformat='.5f',
-            xaxis_rangeslider_visible=False,
-            yaxis={'visible': False, 'showticklabels': False}
+            xaxis_rangeslider_visible=False
         )
 
         candlesticks_minute_fig.update_xaxes(
