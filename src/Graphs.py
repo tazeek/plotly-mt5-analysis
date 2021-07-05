@@ -68,7 +68,7 @@ class Graphs:
         current_atr = ''.join(current_atr[:2])
 
         atr_fig.update_layout(
-            title=f"{self._currency} - ATR (Current value: {current_atr})",
+            title=f"{self._currency} - ATR (4H) (Current value: {current_atr})",
             template='simple_white',
             xaxis_title="Time",
             hovermode='x',
