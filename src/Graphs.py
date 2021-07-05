@@ -189,7 +189,7 @@ class Graphs:
                     close=data_day['close'],
                     text=hover_list,
                     hoverinfo='text',
-                    name='Candlesticks'
+                    showlegend=False
                 ),
                 go.Scatter(
                     x=indicators_df['time'], 
