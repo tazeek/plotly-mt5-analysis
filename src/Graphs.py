@@ -330,3 +330,26 @@ class Graphs:
         )
 
         return bar_fig
+    
+    def plot_histogram(self, day_stats):
+
+        histogram_fig = go.Figure(
+            data=[
+                go.Histogram(
+                    x=day_stats['close'],
+                    opacity=0.4,
+                    bingroup='bar'
+                )
+            ]
+        )
+
+        histogram_fig.update_layout(
+            title=f"{self._currency} - Histogram",
+            xaxis_title="Price",
+            yaxis_title="Counts",
+            hovermode='x',
+            yaxis_tickformat='k',
+            bargap=0.20
+        )
+
+        return histogram_fig
