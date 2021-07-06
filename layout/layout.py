@@ -217,7 +217,7 @@ def generate_layout():
                     ]),
 
                     dcc.Tab(label='High Timeframe (4H)', value='high-timeframe', children=[
-                        _loading_figure_layout('candlestick-4H-fig'),
+                        _loading_figure_layout('candlestick-4H-fig', draw_config),
                         _loading_figure_layout('histogram-4H-fig')
                     ]),
 
