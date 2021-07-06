@@ -58,7 +58,6 @@ def register_callbacks(app):
         [
             Output("ask-value","children"),
             Output("bid-value","children"),
-            Output("histogram-4H-fig","figure"),
             Output("tick-volatility-fig","figure"),
             Output("atr-graph-4H","figure"),
             Output("percentage-changes-fig","figure"),
@@ -86,7 +85,6 @@ def register_callbacks(app):
         return [
             f"Ask value: {ask_value:.5f}",
             f"Bid value: {bid_value:.5f}",
-            graph_generator.plot_histogram(stats_4H),
             graph_generator.plot_tick_volume_fullday(stats_1H, start_day),
             graph_generator.plot_atr(forex_analyzer.get_indicator_stats('4H')),
             graph_generator.plot_percentage_change(stats_1H, start_day),
