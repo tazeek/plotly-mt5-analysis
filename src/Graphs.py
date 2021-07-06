@@ -200,7 +200,6 @@ class Graphs:
         ])
 
         rsi_fig.update_layout(
-            template='simple_white',
             xaxis_title="Time",
             yaxis_title="RSI Value",
             title=f"RSI of {self._currency}",
