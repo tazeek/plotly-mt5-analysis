@@ -33,6 +33,19 @@ class Graphs:
     def _filter_data(self, data, start_time):
         return data[data['time'] >= start_time]
 
+    def _add_sma_graphs(self, fig, data, color, col_name):
+        
+        fig.add_trace(
+            go.Scatter(
+                x=data['time'], 
+                y=data[col_name],
+                line=dict(color=color, width=2),
+                name=col_name.upper()
+            )
+        )
+
+        return None
+
     def _candlestick_text(self, candlestick_info):
 
         return f"Open: {candlestick_info['open']:.5f}<br>" + \
@@ -157,32 +170,11 @@ class Graphs:
             ]
         )
 
-        candlesticks_minute_fig.add_trace(
-            go.Scatter(
-                x=indicators_df['time'], 
-                y=indicators_df['sma_50'],
-                line=dict(color='black', width=2),
-                name="SMA_50"
-            )
-        )
+        self._add_sma_graphs(candlesticks_minute_fig, indicators_df, 'black', 'sma_50')
 
         if timeframe == '15M':
-            candlesticks_minute_fig.add_trace(
-                go.Scatter(
-                    x=indicators_df['time'], 
-                    y=indicators_df['sma_21'],
-                    line=dict(color='blue', width=2),
-                    name="SMA_21"
-                )
-            )
-            candlesticks_minute_fig.add_trace(
-                go.Scatter(
-                    x=indicators_df['time'], 
-                    y=indicators_df['sma_200'],
-                    line=dict(color='red', width=2),
-                    name="SMA_200"
-                )
-            )
+            self._add_sma_graphs(candlesticks_minute_fig, indicators_df, 'blue','sma_21')
+            self._add_sma_graphs(candlesticks_minute_fig, indicators_df, 'red','sma_200')
 
         candlesticks_minute_fig.update_layout(
             title=f"{self._currency} - Series ({timeframe})",
