@@ -160,7 +160,7 @@ class Graphs:
         candlesticks_minute_fig.add_trace(
             go.Scatter(
                     x=indicators_df['time'], 
-                    y=indicators_df['sma'],
+                    y=indicators_df['sma_50'],
                     line=dict(color='black', width=2),
                     name="SMA_50"
                 )
