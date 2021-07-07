@@ -39,7 +39,7 @@ class Graphs:
             go.Scatter(
                 x=data['time'], 
                 y=data[col_name],
-                line=dict(color=color, width=2),
+                line=dict(color=color, width=1),
                 name=col_name.upper()
             )
         )
