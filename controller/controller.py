@@ -1,7 +1,7 @@
 import dash
 from dash.dependencies import Input, Output, State
 
-from currency_analysis import fetch_latest_candlesticks, calculate_currency_strength
+from currency_analysis import calculate_currency_strength
 
 from src.Graphs import Graphs
 from src.ForexAnalyzer import ForexAnalyzer
@@ -154,40 +154,4 @@ def register_callbacks(app):
             f"Minimum balance ({pct_loss}% loss tolerance): {(bal - amount_loss):.2f} (-{amount_loss:.2f})",
             graph_generator.plot_pip_target(avg_pip_list),
             {'display':'block'}
-        ]
-    
-
-    @app.callback(
-        [
-            Output("currency-dropdown","value"),
-            Output("currency-dropdown","options"),
-            Output("last-updated-candlesticks","children")
-        ],
-        [
-            Input("update-candlesticks-stats", "n_clicks"),
-            State("candlesticks-width","data")
-        ],
-        prevent_initial_call=True
-    )
-    def fetch_new_candlesticks_width(clicks, candlestick_data):
-
-        updated_pairs = fetch_latest_candlesticks()
-
-        last_updated_time = updated_pairs['last_updated']
-        del updated_pairs['last_updated']
-
-        widest_gap_symbol = next(iter(updated_pairs))
-        dropdown_options = []
-
-        for symbol, width in updated_pairs.items():
-            
-            dropdown_options.append({
-                'label': f"{symbol} - {width}",
-                'value': symbol
-            })
-        
-        return [
-            widest_gap_symbol,
-            dropdown_options,
-            f"Candlestick width last updated: {last_updated_time}"
         ]

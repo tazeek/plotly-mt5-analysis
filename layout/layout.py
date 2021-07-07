@@ -3,26 +3,18 @@ import dash_html_components as html
 
 def _fetch_forex_pairs():
     forex_pairs = []
-    last_updated_time = ""
 
     file_path = "\\".join([
         'C:','Users','Tazeek','Desktop','Projects',
-        'plotly-mt5-analysis','files','candlesticks_width.txt'
+        'plotly-mt5-analysis','files','forex_pairs.txt'
     ])
 
     with open(file_path) as f:
         for line in f.readlines():
 
-            forex_data = line.split(':')
-            if len(forex_data[0]) < 7:
-                forex_pairs.append({
-                    'symbol': forex_data[0],
-                    'width': forex_data[1].rstrip()
-                })
-            else:
-                last_updated_time = ":".join(forex_data[1:]).rstrip()
+            forex_pairs.append(line.strip())
     
-    return forex_pairs, last_updated_time
+    return sorted(forex_pairs)
 
 def _loading_figure_layout(fig_id, config=None, style=None):
     return dcc.Loading(
@@ -114,36 +106,16 @@ def _generate_profit_pip_calculator():
         ]
     )
 
-def _generate_candlesticks_info(last_updated_time):
-
-    return html.Div([
-
-        html.Div(
-            id="last-updated-candlesticks",
-            children=f"Candlestick width last updated: {last_updated_time}",
-            style={"margin-top": 10}
-        ),
-
-        html.Button(
-            'Update candlesticks stats', 
-            id='update-candlesticks-stats',
-            style={"margin-top": "15px"}
-        ),
-    ])
-
 def _generate_dropdown(forex_list):
 
     current_forex = forex_list[0]
 
     dropdown_options = []
 
-    for forex in forex_list:
-        
-        symbol = forex['symbol']
-        width = forex['width']
+    for symbol in forex_list:
         
         dropdown_options.append({
-            'label': f"{symbol} - {width}",
+            'label': f"{symbol}",
             'value': symbol
         })
 
@@ -155,12 +127,12 @@ def _generate_dropdown(forex_list):
                     id='currency-dropdown',
                     options=dropdown_options,
                     clearable=False,
-                    value=current_forex['symbol']
+                    value=current_forex
                 ),
-                dcc.Store(id='current-currency',data=current_forex['symbol']),
+                dcc.Store(id='current-currency',data=current_forex),
                 dcc.Store(id='candlesticks-width', data=forex_list)
             ],
-                style={"width": "15%"}
+                style={"width": "10%", "margin-top": 10}
         ),
 
         html.Div(children=[
@@ -184,7 +156,7 @@ def _generate_dropdown(forex_list):
 
 def generate_layout():
 
-    forex_list, last_updated_time = _fetch_forex_pairs()
+    forex_list = _fetch_forex_pairs()
 
     draw_config = {'modeBarButtonsToAdd': ['drawline','eraseshape', 'drawopenpath', 'drawrect']}
     hide_display = {'display':'none'}
@@ -203,9 +175,7 @@ def generate_layout():
             ]),
 
             dcc.Tab(label='Price Analysis', value='price-analysis-tab', children=[
-                
-                _generate_candlesticks_info(last_updated_time),
-                html.Hr(),
+
                 _generate_dropdown(forex_list),
 
                 dcc.Tabs(id='timeframe-tabs', value='price-activity', children=[
