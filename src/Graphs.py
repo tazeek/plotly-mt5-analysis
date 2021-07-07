@@ -153,14 +153,17 @@ class Graphs:
                     text=hover_list,
                     hoverinfo='text',
                     showlegend=False
-                ),
-                go.Scatter(
+                )
+            ]
+        )
+
+        candlesticks_minute_fig.add_trace(
+            go.Scatter(
                     x=indicators_df['time'], 
                     y=indicators_df['sma'],
                     line=dict(color='black', width=5),
-                    name="SMA"
+                    name="SMA_50"
                 )
-            ]
         )
 
         candlesticks_minute_fig.update_layout(
