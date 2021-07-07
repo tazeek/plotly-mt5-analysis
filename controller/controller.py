@@ -77,8 +77,8 @@ def register_callbacks(app):
         ask_value, bid_value = forex_analyzer.find_ask_bid()
         
         start_time = forex_analyzer.get_start_day()
-        stats_15M = forex_analyzer.get_daily_stats('15M',200)
-        stats_1H = forex_analyzer.get_daily_stats('1H',200)
+        stats_15M = forex_analyzer.get_daily_stats('15M',600)
+        stats_1H = forex_analyzer.get_daily_stats('1H',600)
         stats_4H = forex_analyzer.get_daily_stats('4H',600)
         start_day = forex_analyzer.get_start_day()
 

@@ -159,12 +159,30 @@ class Graphs:
 
         candlesticks_minute_fig.add_trace(
             go.Scatter(
-                    x=indicators_df['time'], 
-                    y=indicators_df['sma_50'],
-                    line=dict(color='black', width=2),
-                    name="SMA_50"
-                )
+                x=indicators_df['time'], 
+                y=indicators_df['sma_50'],
+                line=dict(color='black', width=2),
+                name="SMA_50"
+            )
         )
+
+        if timeframe == '15M':
+            candlesticks_minute_fig.add_trace(
+                go.Scatter(
+                    x=indicators_df['time'], 
+                    y=indicators_df['sma_21'],
+                    line=dict(color='blue', width=2),
+                    name="SMA_21"
+                )
+            )
+            candlesticks_minute_fig.add_trace(
+                go.Scatter(
+                    x=indicators_df['time'], 
+                    y=indicators_df['sma_200'],
+                    line=dict(color='red', width=2),
+                    name="SMA_200"
+                )
+            )
 
         candlesticks_minute_fig.update_layout(
             title=f"{self._currency} - Series ({timeframe})",
