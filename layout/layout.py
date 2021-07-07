@@ -14,7 +14,7 @@ def _fetch_forex_pairs():
 
             forex_pairs.append(line.strip())
     
-    return forex_pairs
+    return sorted(forex_pairs)
 
 def _loading_figure_layout(fig_id, config=None, style=None):
     return dcc.Loading(
@@ -132,7 +132,7 @@ def _generate_dropdown(forex_list):
                 dcc.Store(id='current-currency',data=current_forex),
                 dcc.Store(id='candlesticks-width', data=forex_list)
             ],
-                style={"width": "15%", "margin-top": 10}
+                style={"width": "10%", "margin-top": 10}
         ),
 
         html.Div(children=[
