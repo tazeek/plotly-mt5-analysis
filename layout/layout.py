@@ -114,23 +114,6 @@ def _generate_profit_pip_calculator():
         ]
     )
 
-def _generate_candlesticks_info(last_updated_time):
-
-    return html.Div([
-
-        html.Div(
-            id="last-updated-candlesticks",
-            children=f"Candlestick width last updated: {last_updated_time}",
-            style={"margin-top": 10}
-        ),
-
-        html.Button(
-            'Update candlesticks stats', 
-            id='update-candlesticks-stats',
-            style={"margin-top": "15px"}
-        ),
-    ])
-
 def _generate_dropdown(forex_list):
 
     current_forex = forex_list[0]
@@ -160,7 +143,7 @@ def _generate_dropdown(forex_list):
                 dcc.Store(id='current-currency',data=current_forex['symbol']),
                 dcc.Store(id='candlesticks-width', data=forex_list)
             ],
-                style={"width": "15%"}
+                style={"width": "15%", "margin-top": 10}
         ),
 
         html.Div(children=[
@@ -203,9 +186,7 @@ def generate_layout():
             ]),
 
             dcc.Tab(label='Price Analysis', value='price-analysis-tab', children=[
-                
-                _generate_candlesticks_info(last_updated_time),
-                html.Hr(),
+
                 _generate_dropdown(forex_list),
 
                 dcc.Tabs(id='timeframe-tabs', value='price-activity', children=[
