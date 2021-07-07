@@ -180,13 +180,6 @@ class Graphs:
             ]
         )
         
-        candlesticks_minute_fig.add_vline(
-            x=start_time,
-            line_dash="solid",
-            line_color="black",
-            line_width=3
-        )
-
         return candlesticks_minute_fig
 
     def plot_rsi_figure(self, rsi_today, start_time):
@@ -208,13 +201,6 @@ class Graphs:
         )
 
         self._draw_hline(rsi_fig, 50, "solid", "black")
-
-        rsi_fig.add_vline(
-            x=start_time,
-            line_dash="solid",
-            line_color="black",
-            line_width=3
-        )
 
         rsi_fig.update_xaxes(
             rangebreaks=[
