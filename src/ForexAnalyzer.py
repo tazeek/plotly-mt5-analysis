@@ -53,11 +53,6 @@ class ForexAnalyzer:
     
     def _create_indicators(self, day_stats, timeframe):
 
-        period = 14
-
-        if timeframe == '4H':
-            period = 50
-
         day_stats.rename(
             columns={
                 "close": "Close", 
@@ -69,8 +64,10 @@ class ForexAnalyzer:
         )
 
         indicators = Indicators(day_stats)
-        indicators.sma(period=period, column_name='sma')
-        indicators.atr(period=period, column_name='atr')
+        indicators.smma(period=21, column_name='sma_21', apply_to='Close')
+        indicators.smma(period=50, column_name='sma_50', apply_to='Close')
+        indicators.smma(period=200, column_name='sma_200', apply_to='Close')
+        indicators.atr(period=50, column_name='atr')
 
         self._indicators_stats_df[timeframe] = indicators.df
 
@@ -133,12 +130,6 @@ class ForexAnalyzer:
         rates_df['width_candlestick'] = rates_df.apply(
             lambda x: self._calculate_pip(x['low'], x['high']),
             axis=1
-        )
-
-        pct_change_lambda = lambda open,close: ((close-open)/open) * 100
-
-        rates_df['price_percentage_change'] = rates_df.apply(
-            lambda x: pct_change_lambda(x['open'], x['close']), axis=1
         )
 
         return rates_df
