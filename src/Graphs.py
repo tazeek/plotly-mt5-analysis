@@ -151,7 +151,7 @@ class Graphs:
 
         return percentage_change_fig
 
-    def plot_candlesticks_fullday(self, data_day, start_time, timeframe, indicators_df):
+    def plot_candlesticks_fullday(self, data_day, timeframe, indicators_df):
 
         hover_list= data_day.apply(lambda data_row:self._candlestick_text(data_row), axis=1)
 
