@@ -1,5 +1,2 @@
 *.ipynb
-forex_pairs.txt
-candlesticks_width.txt
-currency_strength_pairs.txt
 *__pycache__
