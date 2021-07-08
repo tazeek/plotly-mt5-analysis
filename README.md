@@ -3,9 +3,7 @@
 
 ### About the project
 
-This project is based
-
-This project consists of a dashboard that has the following features:
+This project is an analysis done on the forex prices from MetaTrader5 (MT5). The analysis is in the form of a dashboard, which have the following features:
 
 * Currency Strength Analysis
 * Risk Management Analysis
