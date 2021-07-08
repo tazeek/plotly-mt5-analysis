@@ -1,5 +1,16 @@
 from src.ForexAnalyzer import ForexAnalyzer
 
+def load_forex_pairs():
+
+    forex_pairs = []
+
+    with open("files\\forex_pairs.txt") as f:
+        for line in f.readlines():
+
+            forex_pairs.append(line.rstrip())
+    
+    return sorted(forex_pairs)
+
 def calculate_currency_strength():
 
     forex_analyzer = ForexAnalyzer()
