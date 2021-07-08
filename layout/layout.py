@@ -1,20 +1,7 @@
+from currency_analysis import load_forex_pairs
+
 import dash_core_components as dcc
 import dash_html_components as html
-
-def _fetch_forex_pairs():
-    forex_pairs = []
-
-    file_path = "\\".join([
-        'C:','Users','Tazeek','Desktop','Projects',
-        'plotly-mt5-analysis','files','forex_pairs.txt'
-    ])
-
-    with open(file_path) as f:
-        for line in f.readlines():
-
-            forex_pairs.append(line.strip())
-    
-    return sorted(forex_pairs)
 
 def _loading_figure_layout(fig_id, config=None, style=None):
     return dcc.Loading(
@@ -156,7 +143,7 @@ def _generate_dropdown(forex_list):
 
 def generate_layout():
 
-    forex_list = _fetch_forex_pairs()
+    forex_list = load_forex_pairs()
 
     draw_config = {'modeBarButtonsToAdd': ['drawline','eraseshape', 'drawopenpath', 'drawrect']}
     hide_display = {'display':'none'}
