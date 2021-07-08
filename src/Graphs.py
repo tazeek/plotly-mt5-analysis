@@ -176,13 +176,22 @@ class Graphs:
             self._add_sma_graphs(candlesticks_minute_fig, indicators_df, 'blue','sma_21')
             self._add_sma_graphs(candlesticks_minute_fig, indicators_df, 'red','sma_200')
 
+        legend_config=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.02,
+            xanchor="right",
+            x=1
+        )
+
         candlesticks_minute_fig.update_layout(
             title=f"{self._currency} - Series ({timeframe})",
             xaxis_title="Time",
             yaxis_title="Price",
             hovermode='x',
             yaxis_tickformat='.5f',
-            xaxis_rangeslider_visible=False
+            xaxis_rangeslider_visible=False,
+            legend=legend_config
         )
 
         candlesticks_minute_fig.update_xaxes(
