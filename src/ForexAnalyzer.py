@@ -87,6 +87,28 @@ class ForexAnalyzer:
 
         return rates
 
+    def find_support_areas(self,df,i):
+
+        current_previous = df['Low'][i] < df['Low'][i-1]
+        current_next = df['Low'][i] < df['Low'][i+1]
+        previous_two = df['Low'][i+1] < df['Low'][i+2]
+        next_two = df['Low'][i-1] < df['Low'][i-2]
+
+        support = current_previous and current_next and previous_two and next_two
+
+        return support
+
+    def find_resistance_areas(self, df,i):
+
+        current_previous = df['High'][i] > df['High'][i-1]
+        current_next = df['High'][i] > df['High'][i+1]
+        previous_two = df['High'][i+1] > df['High'][i+2]
+        next_two = df['High'][i-1] > df['High'][i-2]
+
+        resistance = current_previous and current_next and previous_two and next_two
+
+        return resistance
+
     def find_ask_bid(self):
 
         last_tick_info = mt5.symbol_info_tick(self._forex_pair)
