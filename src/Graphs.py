@@ -195,7 +195,7 @@ class Graphs:
         )
 
         if support_resistance_levels:
-            for level in levels:
+            for level in support_resistance_levels:
                 self._draw_hline(candlesticks_minute_fig, level, "solid", "purple")
 
         candlesticks_minute_fig.update_xaxes(

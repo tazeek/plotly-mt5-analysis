@@ -89,10 +89,10 @@ class ForexAnalyzer:
 
     def _find_support_areas(self,df,i):
 
-        current_previous = df['Low'][i] < df['Low'][i-1]
-        current_next = df['Low'][i] < df['Low'][i+1]
-        previous_two = df['Low'][i+1] < df['Low'][i+2]
-        next_two = df['Low'][i-1] < df['Low'][i-2]
+        current_previous = df['low'][i] < df['low'][i-1]
+        current_next = df['low'][i] < df['low'][i+1]
+        previous_two = df['low'][i+1] < df['low'][i+2]
+        next_two = df['low'][i-1] < df['low'][i-2]
 
         support = current_previous and current_next and previous_two and next_two
 
@@ -100,10 +100,10 @@ class ForexAnalyzer:
 
     def _find_resistance_areas(self, df,i):
 
-        current_previous = df['High'][i] > df['High'][i-1]
-        current_next = df['High'][i] > df['High'][i+1]
-        previous_two = df['High'][i+1] > df['High'][i+2]
-        next_two = df['High'][i-1] > df['High'][i-2]
+        current_previous = df['high'][i] > df['high'][i-1]
+        current_next = df['high'][i] > df['high'][i+1]
+        previous_two = df['high'][i+1] > df['high'][i+2]
+        next_two = df['high'][i-1] > df['high'][i-2]
 
         resistance = current_previous and current_next and previous_two and next_two
 
@@ -188,8 +188,8 @@ class ForexAnalyzer:
         
         for i in range(2,df.shape[0]-2):
             if self._find_support_areas(df, i):
-                levels.append(df['Low'].iat[i])
+                levels.append(df['low'].iat[i])
             elif self._find_resistance_areas(df, i):
-                levels.append(df['High'].iat[i])
+                levels.append(df['high'].iat[i])
 
         return levels
