@@ -87,7 +87,7 @@ class ForexAnalyzer:
 
         return rates
 
-    def find_support_areas(self,df,i):
+    def _find_support_areas(self,df,i):
 
         current_previous = df['Low'][i] < df['Low'][i-1]
         current_next = df['Low'][i] < df['Low'][i+1]
@@ -98,7 +98,7 @@ class ForexAnalyzer:
 
         return support
 
-    def find_resistance_areas(self, df,i):
+    def _find_resistance_areas(self, df,i):
 
         current_previous = df['High'][i] > df['High'][i-1]
         current_next = df['High'][i] > df['High'][i+1]
