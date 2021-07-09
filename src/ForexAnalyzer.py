@@ -184,4 +184,12 @@ class ForexAnalyzer:
         return round(rop_val,3)
 
     def find_support_resistance(self, df):
-        ...
+        levels = []
+        
+        for i in range(2,df.shape[0]-2):
+            if self._find_support_areas(df, i):
+                levels.append(df['Low'].iat[i])
+            elif self._find_resistance_areas(df, i):
+                levels.append(df['High'].iat[i])
+        
+        print(levels)
