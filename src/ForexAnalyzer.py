@@ -191,5 +191,5 @@ class ForexAnalyzer:
                 levels.append(df['Low'].iat[i])
             elif self._find_resistance_areas(df, i):
                 levels.append(df['High'].iat[i])
-        
-        print(levels)
+
+        return levels

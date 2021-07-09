@@ -151,7 +151,7 @@ class Graphs:
 
         return percentage_change_fig
 
-    def plot_candlesticks_fullday(self, data_day, timeframe, indicators_df):
+    def plot_candlesticks_fullday(self, data_day, timeframe, indicators_df, support_resistance_levels=None):
 
         hover_list= data_day.apply(lambda data_row:self._candlestick_text(data_row), axis=1)
 
@@ -193,6 +193,10 @@ class Graphs:
             xaxis_rangeslider_visible=False,
             legend=legend_config
         )
+
+        if support_resistance_levels:
+            for level in levels:
+                self._draw_hline(candlesticks_minute_fig, level, "solid", "purple")
 
         candlesticks_minute_fig.update_xaxes(
             rangebreaks=[
