@@ -182,3 +182,6 @@ class ForexAnalyzer:
         rop_val = ((current_close_price - oldest_close_price)/oldest_close_price) * 100
 
         return round(rop_val,3)
+
+    def find_support_resistance(self, df):
+        ...

@@ -80,6 +80,8 @@ def register_callbacks(app):
         stats_4H = forex_analyzer.get_daily_stats('4H',600)
         start_day = forex_analyzer.get_start_day()
 
+        support_resistance_4H = forex_analyzer.find_support_resistance(stats_4H)
+
         return [
             f"Ask value: {ask_value:.5f}",
             f"Bid value: {bid_value:.5f}",
