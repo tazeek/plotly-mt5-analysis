@@ -30,6 +30,12 @@ def _generate_points_percentage_graph():
                     style={"margin-right": "15px"}
                 ) for field in ['lower', 'upper']
             ]),
+
+            html.Button(
+                'Display', 
+                id='show-graph-points',
+                style={"margin-top": "15px", "margin-bottom": "15px"}
+            )
         ]
     )
 
