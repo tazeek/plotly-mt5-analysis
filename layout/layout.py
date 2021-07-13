@@ -20,7 +20,16 @@ def _generate_points_percentage_graph():
         [
             html.H1(
                 children="Points aim (percentage)"
-            )
+            ),
+
+            html.Div([
+                dcc.Input(
+                    id=f"input_{field}",
+                    type="text",
+                    placeholder=f"Enter price - {field}",
+                    style={"margin-right": "15px"}
+                ) for field in ['lower', 'upper']
+            ]),
         ]
     )
 
