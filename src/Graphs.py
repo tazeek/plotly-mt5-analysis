@@ -300,3 +300,17 @@ class Graphs:
         )
 
         return bar_fig
+
+    def plot_point_percentage_target(self, data_dict):
+
+        fig = go.Figure(
+            [
+                go.Scatter(
+                    x=list(data_dict.items()), 
+                    y=list(data_dict.values()),
+                    mode="lines"
+                )
+            ]
+        )
+
+        return fig
