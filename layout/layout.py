@@ -26,7 +26,7 @@ def _generate_points_percentage_graph():
                 dcc.Input(
                     id=f"input_{field}",
                     type="text",
-                    placeholder=f"Enter price - {field}",
+                    placeholder=f"Enter {field}",
                     style={"margin-right": "15px"}
                 ) for field in ['lower', 'upper', 'currency']
             ]),
