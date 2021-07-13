@@ -20,23 +20,6 @@ def _generate_points_percentage_graph():
 
 def _generate_profit_pip_calculator():
 
-    dropdown_options = []
-
-    settlement_conversion = {
-        'JPY': 0.90,
-        'CAD': 0.80,
-        'USD': 1.00,
-        'CHF': 1.10,
-        'GBP': 1.40
-    }
-
-    for currency, rate in settlement_conversion.items():
-
-        dropdown_options.append({
-            'label': currency,
-            'value': rate
-        })
-
     profit_loss_rm_dict = {
         'balance': 0.00,
         'percentage_target': 30,
