@@ -303,11 +303,17 @@ class Graphs:
 
     def plot_point_percentage_target(self, data_dict):
 
+        x_val = list(data_dict.keys())
+        y_val = list(data_dict.values())
+
+        print(x_val)
+        print(y_val)
+
         fig = go.Figure(
             [
                 go.Scatter(
-                    x=list(data_dict.items()), 
-                    y=list(data_dict.values()),
+                    x=x_val, 
+                    y=y_val,
                     mode="lines"
                 )
             ]

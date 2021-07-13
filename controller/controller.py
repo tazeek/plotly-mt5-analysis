@@ -155,6 +155,7 @@ def register_callbacks(app):
 
     @app.callback(
         [
+            Output('points-percentage-fig','figure'),
             Output('points-percentage-fig','style')
         ],
         [
@@ -179,4 +180,7 @@ def register_callbacks(app):
             percentage_target[perc] = int(points_diff * (perc/100))
 
         print(percentage_target)
-        ...
+        return [
+            graph_generator.plot_point_percentage_target(percentage_target),
+            {'display':'block'}
+        ]
