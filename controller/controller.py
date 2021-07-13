@@ -152,3 +152,35 @@ def register_callbacks(app):
             graph_generator.plot_pip_target(avg_pip_list),
             {'display':'block'}
         ]
+
+    @app.callback(
+        [
+            Output('points-percentage-fig','figure'),
+            Output('points-percentage-fig','style')
+        ],
+        [
+            Input('show-graph-points','n_clicks')
+        ],
+        [
+            State('input_upper','value'),
+            State('input_lower','value'),
+            State('input_currency','value')
+        ],
+        prevent_initial_call=True
+    )
+    def calculate_point_percentage(click, upper_num, lower_num, underlying):
+
+        # Find the number of points
+        points_diff = forex_analyzer.calculate_point_gap(float(lower_num), float(upper_num), underlying)
+        
+        percentage_target = {}
+
+        for i in range(1, 11):
+            perc = i * 10
+            percentage_target[perc] = int(points_diff * (perc/100))
+
+        print(percentage_target)
+        return [
+            graph_generator.plot_point_percentage_target(percentage_target),
+            {'display':'block'}
+        ]

@@ -31,15 +31,15 @@ class ForexAnalyzer:
             print("initialize() failed, error code =",mt5.last_error())
             quit()
 
-    def _get_multiplier(self):
+    def _get_multiplier(self, forex_pair=None):
 
-        symbol_info = mt5.symbol_info(self._forex_pair)
+        symbol_info = mt5.symbol_info(forex_pair or self._forex_pair)
 
         return 10 ** -symbol_info.digits
 
-    def _calculate_pip(self, open_price, close_price):
+    def calculate_point_gap(self, open_price, close_price, forex_pair=None):
 
-        pips = round((close_price - open_price) / self._get_multiplier())
+        pips = round((close_price - open_price) / self._get_multiplier(forex_pair))
         return int(pips)
 
     def _calculate_rsi(self, day_stats, timeframe):
@@ -120,7 +120,7 @@ class ForexAnalyzer:
             
         self._create_indicators(rates_df.copy(), timeframe)
 
-        pip_lambda = lambda open_price, close_price: self._calculate_pip(open_price, close_price)
+        pip_lambda = lambda open_price, close_price: self.calculate_point_gap(open_price, close_price)
         
         rates_df['pip_difference'] = rates_df.apply(
             lambda x: pip_lambda(x['low'], x['high']), 
@@ -128,7 +128,7 @@ class ForexAnalyzer:
         )
 
         rates_df['width_candlestick'] = rates_df.apply(
-            lambda x: self._calculate_pip(x['low'], x['high']),
+            lambda x: self.calculate_point_gap(x['low'], x['high']),
             axis=1
         )
 
@@ -142,10 +142,10 @@ class ForexAnalyzer:
 
             stats_dict = rates_df.to_dict('records')[0]
 
-        stats_dict['width_candlestick'] = self._calculate_pip(stats_dict['low'], stats_dict['high'])
-        stats_dict['gap_high_close'] = self._calculate_pip(stats_dict['close'],stats_dict['high'])
-        stats_dict['gap_close_low'] = self._calculate_pip(stats_dict['low'], stats_dict['close'])
-        stats_dict['gap_close_open'] = self._calculate_pip(stats_dict['open'], stats_dict['close'])
+        stats_dict['width_candlestick'] = self.calculate_point_gap(stats_dict['low'], stats_dict['high'])
+        stats_dict['gap_high_close'] = self.calculate_point_gap(stats_dict['close'],stats_dict['high'])
+        stats_dict['gap_close_low'] = self.calculate_point_gap(stats_dict['low'], stats_dict['close'])
+        stats_dict['gap_close_open'] = self.calculate_point_gap(stats_dict['open'], stats_dict['close'])
         
         return stats_dict
 

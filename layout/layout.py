@@ -15,24 +15,31 @@ def _loading_figure_layout(fig_id, config=None, style=None):
         ])
     )
 
+def _generate_points_percentage_graph():
+    return html.Div(
+        [
+            html.H1(
+                children="Points aim (percentage)"
+            ),
+
+            html.Div([
+                dcc.Input(
+                    id=f"input_{field}",
+                    type="text",
+                    placeholder=f"Enter {field}",
+                    style={"margin-right": "15px"}
+                ) for field in ['lower', 'upper', 'currency']
+            ]),
+
+            html.Button(
+                'Display', 
+                id='show-graph-points',
+                style={"margin-top": "15px", "margin-bottom": "15px"}
+            )
+        ]
+    )
+
 def _generate_profit_pip_calculator():
-
-    dropdown_options = []
-
-    settlement_conversion = {
-        'JPY': 0.90,
-        'CAD': 0.80,
-        'USD': 1.00,
-        'CHF': 1.10,
-        'GBP': 1.40
-    }
-
-    for currency, rate in settlement_conversion.items():
-
-        dropdown_options.append({
-            'label': currency,
-            'value': rate
-        })
 
     profit_loss_rm_dict = {
         'balance': 0.00,
@@ -154,7 +161,10 @@ def generate_layout():
             
             dcc.Tab(label='Risk Management', value='risk-management-tab', children=[
                 _generate_profit_pip_calculator(),
-                _loading_figure_layout('bar-average-pip-fig',None,hide_display)
+                _loading_figure_layout('bar-average-pip-fig',None,hide_display),
+                html.Hr(),
+                _generate_points_percentage_graph(),
+                _loading_figure_layout('points-percentage-fig',None,hide_display),
             ]),
 
             dcc.Tab(label='Currency Strength Analysis', value='currency-strength-tab', children=[
