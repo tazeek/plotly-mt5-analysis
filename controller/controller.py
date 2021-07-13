@@ -170,4 +170,6 @@ def register_callbacks(app):
     def calculate_point_percentage(click, upper_num, lower_num, underlying):
 
         # Find the number of points
+        points_diff = forex_analyzer.calculate_point_gap(float(lower_num), float(upper_num), underlying)
+        print(points_diff)
         ...
