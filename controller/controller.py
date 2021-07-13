@@ -152,3 +152,19 @@ def register_callbacks(app):
             graph_generator.plot_pip_target(avg_pip_list),
             {'display':'block'}
         ]
+
+    @app.callback(
+        [
+            Output('points-percentage-fig','style')
+        ],
+        [
+            Input('show-graph-points','n_clicks')
+        ],
+        [
+            State('input_upper','value'),
+            State('input_lower','value')
+        ],
+        prevent_initial_call=True
+    )
+    def calculate_point_percentage(click, upper_num, lower_num):
+        ...
