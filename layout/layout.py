@@ -16,7 +16,13 @@ def _loading_figure_layout(fig_id, config=None, style=None):
     )
 
 def _generate_points_percentage_graph():
-    ...
+    return html.Div(
+        [
+            html.H1(
+                children="Points aim (percentage)"
+            )
+        ]
+    )
 
 def _generate_profit_pip_calculator():
 
