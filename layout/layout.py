@@ -15,6 +15,9 @@ def _loading_figure_layout(fig_id, config=None, style=None):
         ])
     )
 
+def _generate_points_percentage_graph():
+    ...
+
 def _generate_profit_pip_calculator():
 
     dropdown_options = []
@@ -154,7 +157,9 @@ def generate_layout():
             
             dcc.Tab(label='Risk Management', value='risk-management-tab', children=[
                 _generate_profit_pip_calculator(),
-                _loading_figure_layout('bar-average-pip-fig',None,hide_display)
+                _loading_figure_layout('bar-average-pip-fig',None,hide_display),
+                html.Hr(),
+                _generate_points_percentage_graph()
             ]),
 
             dcc.Tab(label='Currency Strength Analysis', value='currency-strength-tab', children=[
