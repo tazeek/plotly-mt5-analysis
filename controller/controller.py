@@ -162,9 +162,12 @@ def register_callbacks(app):
         ],
         [
             State('input_upper','value'),
-            State('input_lower','value')
+            State('input_lower','value'),
+            State('input_currency','value')
         ],
         prevent_initial_call=True
     )
-    def calculate_point_percentage(click, upper_num, lower_num):
+    def calculate_point_percentage(click, upper_num, lower_num, underlying):
+
+        # Find the number of points
         ...

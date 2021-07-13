@@ -28,7 +28,7 @@ def _generate_points_percentage_graph():
                     type="text",
                     placeholder=f"Enter price - {field}",
                     style={"margin-right": "15px"}
-                ) for field in ['lower', 'upper']
+                ) for field in ['lower', 'upper', 'currency']
             ]),
 
             html.Button(
