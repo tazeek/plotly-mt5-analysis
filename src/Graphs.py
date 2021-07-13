@@ -305,7 +305,7 @@ class Graphs:
 
         x_val = list(data_dict.keys())
         y_val = list(data_dict.values())
-        
+
         fig = go.Figure(
             [
                 go.Scatter(
@@ -314,6 +314,13 @@ class Graphs:
                     mode="lines"
                 )
             ]
+        )
+
+        fig.update_layout(
+            title=f"Points percentage target",
+            xaxis_title="Points",
+            yaxis_title="Percentage",
+            hovermode='x',
         )
 
         return fig
