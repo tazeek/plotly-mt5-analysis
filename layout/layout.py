@@ -157,7 +157,8 @@ def generate_layout():
                 _generate_profit_pip_calculator(),
                 _loading_figure_layout('bar-average-pip-fig',None,hide_display),
                 html.Hr(),
-                _generate_points_percentage_graph()
+                _generate_points_percentage_graph(),
+                _loading_figure_layout('points-percentage-fig',None,hide_display),
             ]),
 
             dcc.Tab(label='Currency Strength Analysis', value='currency-strength-tab', children=[
