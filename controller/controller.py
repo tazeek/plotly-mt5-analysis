@@ -179,7 +179,6 @@ def register_callbacks(app):
             perc = i * 10
             percentage_target[perc] = int(points_diff * (perc/100))
 
-        print(percentage_target)
         return [
             graph_generator.plot_point_percentage_target(percentage_target),
             {'display':'block'}
