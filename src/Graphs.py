@@ -321,6 +321,11 @@ class Graphs:
             xaxis_title="Percentage",
             yaxis_title="Points",
             hovermode='x',
+            xaxis=dict(
+                tickmode='linear',
+                tick0 = 0,
+                dtick = 10
+            )
         )
 
         return fig
@@ -345,6 +350,11 @@ class Graphs:
             xaxis_title="Percentage",
             yaxis_title="Profit",
             hovermode='x',
+            xaxis=dict(
+                tickmode='linear',
+                tick0 = 0,
+                dtick = 10
+            )
         )
 
         return fig
