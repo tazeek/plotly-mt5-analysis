@@ -189,6 +189,9 @@ def generate_layout():
                 html.Hr(),
                 _generate_points_percentage_graph(),
                 _loading_figure_layout('points-percentage-fig',None,hide_display),
+                html.Hr(),
+                _generate_profit_percentage_graph(),
+                _loading_figure_layout('profit-percentage-fig',None,hide_display)
             ]),
 
             dcc.Tab(label='Currency Strength Analysis', value='currency-strength-tab', children=[
