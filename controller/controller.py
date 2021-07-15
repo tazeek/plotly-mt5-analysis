@@ -183,3 +183,30 @@ def register_callbacks(app):
             graph_generator.plot_point_percentage_target(percentage_target),
             {'display':'block'}
         ]
+
+    @app.callback(
+        [
+            Output('profit-percentage-fig','figure'),
+            Output('profit-percentage-fig','style')
+        ],
+        [
+            Input('show-graph-profit','n_clicks')
+        ],
+        [
+            State('input_profit_target','value')
+        ],
+        prevent_initial_call=True
+    )
+    def calculate_point_percentage(click, profit_target):
+ 
+        percentage_target = {0: 0}
+        profit_target = float(profit_target)
+
+        for i in range(1, 11):
+            perc = i * 10
+            percentage_target[perc] = round((profit_target * (perc/100)),2)
+
+        return [
+            graph_generator.plot_profit_percentage_target(percentage_target),
+            {'display':'block'}
+        ]

@@ -318,8 +318,32 @@ class Graphs:
 
         fig.update_layout(
             title=f"Points percentage target",
-            xaxis_title="Points",
-            yaxis_title="Percentage",
+            xaxis_title="Percentage",
+            yaxis_title="Points",
+            hovermode='x',
+        )
+
+        return fig
+    
+    def plot_profit_percentage_target(self, data_dict):
+
+        x_val = list(data_dict.keys())
+        y_val = list(data_dict.values())
+
+        fig = go.Figure(
+            [
+                go.Scatter(
+                    x=x_val, 
+                    y=y_val,
+                    mode="lines"
+                )
+            ]
+        )
+
+        fig.update_layout(
+            title=f"Profit percentage target",
+            xaxis_title="Percentage",
+            yaxis_title="Profit",
             hovermode='x',
         )
 
