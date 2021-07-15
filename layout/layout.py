@@ -39,6 +39,30 @@ def _generate_points_percentage_graph():
         ]
     )
 
+def _generate_profit_percentage_graph():
+
+    return html.Div([
+        html.H1(
+            children="Profit aim (percentage)"
+        ),
+
+        html.Div([
+            dcc.Input(
+                id=f"input_profit_target",
+                type="text",
+                placeholder="Enter profit target",
+                style={"margin-right": "15px"}
+            )
+        ]),
+
+        html.Button(
+                'Display', 
+                id='show-graph-profit',
+                style={"margin-top": "15px", "margin-bottom": "15px"}
+            )
+
+    ])
+
 def _generate_profit_pip_calculator():
 
     profit_loss_rm_dict = {
