@@ -18,13 +18,13 @@ class Graphs:
         if timeframe not in self._missing_dates:
 
             # build complete timeline from start date to end date
-            dt_all = pd.date_range(start=data['time'].iat[0],end=data['time'].iat[-1])
+            all_dates = pd.date_range(start=data['time'].iat[0],end=data['time'].iat[-1])
 
             # retrieve the dates that ARE in the original datset
             original_dates = [d.strftime("%Y-%m-%d") for d in data['time']]
 
             # define dates with missing values
-            break_dates = [d for d in dt_all.strftime("%Y-%m-%d").tolist() if not d in original_dates]
+            break_dates = [d for d in all_dates.strftime("%Y-%m-%d").tolist() if not d in original_dates]
 
             self._missing_dates[timeframe] = break_dates
 
@@ -108,40 +108,6 @@ class Graphs:
         )
 
         return tick_vol_fig
-
-    def plot_percentage_change(self, data, start_time):
-
-        data = self._filter_data(data.copy(), start_time)
-
-        percentage_change_fig = go.Figure([
-            go.Scatter(
-                x=data['time'], 
-                y=data['price_percentage_change']
-            )
-        ])
-
-        percentage_change_fig.update_layout(
-            title=f"{self._symbol} - Price Percentage Change for today (1H)",
-            template='simple_white',
-            xaxis_title="Time",
-            yaxis_title="Percentage change",
-            hovermode='x',
-            yaxis_tickformat='.3f'
-        )
-
-        self._draw_hline(percentage_change_fig, 0, "solid", "black")
-
-        percentage_change_fig.add_hrect(
-            y0=0.03, 
-            y1=-0.03,
-            fillcolor="#D55A5A",
-            annotation_text="Less activity zone",
-            annotation_position="outside bottom left",
-            layer="below", 
-            opacity=0.25
-        )
-
-        return percentage_change_fig
 
     def plot_candlesticks_fullday(self, data_day, timeframe, indicators_df):
 
