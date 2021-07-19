@@ -39,8 +39,8 @@ class ForexAnalyzer:
 
     def calculate_point_gap(self, open_price, close_price, symbol=None):
 
-        pips = round((close_price - open_price) / self._get_multiplier(symbol))
-        return int(pips)
+        points = round((close_price - open_price) / self._get_multiplier(symbol))
+        return int(points)
 
     def _calculate_rsi(self, day_stats, timeframe):
 
@@ -73,13 +73,13 @@ class ForexAnalyzer:
 
         return None
 
-    def _fetch_data_mt5(self, timeframe, bars_num, pair=None):
+    def _fetch_data_mt5(self, timeframe, bar_count, symbol=None):
 
         rates = mt5.copy_rates_from(
-            pair or self._symbol,
+            symbol or self._symbol,
             self._mt5_timeframe_dict[timeframe],
             self.get_current_time(),
-            bars_num
+            bar_count
         )
 
         rates = pd.DataFrame(rates)
@@ -122,14 +122,14 @@ class ForexAnalyzer:
 
         return rates_df
 
-    def get_currency_strength(self, currency_pair):
-        rates_df = self._fetch_data_mt5('1W', 5, currency_pair)
+    def get_currency_strength(self, symbol):
+        rates_df = self._fetch_data_mt5('1W', 5, symbol)
 
         close_price_series = rates_df['close']
 
         oldest_close_price = close_price_series.iat[0]
         current_close_price = close_price_series.iat[-1]
 
-        rop_val = ((current_close_price - oldest_close_price)/oldest_close_price) * 100
+        percentage_strength = ((current_close_price - oldest_close_price)/oldest_close_price) * 100
 
-        return round(rop_val,3)
+        return round(percentage_strength,3)
