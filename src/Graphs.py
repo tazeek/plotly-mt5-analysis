@@ -4,12 +4,12 @@ import pandas as pd
 
 class Graphs:
 
-    def __init__(self, currency=None):
-        self._currency = currency
+    def __init__(self, symbol=None):
+        self._symbol = symbol
         self._missing_dates = {}
 
-    def update_currency(self, currency):
-        self._currency = currency
+    def update_symbol(self, symbol):
+        self._symbol = symbol
 
         return None
 
@@ -18,13 +18,13 @@ class Graphs:
         if timeframe not in self._missing_dates:
 
             # build complete timeline from start date to end date
-            dt_all = pd.date_range(start=data['time'].iat[0],end=data['time'].iat[-1])
+            all_dates = pd.date_range(start=data['time'].iat[0],end=data['time'].iat[-1])
 
             # retrieve the dates that ARE in the original datset
             original_dates = [d.strftime("%Y-%m-%d") for d in data['time']]
 
             # define dates with missing values
-            break_dates = [d for d in dt_all.strftime("%Y-%m-%d").tolist() if not d in original_dates]
+            break_dates = [d for d in all_dates.strftime("%Y-%m-%d").tolist() if not d in original_dates]
 
             self._missing_dates[timeframe] = break_dates
 
@@ -46,14 +46,6 @@ class Graphs:
 
         return None
 
-    def _candlestick_text(self, candlestick_info):
-
-        return f"Open: {candlestick_info['open']:.5f}<br>" + \
-                f"High: {candlestick_info['high']:.5f}<br>" + \
-                f"Low: {candlestick_info['low']:.5f}<br>" + \
-                f"Close: {candlestick_info['close']:.5f}<br>" + \
-                f"Width: {candlestick_info['pip_difference']}"
-
     def _draw_hline(self, fig, y_val, line_dash, line_col, annotation=None):
 
         fig.add_hline(
@@ -64,6 +56,17 @@ class Graphs:
             line_width=3
         )
         
+        return None
+
+    def _fill_missing_dates(self, fig, data_day, timeframe):
+        fig.update_xaxes(
+            rangebreaks=[
+                dict(
+                    values=self._filter_missing_dates(data_day, timeframe)
+                )
+            ]
+        )
+
         return None
 
     def plot_atr(self, data):
@@ -81,7 +84,7 @@ class Graphs:
         current_atr = ''.join(current_atr[:2])
 
         atr_fig.update_layout(
-            title=f"{self._currency} - ATR (4H) (Current value: {current_atr})",
+            title=f"{self._symbol} - ATR (4H) (Current value: {current_atr})",
             template='simple_white',
             xaxis_title="Time",
             hovermode='x',
@@ -92,68 +95,7 @@ class Graphs:
 
         return atr_fig
 
-    def plot_tick_volume_fullday(self, data, start_time):
-
-        data = self._filter_data(data.copy(), start_time)
-
-        tick_vol_fig = go.Figure([
-            go.Scatter(
-                x=data['time'], 
-                y=data['tick_volume'],
-                mode="lines+markers"
-            )
-        ])
-
-        self._draw_hline(tick_vol_fig, data['tick_volume'].mean(), "solid", "black")
-
-        tick_vol_fig.update_layout(
-            title=f"{self._currency} - Tick Volume for today (1H)",
-            template='simple_white',
-            xaxis_title="Time",
-            yaxis_title="Volume",
-            hovermode='x',
-            yaxis_tickformat='k'
-        )
-
-        return tick_vol_fig
-
-    def plot_percentage_change(self, data, start_time):
-
-        data = self._filter_data(data.copy(), start_time)
-
-        percentage_change_fig = go.Figure([
-            go.Scatter(
-                x=data['time'], 
-                y=data['price_percentage_change']
-            )
-        ])
-
-        percentage_change_fig.update_layout(
-            title=f"{self._currency} - Price Percentage Change for today (1H)",
-            template='simple_white',
-            xaxis_title="Time",
-            yaxis_title="Percentage change",
-            hovermode='x',
-            yaxis_tickformat='.3f'
-        )
-
-        self._draw_hline(percentage_change_fig, 0, "solid", "black")
-
-        percentage_change_fig.add_hrect(
-            y0=0.03, 
-            y1=-0.03,
-            fillcolor="#D55A5A",
-            annotation_text="Less activity zone",
-            annotation_position="outside bottom left",
-            layer="below", 
-            opacity=0.25
-        )
-
-        return percentage_change_fig
-
     def plot_candlesticks_fullday(self, data_day, timeframe, indicators_df):
-
-        hover_list= data_day.apply(lambda data_row:self._candlestick_text(data_row), axis=1)
 
         candlesticks_minute_fig = go.Figure(
             data=[
@@ -163,8 +105,7 @@ class Graphs:
                     high=data_day['high'],
                     low=data_day['low'], 
                     close=data_day['close'],
-                    text=hover_list,
-                    hoverinfo='text',
+                    hoverinfo='none',
                     showlegend=False
                 )
             ]
@@ -185,7 +126,7 @@ class Graphs:
         )
 
         candlesticks_minute_fig.update_layout(
-            title=f"{self._currency} - Series ({timeframe})",
+            title=f"{self._symbol} - Series ({timeframe})",
             xaxis_title="Time",
             yaxis_title="Price",
             hovermode='x',
@@ -194,17 +135,11 @@ class Graphs:
             legend=legend_config
         )
 
-        candlesticks_minute_fig.update_xaxes(
-            rangebreaks=[
-                dict(
-                    values=self._filter_missing_dates(data_day, timeframe)
-                )
-            ]
-        )
+        self._fill_missing_dates(candlesticks_minute_fig, data_day, timeframe)
         
         return candlesticks_minute_fig
 
-    def plot_rsi_figure(self, rsi_today, start_time):
+    def plot_rsi_figure(self, rsi_today):
 
         rsi_fig = go.Figure([
             go.Scatter(
@@ -217,20 +152,14 @@ class Graphs:
         rsi_fig.update_layout(
             xaxis_title="Time",
             yaxis_title="RSI Value",
-            title=f"RSI of {self._currency}",
+            title=f"RSI of {self._symbol}",
             hovermode='x',
             yaxis_tickformat='.2f'
         )
 
         self._draw_hline(rsi_fig, 50, "solid", "black")
 
-        rsi_fig.update_xaxes(
-            rangebreaks=[
-                dict(
-                    values=self._filter_missing_dates(rsi_today, '1H')
-                )
-            ]
-        )
+        self._fill_missing_dates(rsi_fig, rsi_today, '1H')
 
         return rsi_fig
 
@@ -262,7 +191,7 @@ class Graphs:
 
         bar_fig.update_layout(
             template='simple_white',
-            xaxis_title="Currency",
+            xaxis_title="Payout Currency",
             yaxis_title="Points",
             title=f"Average points target",
             hovermode='x unified',
@@ -271,7 +200,7 @@ class Graphs:
 
         return bar_fig
 
-    def display_currency_strength(self, data):
+    def display_symbol_strength(self, data):
 
         roc_values = list(data.values())
         marker_colors = ['green' if roc > 0 else 'red' for roc in roc_values]
@@ -292,16 +221,16 @@ class Graphs:
 
         bar_fig.update_layout(
             template='simple_white',
-            xaxis_title="Currency",
+            xaxis_title="symbol",
             yaxis_title="Strength",
-            title=f"Currency Strength (with JPY as the apple)",
+            title=f"symbol Strength (with JPY as the apple)",
             hovermode='x unified',
             height=700
         )
 
         return bar_fig
 
-    def plot_point_percentage_target(self, data_dict):
+    def plot_point_percentage_target(self, data_dict, definer):
 
         x_val = list(data_dict.keys())
         y_val = list(data_dict.values())
@@ -317,38 +246,9 @@ class Graphs:
         )
 
         fig.update_layout(
-            title=f"Points percentage target",
+            title=f"{definer} percentage target",
             xaxis_title="Percentage",
-            yaxis_title="Points",
-            hovermode='x',
-            xaxis=dict(
-                tickmode='linear',
-                tick0 = 0,
-                dtick = 10
-            )
-        )
-
-        return fig
-    
-    def plot_profit_percentage_target(self, data_dict):
-
-        x_val = list(data_dict.keys())
-        y_val = list(data_dict.values())
-
-        fig = go.Figure(
-            [
-                go.Scatter(
-                    x=x_val, 
-                    y=y_val,
-                    mode="lines"
-                )
-            ]
-        )
-
-        fig.update_layout(
-            title=f"Profit percentage target",
-            xaxis_title="Percentage",
-            yaxis_title="Profit",
+            yaxis_title=f"{definer}",
             hovermode='x',
             xaxis=dict(
                 tickmode='linear',

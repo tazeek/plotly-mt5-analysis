@@ -23,8 +23,8 @@ def register_callbacks(app):
     )
     def update_new_forex(changed_currency):
 
-        forex_analyzer.update_forex_pair(changed_currency)
-        graph_generator.update_currency(changed_currency)
+        forex_analyzer.update_symbol(changed_currency)
+        graph_generator.update_symbol(changed_currency)
 
         return [changed_currency]
 
@@ -58,7 +58,6 @@ def register_callbacks(app):
         [
             Output("ask-value","children"),
             Output("bid-value","children"),
-            Output("tick-volatility-fig","figure"),
             Output("atr-graph-4H","figure"),
             Output("candlestick-1H-fig","figure"),
             Output("candlestick-4H-fig","figure"),
@@ -83,13 +82,12 @@ def register_callbacks(app):
         return [
             f"Ask value: {ask_value:.5f}",
             f"Bid value: {bid_value:.5f}",
-            graph_generator.plot_tick_volume_fullday(stats_1H, start_day),
             graph_generator.plot_atr(forex_analyzer.get_indicator_stats('4H')),
             graph_generator.plot_candlesticks_fullday(stats_1H, '1H', forex_analyzer.get_indicator_stats('1H')),
             graph_generator.plot_candlesticks_fullday(stats_4H, '4H', forex_analyzer.get_indicator_stats('4H')),
             graph_generator.plot_candlesticks_fullday(stats_15M, '15M', forex_analyzer.get_indicator_stats('15M')),
-            graph_generator.plot_rsi_figure(forex_analyzer.get_rsi_today('1H'), start_day),
-            graph_generator.plot_rsi_figure(forex_analyzer.get_rsi_today('15M'), start_day),
+            graph_generator.plot_rsi_figure(forex_analyzer.get_rsi_today('1H')),
+            graph_generator.plot_rsi_figure(forex_analyzer.get_rsi_today('15M')),
         ]
 
     @app.callback(
@@ -180,7 +178,7 @@ def register_callbacks(app):
             percentage_target[perc] = int(points_diff * (perc/100))
 
         return [
-            graph_generator.plot_point_percentage_target(percentage_target),
+            graph_generator.plot_point_percentage_target(percentage_target, 'Points'),
             {'display':'block'}
         ]
 
@@ -207,6 +205,6 @@ def register_callbacks(app):
             percentage_target[perc] = round((profit_target * (perc/100)),2)
 
         return [
-            graph_generator.plot_profit_percentage_target(percentage_target),
+            graph_generator.plot_point_percentage_target(percentage_target, 'Profit'),
             {'display':'block'}
         ]

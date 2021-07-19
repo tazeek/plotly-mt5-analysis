@@ -205,7 +205,6 @@ def generate_layout():
                 dcc.Tabs(id='timeframe-tabs', value='price-activity', children=[
 
                     dcc.Tab(label='Price Activtiy', value='price-activity', children=[
-                        _loading_figure_layout('tick-volatility-fig'),
                         _loading_figure_layout('atr-graph-4H')
                     ]),
 

@@ -9,7 +9,7 @@ import talib
 
 class ForexAnalyzer:
 
-    def __init__(self, forex_pair=None):
+    def __init__(self, symbol=None):
 
         self._mt5_timeframe_dict = {
             '15M': mt5.TIMEFRAME_M15,
@@ -19,7 +19,7 @@ class ForexAnalyzer:
             '1W': mt5.TIMEFRAME_W1
         }
         
-        self._forex_pair = forex_pair
+        self._symbol = symbol
         
         self._timezone = pytz.timezone('Europe/Moscow') # MT5 timezone
 
@@ -31,16 +31,16 @@ class ForexAnalyzer:
             print("initialize() failed, error code =",mt5.last_error())
             quit()
 
-    def _get_multiplier(self, forex_pair=None):
+    def _get_multiplier(self, symbol=None):
 
-        symbol_info = mt5.symbol_info(forex_pair or self._forex_pair)
+        symbol_info = mt5.symbol_info(symbol or self._symbol)
 
         return 10 ** -symbol_info.digits
 
-    def calculate_point_gap(self, open_price, close_price, forex_pair=None):
+    def calculate_point_gap(self, open_price, close_price, symbol=None):
 
-        pips = round((close_price - open_price) / self._get_multiplier(forex_pair))
-        return int(pips)
+        points = round((close_price - open_price) / self._get_multiplier(symbol))
+        return int(points)
 
     def _calculate_rsi(self, day_stats, timeframe):
 
@@ -73,13 +73,13 @@ class ForexAnalyzer:
 
         return None
 
-    def _fetch_data_mt5(self, timeframe, bars_num, pair=None):
+    def _fetch_data_mt5(self, timeframe, bar_count, symbol=None):
 
         rates = mt5.copy_rates_from(
-            pair or self._forex_pair,
+            symbol or self._symbol,
             self._mt5_timeframe_dict[timeframe],
             self.get_current_time(),
-            bars_num
+            bar_count
         )
 
         rates = pd.DataFrame(rates)
@@ -89,14 +89,14 @@ class ForexAnalyzer:
 
     def find_ask_bid(self):
 
-        last_tick_info = mt5.symbol_info_tick(self._forex_pair)
+        last_tick_info = mt5.symbol_info_tick(self._symbol)
 
         return last_tick_info.ask, last_tick_info.bid
 
 
-    def update_forex_pair(self, forex_pair):
+    def update_symbol(self, symbol):
 
-        self._forex_pair = forex_pair
+        self._symbol = symbol
 
         return None
 
@@ -120,43 +120,16 @@ class ForexAnalyzer:
             
         self._create_indicators(rates_df.copy(), timeframe)
 
-        pip_lambda = lambda open_price, close_price: self.calculate_point_gap(open_price, close_price)
-        
-        rates_df['pip_difference'] = rates_df.apply(
-            lambda x: pip_lambda(x['low'], x['high']), 
-            axis=1
-        )
-
-        rates_df['width_candlestick'] = rates_df.apply(
-            lambda x: self.calculate_point_gap(x['low'], x['high']),
-            axis=1
-        )
-
         return rates_df
 
-    def get_d1_stats(self, stats_dict=None):
-
-        # Last 24 hours, in 1-minute intervals
-        if stats_dict is None:
-            rates_df = self._fetch_data_mt5('1D', 1)
-
-            stats_dict = rates_df.to_dict('records')[0]
-
-        stats_dict['width_candlestick'] = self.calculate_point_gap(stats_dict['low'], stats_dict['high'])
-        stats_dict['gap_high_close'] = self.calculate_point_gap(stats_dict['close'],stats_dict['high'])
-        stats_dict['gap_close_low'] = self.calculate_point_gap(stats_dict['low'], stats_dict['close'])
-        stats_dict['gap_close_open'] = self.calculate_point_gap(stats_dict['open'], stats_dict['close'])
-        
-        return stats_dict
-
-    def get_currency_strength(self, currency_pair):
-        rates_df = self._fetch_data_mt5('1W', 5, currency_pair)
+    def get_currency_strength(self, symbol):
+        rates_df = self._fetch_data_mt5('1W', 5, symbol)
 
         close_price_series = rates_df['close']
 
         oldest_close_price = close_price_series.iat[0]
         current_close_price = close_price_series.iat[-1]
 
-        rop_val = ((current_close_price - oldest_close_price)/oldest_close_price) * 100
+        percentage_strength = ((current_close_price - oldest_close_price)/oldest_close_price) * 100
 
-        return round(rop_val,3)
+        return round(percentage_strength,3)
