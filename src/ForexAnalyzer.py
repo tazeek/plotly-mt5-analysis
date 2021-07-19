@@ -9,7 +9,7 @@ import talib
 
 class ForexAnalyzer:
 
-    def __init__(self, forex_pair=None):
+    def __init__(self, symbol=None):
 
         self._mt5_timeframe_dict = {
             '15M': mt5.TIMEFRAME_M15,
@@ -19,7 +19,7 @@ class ForexAnalyzer:
             '1W': mt5.TIMEFRAME_W1
         }
         
-        self._forex_pair = forex_pair
+        self._symbol = symbol
         
         self._timezone = pytz.timezone('Europe/Moscow') # MT5 timezone
 
@@ -31,15 +31,15 @@ class ForexAnalyzer:
             print("initialize() failed, error code =",mt5.last_error())
             quit()
 
-    def _get_multiplier(self, forex_pair=None):
+    def _get_multiplier(self, symbol=None):
 
-        symbol_info = mt5.symbol_info(forex_pair or self._forex_pair)
+        symbol_info = mt5.symbol_info(symbol or self._symbol)
 
         return 10 ** -symbol_info.digits
 
-    def calculate_point_gap(self, open_price, close_price, forex_pair=None):
+    def calculate_point_gap(self, open_price, close_price, symbol=None):
 
-        pips = round((close_price - open_price) / self._get_multiplier(forex_pair))
+        pips = round((close_price - open_price) / self._get_multiplier(symbol))
         return int(pips)
 
     def _calculate_rsi(self, day_stats, timeframe):
@@ -76,7 +76,7 @@ class ForexAnalyzer:
     def _fetch_data_mt5(self, timeframe, bars_num, pair=None):
 
         rates = mt5.copy_rates_from(
-            pair or self._forex_pair,
+            pair or self._symbol,
             self._mt5_timeframe_dict[timeframe],
             self.get_current_time(),
             bars_num
@@ -89,14 +89,14 @@ class ForexAnalyzer:
 
     def find_ask_bid(self):
 
-        last_tick_info = mt5.symbol_info_tick(self._forex_pair)
+        last_tick_info = mt5.symbol_info_tick(self._symbol)
 
         return last_tick_info.ask, last_tick_info.bid
 
 
-    def update_forex_pair(self, forex_pair):
+    def update_symbol(self, symbol):
 
-        self._forex_pair = forex_pair
+        self._symbol = symbol
 
         return None
 
