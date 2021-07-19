@@ -134,21 +134,6 @@ class ForexAnalyzer:
 
         return rates_df
 
-    def get_d1_stats(self, stats_dict=None):
-
-        # Last 24 hours, in 1-minute intervals
-        if stats_dict is None:
-            rates_df = self._fetch_data_mt5('1D', 1)
-
-            stats_dict = rates_df.to_dict('records')[0]
-
-        stats_dict['width_candlestick'] = self.calculate_point_gap(stats_dict['low'], stats_dict['high'])
-        stats_dict['gap_high_close'] = self.calculate_point_gap(stats_dict['close'],stats_dict['high'])
-        stats_dict['gap_close_low'] = self.calculate_point_gap(stats_dict['low'], stats_dict['close'])
-        stats_dict['gap_close_open'] = self.calculate_point_gap(stats_dict['open'], stats_dict['close'])
-        
-        return stats_dict
-
     def get_currency_strength(self, currency_pair):
         rates_df = self._fetch_data_mt5('1W', 5, currency_pair)
 
