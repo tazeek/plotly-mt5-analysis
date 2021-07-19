@@ -4,12 +4,12 @@ import pandas as pd
 
 class Graphs:
 
-    def __init__(self, currency=None):
-        self._currency = currency
+    def __init__(self, symbol=None):
+        self._symbol = symbol
         self._missing_dates = {}
 
-    def update_currency(self, currency):
-        self._currency = currency
+    def update_symbol(self, symbol):
+        self._symbol = symbol
 
         return None
 
@@ -73,7 +73,7 @@ class Graphs:
         current_atr = ''.join(current_atr[:2])
 
         atr_fig.update_layout(
-            title=f"{self._currency} - ATR (4H) (Current value: {current_atr})",
+            title=f"{self._symbol} - ATR (4H) (Current value: {current_atr})",
             template='simple_white',
             xaxis_title="Time",
             hovermode='x',
@@ -99,7 +99,7 @@ class Graphs:
         self._draw_hline(tick_vol_fig, data['tick_volume'].mean(), "solid", "black")
 
         tick_vol_fig.update_layout(
-            title=f"{self._currency} - Tick Volume for today (1H)",
+            title=f"{self._symbol} - Tick Volume for today (1H)",
             template='simple_white',
             xaxis_title="Time",
             yaxis_title="Volume",
@@ -121,7 +121,7 @@ class Graphs:
         ])
 
         percentage_change_fig.update_layout(
-            title=f"{self._currency} - Price Percentage Change for today (1H)",
+            title=f"{self._symbol} - Price Percentage Change for today (1H)",
             template='simple_white',
             xaxis_title="Time",
             yaxis_title="Percentage change",
@@ -174,7 +174,7 @@ class Graphs:
         )
 
         candlesticks_minute_fig.update_layout(
-            title=f"{self._currency} - Series ({timeframe})",
+            title=f"{self._symbol} - Series ({timeframe})",
             xaxis_title="Time",
             yaxis_title="Price",
             hovermode='x',
@@ -206,7 +206,7 @@ class Graphs:
         rsi_fig.update_layout(
             xaxis_title="Time",
             yaxis_title="RSI Value",
-            title=f"RSI of {self._currency}",
+            title=f"RSI of {self._symbol}",
             hovermode='x',
             yaxis_tickformat='.2f'
         )
@@ -251,7 +251,7 @@ class Graphs:
 
         bar_fig.update_layout(
             template='simple_white',
-            xaxis_title="Currency",
+            xaxis_title="symbol",
             yaxis_title="Points",
             title=f"Average points target",
             hovermode='x unified',
@@ -260,7 +260,7 @@ class Graphs:
 
         return bar_fig
 
-    def display_currency_strength(self, data):
+    def display_symbol_strength(self, data):
 
         roc_values = list(data.values())
         marker_colors = ['green' if roc > 0 else 'red' for roc in roc_values]
@@ -281,9 +281,9 @@ class Graphs:
 
         bar_fig.update_layout(
             template='simple_white',
-            xaxis_title="Currency",
+            xaxis_title="symbol",
             yaxis_title="Strength",
-            title=f"Currency Strength (with JPY as the apple)",
+            title=f"symbol Strength (with JPY as the apple)",
             hovermode='x unified',
             height=700
         )
