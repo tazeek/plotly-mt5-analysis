@@ -58,6 +58,17 @@ class Graphs:
         
         return None
 
+    def _fill_missing_dates(self, fig, data_day, timeframe):
+        fig.update_xaxes(
+            rangebreaks=[
+                dict(
+                    values=self._filter_missing_dates(data_day, timeframe)
+                )
+            ]
+        )
+
+        return None
+
     def plot_atr(self, data):
         
         atr_fig = go.Figure([
@@ -124,13 +135,7 @@ class Graphs:
             legend=legend_config
         )
 
-        candlesticks_minute_fig.update_xaxes(
-            rangebreaks=[
-                dict(
-                    values=self._filter_missing_dates(data_day, timeframe)
-                )
-            ]
-        )
+        self._fill_missing_dates(candlesticks_minute_fig, data_day, timeframe)
         
         return candlesticks_minute_fig
 
@@ -154,13 +159,7 @@ class Graphs:
 
         self._draw_hline(rsi_fig, 50, "solid", "black")
 
-        rsi_fig.update_xaxes(
-            rangebreaks=[
-                dict(
-                    values=self._filter_missing_dates(rsi_today, '1H')
-                )
-            ]
-        )
+        self._fill_missing_dates(rsi_fig, rsi_today, '1H')
 
         return rsi_fig
 
