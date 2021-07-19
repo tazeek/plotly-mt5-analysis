@@ -58,7 +58,6 @@ def register_callbacks(app):
         [
             Output("ask-value","children"),
             Output("bid-value","children"),
-            Output("tick-volatility-fig","figure"),
             Output("atr-graph-4H","figure"),
             Output("candlestick-1H-fig","figure"),
             Output("candlestick-4H-fig","figure"),
@@ -83,7 +82,6 @@ def register_callbacks(app):
         return [
             f"Ask value: {ask_value:.5f}",
             f"Bid value: {bid_value:.5f}",
-            graph_generator.plot_tick_volume_fullday(stats_1H, start_day),
             graph_generator.plot_atr(forex_analyzer.get_indicator_stats('4H')),
             graph_generator.plot_candlesticks_fullday(stats_1H, '1H', forex_analyzer.get_indicator_stats('1H')),
             graph_generator.plot_candlesticks_fullday(stats_4H, '4H', forex_analyzer.get_indicator_stats('4H')),

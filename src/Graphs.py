@@ -84,31 +84,6 @@ class Graphs:
 
         return atr_fig
 
-    def plot_tick_volume_fullday(self, data, start_time):
-
-        data = self._filter_data(data.copy(), start_time)
-
-        tick_vol_fig = go.Figure([
-            go.Scatter(
-                x=data['time'], 
-                y=data['tick_volume'],
-                mode="lines+markers"
-            )
-        ])
-
-        self._draw_hline(tick_vol_fig, data['tick_volume'].mean(), "solid", "black")
-
-        tick_vol_fig.update_layout(
-            title=f"{self._symbol} - Tick Volume for today (1H)",
-            template='simple_white',
-            xaxis_title="Time",
-            yaxis_title="Volume",
-            hovermode='x',
-            yaxis_tickformat='k'
-        )
-
-        return tick_vol_fig
-
     def plot_candlesticks_fullday(self, data_day, timeframe, indicators_df):
 
         candlesticks_minute_fig = go.Figure(
