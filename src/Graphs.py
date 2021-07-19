@@ -230,7 +230,7 @@ class Graphs:
 
         return bar_fig
 
-    def plot_point_percentage_target(self, data_dict):
+    def plot_point_percentage_target(self, data_dict, definer):
 
         x_val = list(data_dict.keys())
         y_val = list(data_dict.values())
@@ -246,38 +246,9 @@ class Graphs:
         )
 
         fig.update_layout(
-            title=f"Points percentage target",
+            title=f"{definer} percentage target",
             xaxis_title="Percentage",
-            yaxis_title="Points",
-            hovermode='x',
-            xaxis=dict(
-                tickmode='linear',
-                tick0 = 0,
-                dtick = 10
-            )
-        )
-
-        return fig
-    
-    def plot_profit_percentage_target(self, data_dict):
-
-        x_val = list(data_dict.keys())
-        y_val = list(data_dict.values())
-
-        fig = go.Figure(
-            [
-                go.Scatter(
-                    x=x_val, 
-                    y=y_val,
-                    mode="lines"
-                )
-            ]
-        )
-
-        fig.update_layout(
-            title=f"Profit percentage target",
-            xaxis_title="Percentage",
-            yaxis_title="Profit",
+            yaxis_title=f"{definer}",
             hovermode='x',
             xaxis=dict(
                 tickmode='linear',
