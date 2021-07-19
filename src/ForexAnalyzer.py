@@ -120,18 +120,6 @@ class ForexAnalyzer:
             
         self._create_indicators(rates_df.copy(), timeframe)
 
-        pip_lambda = lambda open_price, close_price: self.calculate_point_gap(open_price, close_price)
-        
-        rates_df['pip_difference'] = rates_df.apply(
-            lambda x: pip_lambda(x['low'], x['high']), 
-            axis=1
-        )
-
-        rates_df['width_candlestick'] = rates_df.apply(
-            lambda x: self.calculate_point_gap(x['low'], x['high']),
-            axis=1
-        )
-
         return rates_df
 
     def get_currency_strength(self, currency_pair):
