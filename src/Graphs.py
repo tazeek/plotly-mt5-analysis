@@ -46,14 +46,6 @@ class Graphs:
 
         return None
 
-    def _candlestick_text(self, candlestick_info):
-
-        return f"Open: {candlestick_info['open']:.5f}<br>" + \
-                f"High: {candlestick_info['high']:.5f}<br>" + \
-                f"Low: {candlestick_info['low']:.5f}<br>" + \
-                f"Close: {candlestick_info['close']:.5f}<br>" + \
-                f"Width: {candlestick_info['pip_difference']}"
-
     def _draw_hline(self, fig, y_val, line_dash, line_col, annotation=None):
 
         fig.add_hline(
@@ -153,8 +145,6 @@ class Graphs:
 
     def plot_candlesticks_fullday(self, data_day, timeframe, indicators_df):
 
-        hover_list= data_day.apply(lambda data_row:self._candlestick_text(data_row), axis=1)
-
         candlesticks_minute_fig = go.Figure(
             data=[
                 go.Candlestick(
@@ -163,8 +153,7 @@ class Graphs:
                     high=data_day['high'],
                     low=data_day['low'], 
                     close=data_day['close'],
-                    text=hover_list,
-                    hoverinfo='text',
+                    hoverinfo='none',
                     showlegend=False
                 )
             ]
