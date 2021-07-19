@@ -139,7 +139,7 @@ class Graphs:
         
         return candlesticks_minute_fig
 
-    def plot_rsi_figure(self, rsi_today, start_time):
+    def plot_rsi_figure(self, rsi_today):
 
         rsi_fig = go.Figure([
             go.Scatter(
@@ -191,7 +191,7 @@ class Graphs:
 
         bar_fig.update_layout(
             template='simple_white',
-            xaxis_title="symbol",
+            xaxis_title="Payout Currency",
             yaxis_title="Points",
             title=f"Average points target",
             hovermode='x unified',
