@@ -50,7 +50,7 @@ def register_callbacks(app):
         currency_stregnth_dict = calculate_currency_strength()
 
         return [
-            graph_generator.display_currency_strength(currency_stregnth_dict),
+            graph_generator.display_symbol_strength(currency_stregnth_dict),
             {'display':'block'}
         ]
 
