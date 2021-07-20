@@ -205,12 +205,12 @@ def generate_layout():
                 dcc.Tabs(id='timeframe-tabs', value='price-activity', children=[
 
                     dcc.Tab(label='Price Activtiy', value='price-activity', children=[
-                        _loading_figure_layout('atr-graph-4H'),
-                        _loading_figure_layout('adx-graph-4H')
+                        _loading_figure_layout('atr-graph-4H')
                     ]),
 
                     dcc.Tab(label='High Timeframe (4H)', value='high-timeframe', children=[
-                        _loading_figure_layout('candlestick-4H-fig', draw_config)
+                        _loading_figure_layout('candlestick-4H-fig', draw_config),
+                        _loading_figure_layout('adx-graph-4H')
                     ]),
 
                     dcc.Tab(label='Analysis Timeframe (1H)', value='low-timeframe', children=[
