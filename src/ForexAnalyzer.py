@@ -41,11 +41,6 @@ class ForexAnalyzer:
 
         return 10 ** -symbol_info.digits
 
-    def calculate_point_gap(self, open_price, close_price, symbol=None):
-
-        points = round((close_price - open_price) / self._get_multiplier(symbol))
-        return int(points)
-
     def _calculate_lagging_indicators(self, day_stats, timeframe):
 
         timeperiod = 14
@@ -112,6 +107,11 @@ class ForexAnalyzer:
         rates['time'] = pd.to_datetime(rates['time'], unit='s')
 
         return rates
+    
+    def calculate_point_gap(self, open_price, close_price, symbol=None):
+
+        points = round((close_price - open_price) / self._get_multiplier(symbol))
+        return int(points)
 
     def find_ask_bid(self):
 
@@ -125,7 +125,8 @@ class ForexAnalyzer:
         return None
 
     def get_current_time(self, addition_hours=3):
-        return datetime.now()  + timedelta(hours=addition_hours) # Local time is 3 hours behind
+        # Local time is 3 hours behind
+        return datetime.now()  + timedelta(hours=addition_hours) 
 
     def get_start_day(self):
         return datetime.now(self._timezone).replace(hour=0,minute=0,second=0).strftime("%Y-%m-%d %H:%M:%S")
@@ -133,7 +134,7 @@ class ForexAnalyzer:
     def get_lagging_indicator(self,timeframe, indicator):
         return self._lagging_indicators[timeframe][indicator]
 
-    def get_indicator_stats(self, timeframe):
+    def get_trend_indicators(self, timeframe):
         return self._indicators_stats_df[timeframe]
 
     def get_daily_stats(self, timeframe='15M', bar_count=100):
