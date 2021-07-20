@@ -61,6 +61,8 @@ class ForexAnalyzer:
             timeperiod=14
         )
 
+        print(adx)
+
         self._adx_df[timeframe] = pd.DataFrame({
             'time': day_stats['time'],
             'value': adx
@@ -107,14 +109,12 @@ class ForexAnalyzer:
     def find_ask_bid(self):
 
         last_tick_info = mt5.symbol_info_tick(self._symbol)
-
         return last_tick_info.ask, last_tick_info.bid
 
 
     def update_symbol(self, symbol):
 
         self._symbol = symbol
-
         return None
 
     def get_current_time(self, addition_hours=3):
