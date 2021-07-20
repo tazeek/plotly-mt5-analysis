@@ -50,7 +50,7 @@ class Graphs:
             line_dash=line_dash,
             line_color=line_col,
             annotation_text=annotation or '',
-            line_width=3
+            line_width=1
         )
         
         return None
