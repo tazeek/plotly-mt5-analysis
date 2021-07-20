@@ -50,24 +50,32 @@ class ForexAnalyzer:
 
         timeperiod = 14
 
-        rsi_stats = talib.RSI(day_stats["close"], timeperiod=timeperiod)
+        rsi_stats = {
+            'time': day_stats['time'],
+            'value': talib.RSI(day_stats["close"], timeperiod=14)
+        }
 
-        adx = talib.ADX(
-            day_stats['high'],
-            day_stats['low'],
-            day_stats['close'],
-            timeperiod=timeperiod
-        )
+        adx = {
+            'time': day_stats['time'],
+            'value': talib.ADX(
+                day_stats['high'],
+                day_stats['low'],
+                day_stats['close'],
+                timeperiod=timeperiod
+            )
+        }
+
+        pd.DataFrame({
+            'time': day_stats['time'],
+            'value': talib.RSI(day_stats["close"], timeperiod=14)
+        })
 
         self._lagging_indicators[timeframe] = {
             'rsi': rsi_stats,
             'adx': adx
         }
 
-        self._adx_df[timeframe] = pd.DataFrame({
-            'time': day_stats['time'],
-            'value': adx
-        })
+        print(self._lagging_indicators)
 
         return None
 
@@ -156,7 +164,7 @@ class ForexAnalyzer:
         return self._adx_df[timeframe]
 
     def get_lagging_indicator(self,timeframe, indicator):
-        return self._adx_df[timeframe][indicator]
+        return self._lagging_indicators[timeframe][indicator]
 
     def get_indicator_stats(self, timeframe):
         return self._indicators_stats_df[timeframe]
@@ -167,6 +175,7 @@ class ForexAnalyzer:
 
         self._calculate_rsi(rates_df, timeframe)
         self._calculate_adx(rates_df, timeframe)
+        self._calculate_lagging_indicators(rates_df, timeframe)
             
         self._create_indicators(rates_df.copy(), timeframe)
 

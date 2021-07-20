@@ -83,12 +83,12 @@ def register_callbacks(app):
             f"Ask value: {ask_value:.5f}",
             f"Bid value: {bid_value:.5f}",
             graph_generator.plot_atr(forex_analyzer.get_indicator_stats('4H')),
-            graph_generator.plot_adx_figure(forex_analyzer.get_adx_stats('4H')),
+            graph_generator.plot_adx_figure(forex_analyzer.get_lagging_indicator('4H', 'adx')),
             graph_generator.plot_candlesticks_fullday(stats_1H, '1H', forex_analyzer.get_indicator_stats('1H')),
             graph_generator.plot_candlesticks_fullday(stats_4H, '4H', forex_analyzer.get_indicator_stats('4H')),
             graph_generator.plot_candlesticks_fullday(stats_15M, '15M', forex_analyzer.get_indicator_stats('15M')),
-            graph_generator.plot_rsi_figure(forex_analyzer.get_rsi_today('1H')),
-            graph_generator.plot_rsi_figure(forex_analyzer.get_rsi_today('15M')),
+            graph_generator.plot_rsi_figure(forex_analyzer.get_lagging_indicator('1H', 'rsi')),
+            graph_generator.plot_rsi_figure(forex_analyzer.get_lagging_indicator('15M', 'rsi')),
         ]
 
     @app.callback(
