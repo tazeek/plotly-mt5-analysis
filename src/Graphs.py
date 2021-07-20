@@ -155,7 +155,6 @@ class Graphs:
         )
 
         self._draw_hline(rsi_fig, 50, "solid", "black")
-
         self._fill_missing_dates(rsi_fig, rsi_today, '1H')
 
         return rsi_fig
@@ -259,7 +258,7 @@ class Graphs:
 
         return bar_fig
 
-    def plot_point_percentage_target(self, data_dict, definer):
+    def plot_profit_target(self, data_dict, definer):
 
         x_val = list(data_dict.keys())
         y_val = list(data_dict.values())

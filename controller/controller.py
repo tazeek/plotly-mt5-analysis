@@ -179,7 +179,7 @@ def register_callbacks(app):
             percentage_target[perc] = int(points_diff * (perc/100))
 
         return [
-            graph_generator.plot_point_percentage_target(percentage_target, 'Points'),
+            graph_generator.plot_profit_target(percentage_target, 'Points'),
             {'display':'block'}
         ]
 
@@ -206,6 +206,6 @@ def register_callbacks(app):
             percentage_target[perc] = round((profit_target * (perc/100)),2)
 
         return [
-            graph_generator.plot_point_percentage_target(percentage_target, 'Profit'),
+            graph_generator.plot_profit_target(percentage_target, 'Profit'),
             {'display':'block'}
         ]
