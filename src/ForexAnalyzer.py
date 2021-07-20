@@ -75,36 +75,9 @@ class ForexAnalyzer:
             'adx': adx
         }
 
-        print(self._lagging_indicators)
-
-        return None
-
-
-    def _calculate_rsi(self, day_stats, timeframe):
-
-        self._rsi_df[timeframe] = pd.DataFrame({
-            'time': day_stats['time'],
-            'value': talib.RSI(day_stats["close"], timeperiod=14)
-        })
-
-        return None
-
-    def _calculate_adx(self, day_stats, timeframe):
-
-        adx = talib.ADX(day_stats['high'],
-            day_stats['low'].values,
-            day_stats['close'],
-            timeperiod=14
-        )
-
-        self._adx_df[timeframe] = pd.DataFrame({
-            'time': day_stats['time'],
-            'value': adx
-        })
-
         return None
     
-    def _create_indicators(self, day_stats, timeframe):
+    def _create_trend_indicators(self, day_stats, timeframe):
 
         day_stats.rename(
             columns={
@@ -157,12 +130,6 @@ class ForexAnalyzer:
     def get_start_day(self):
         return datetime.now(self._timezone).replace(hour=0,minute=0,second=0).strftime("%Y-%m-%d %H:%M:%S")
 
-    def get_rsi_today(self, timeframe):
-        return self._rsi_df[timeframe]
-
-    def get_adx_stats(self,timeframe):
-        return self._adx_df[timeframe]
-
     def get_lagging_indicator(self,timeframe, indicator):
         return self._lagging_indicators[timeframe][indicator]
 
@@ -173,11 +140,9 @@ class ForexAnalyzer:
 
         rates_df = self._fetch_data_mt5(timeframe, bar_count)
 
-        self._calculate_rsi(rates_df, timeframe)
-        self._calculate_adx(rates_df, timeframe)
         self._calculate_lagging_indicators(rates_df, timeframe)
             
-        self._create_indicators(rates_df.copy(), timeframe)
+        self._create_trend_indicators(rates_df.copy(), timeframe)
 
         return rates_df
 
