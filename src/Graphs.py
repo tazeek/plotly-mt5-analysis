@@ -30,9 +30,6 @@ class Graphs:
 
         return self._missing_dates[timeframe]
 
-    def _filter_data(self, data, start_time):
-        return data[data['time'] >= start_time]
-
     def _add_sma_graphs(self, fig, data, color, col_name):
         
         fig.add_trace(
@@ -158,7 +155,6 @@ class Graphs:
         )
 
         self._draw_hline(rsi_fig, 50, "solid", "black")
-
         self._fill_missing_dates(rsi_fig, rsi_today, '1H')
 
         return rsi_fig
@@ -182,6 +178,16 @@ class Graphs:
         )
 
         self._fill_missing_dates(adx_fig, adx_df, '1H')
+
+        atr_info_dict = {
+            25: 'Weak',
+            50: 'Strong',
+            75: 'Very Strong',
+            100: 'Extremely Strong'
+        }
+
+        for num, annotation in atr_info_dict.items():
+            self._draw_hline(adx_fig, num, 'dash', 'black', annotation)
 
         return adx_fig
 
@@ -252,7 +258,7 @@ class Graphs:
 
         return bar_fig
 
-    def plot_point_percentage_target(self, data_dict, definer):
+    def plot_profit_target(self, data_dict, definer):
 
         x_val = list(data_dict.keys())
         y_val = list(data_dict.values())
