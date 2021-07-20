@@ -30,9 +30,6 @@ class Graphs:
 
         return self._missing_dates[timeframe]
 
-    def _filter_data(self, data, start_time):
-        return data[data['time'] >= start_time]
-
     def _add_sma_graphs(self, fig, data, color, col_name):
         
         fig.add_trace(
