@@ -25,6 +25,10 @@ class ForexAnalyzer:
 
         self._rsi_df = {}
 
+        self._adx_df = {}
+
+        self._lagging_indicators = {}
+
         self._indicators_stats_df = {}
 
         if not mt5.initialize():
@@ -37,21 +41,38 @@ class ForexAnalyzer:
 
         return 10 ** -symbol_info.digits
 
-    def calculate_point_gap(self, open_price, close_price, symbol=None):
+    def _calculate_lagging_indicators(self, day_stats, timeframe):
 
-        points = round((close_price - open_price) / self._get_multiplier(symbol))
-        return int(points)
+        timeperiod = 14
 
-    def _calculate_rsi(self, day_stats, timeframe):
+        rsi_stats = {
+            'time': day_stats['time'],
+            'value': talib.RSI(day_stats["close"], timeperiod=14)
+        }
 
-        self._rsi_df[timeframe] = pd.DataFrame({
+        adx = {
+            'time': day_stats['time'],
+            'value': talib.ADX(
+                day_stats['high'],
+                day_stats['low'],
+                day_stats['close'],
+                timeperiod=timeperiod
+            )
+        }
+
+        pd.DataFrame({
             'time': day_stats['time'],
             'value': talib.RSI(day_stats["close"], timeperiod=14)
         })
 
+        self._lagging_indicators[timeframe] = {
+            'rsi': rsi_stats,
+            'adx': adx
+        }
+
         return None
     
-    def _create_indicators(self, day_stats, timeframe):
+    def _create_trend_indicators(self, day_stats, timeframe):
 
         day_stats.rename(
             columns={
@@ -86,39 +107,43 @@ class ForexAnalyzer:
         rates['time'] = pd.to_datetime(rates['time'], unit='s')
 
         return rates
+    
+    def calculate_point_gap(self, open_price, close_price, symbol=None):
+
+        points = round((close_price - open_price) / self._get_multiplier(symbol))
+        return int(points)
 
     def find_ask_bid(self):
 
         last_tick_info = mt5.symbol_info_tick(self._symbol)
-
         return last_tick_info.ask, last_tick_info.bid
 
 
     def update_symbol(self, symbol):
 
         self._symbol = symbol
-
         return None
 
     def get_current_time(self, addition_hours=3):
-        return datetime.now()  + timedelta(hours=addition_hours) # Local time is 3 hours behind
+        # Local time is 3 hours behind
+        return datetime.now()  + timedelta(hours=addition_hours) 
 
     def get_start_day(self):
         return datetime.now(self._timezone).replace(hour=0,minute=0,second=0).strftime("%Y-%m-%d %H:%M:%S")
 
-    def get_rsi_today(self, timeframe):
-        return self._rsi_df[timeframe]
+    def get_lagging_indicator(self,timeframe, indicator):
+        return self._lagging_indicators[timeframe][indicator]
 
-    def get_indicator_stats(self, timeframe):
+    def get_trend_indicators(self, timeframe):
         return self._indicators_stats_df[timeframe]
 
     def get_daily_stats(self, timeframe='15M', bar_count=100):
 
         rates_df = self._fetch_data_mt5(timeframe, bar_count)
 
-        self._calculate_rsi(rates_df, timeframe)
+        self._calculate_lagging_indicators(rates_df, timeframe)
             
-        self._create_indicators(rates_df.copy(), timeframe)
+        self._create_trend_indicators(rates_df.copy(), timeframe)
 
         return rates_df
 
