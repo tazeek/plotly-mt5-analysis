@@ -61,8 +61,6 @@ class ForexAnalyzer:
             timeperiod=14
         )
 
-        print(adx)
-
         self._adx_df[timeframe] = pd.DataFrame({
             'time': day_stats['time'],
             'value': adx
