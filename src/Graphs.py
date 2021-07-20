@@ -165,8 +165,6 @@ class Graphs:
 
     def plot_adx_figure(self, adx_df):
 
-        print(adx_df)
-
         adx_fig = go.Figure([
             go.Scatter(
                 x=adx_df['time'], 

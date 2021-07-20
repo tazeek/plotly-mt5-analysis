@@ -27,6 +27,8 @@ class ForexAnalyzer:
 
         self._adx_df = {}
 
+        self._lagging_indicators = {}
+
         self._indicators_stats_df = {}
 
         if not mt5.initialize():
@@ -43,6 +45,32 @@ class ForexAnalyzer:
 
         points = round((close_price - open_price) / self._get_multiplier(symbol))
         return int(points)
+
+    def _calculate_lagging_indicators(self, day_stats, timeframe):
+
+        timeperiod = 14
+
+        rsi_stats = talib.RSI(day_stats["close"], timeperiod=timeperiod)
+
+        adx = talib.ADX(
+            day_stats['high'],
+            day_stats['low'],
+            day_stats['close'],
+            timeperiod=timeperiod
+        )
+
+        self._lagging_indicators[timeframe] = {
+            'rsi': rsi_stats,
+            'adx': adx
+        }
+
+        self._adx_df[timeframe] = pd.DataFrame({
+            'time': day_stats['time'],
+            'value': adx
+        })
+
+        return None
+
 
     def _calculate_rsi(self, day_stats, timeframe):
 
@@ -126,6 +154,9 @@ class ForexAnalyzer:
 
     def get_adx_stats(self,timeframe):
         return self._adx_df[timeframe]
+
+    def get_lagging_indicator(self,timeframe, indicator):
+        return self._adx_df[timeframe][indicator]
 
     def get_indicator_stats(self, timeframe):
         return self._indicators_stats_df[timeframe]
