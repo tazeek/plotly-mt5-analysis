@@ -126,6 +126,9 @@ class ForexAnalyzer:
     def get_rsi_today(self, timeframe):
         return self._rsi_df[timeframe]
 
+    def get_adx_stats(self,timeframe):
+        return self._adx_df[timeframe]
+
     def get_indicator_stats(self, timeframe):
         return self._indicators_stats_df[timeframe]
 
