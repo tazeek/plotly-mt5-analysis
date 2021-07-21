@@ -209,8 +209,7 @@ def generate_layout():
                     ]),
 
                     dcc.Tab(label='High Timeframe (4H)', value='high-timeframe', children=[
-                        _loading_figure_layout('candlestick-4H-fig', draw_config),
-                        _loading_figure_layout('adx-graph-4H')
+                        _loading_figure_layout('candlestick-4H-fig', draw_config)
                     ]),
 
                     dcc.Tab(label='Analysis Timeframe (1H)', value='low-timeframe', children=[
@@ -220,7 +219,8 @@ def generate_layout():
 
                     dcc.Tab(label='Entry Timeframe (15M)', value='medium-timeframe', children=[
                         _loading_figure_layout('candlestick-15M-fig', draw_config),
-                        _loading_figure_layout('rsi-15M-fig', draw_config)
+                        _loading_figure_layout('rsi-15M-fig', draw_config),
+                        _loading_figure_layout('adx-graph-15M')
                     ])
 
                 ])
