@@ -62,7 +62,7 @@ class ForexAnalyzer:
 
         pd.DataFrame({
             'time': day_stats['time'],
-            'value': talib.RSI(day_stats["close"], timeperiod=14)
+            'value': talib.RSI(day_stats["close"], timeperiod=timeperiod)
         })
 
         self._lagging_indicators[timeframe] = {
