@@ -179,19 +179,71 @@ class ForexAnalyzer:
         return None
 
     def get_current_time(self, addition_hours=3):
+        """Get the current time, based on the timezone
+
+        Parameters:
+            - additional_hours(int): the extra hours to be added in
+        
+        Returns:
+            - datetime: datetime object that is ahead, based on the addition_hours
+        
+        """
+
         # Local time is 3 hours behind
         return datetime.now()  + timedelta(hours=addition_hours) 
 
     def get_start_day(self):
+        """Get the current time, based on the timezone
+
+        Parameters:
+            - additional_hours(int): the extra hours to be added in
+        
+        Returns:
+            - datetime: datetime object that is ahead, based on the addition_hours
+        
+        """
+        
         return datetime.now(self._timezone).replace(hour=0,minute=0,second=0).strftime("%Y-%m-%d %H:%M:%S")
 
     def get_lagging_indicator(self,timeframe, indicator):
+        """Get the respective lagging indicator, based on the timeframe
+
+        Parameters:
+            - indicator(str): the indicator to fetch
+            - timeframe(str): the timeframe to fetch in
+        
+        Returns:
+            - dataframe: dataframe containing the indicator stats
+        
+        """
+
         return self._lagging_indicators[timeframe][indicator]
 
     def get_trend_indicators(self, timeframe):
+        """Get the trend indicators, based on the timeframe
+
+        Parameters:
+            - timeframe(str): the timeframe to fetch in
+        
+        Returns:
+            - dataframe: dataframe containing the indicator stats
+        
+        """
+
         return self._indicators_stats_df[timeframe]
 
     def get_daily_stats(self, timeframe='15M', bar_count=100):
+        """Get the data of the symbol, based on the timeframe and candlesticks
+        This is followed by creating the lagging and trend indicators
+
+        Parameters:
+            - timeframe(str): the timeframe to fetch in
+            - bar_count(int): how many candlesticks to fetch
+        
+        Returns:
+            - dataframe: dataframe containing the symbol stats
+        
+        """
 
         rates_df = self._fetch_data_mt5(timeframe, bar_count)
 
@@ -202,6 +254,15 @@ class ForexAnalyzer:
         return rates_df
 
     def get_currency_strength(self, symbol):
+        """Get the strength of the symbol for currency strength analysis
+
+        Parameters:
+            - symbol(str): the given symbol
+        
+        Returns:
+            - float: the strength of the given symbol
+        
+        """
         rates_df = self._fetch_data_mt5('1W', 5, symbol)
 
         close_price_series = rates_df['close']
