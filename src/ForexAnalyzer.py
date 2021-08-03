@@ -190,7 +190,23 @@ class ForexAnalyzer:
         """
 
         # Local time is 3 hours behind
-        return datetime.now()  + timedelta(hours=addition_hours) 
+        return datetime.now()  + timedelta(hours=addition_hours)
+
+    def calculate_point_gap(self, open_price, close_price, symbol=None):
+        """Find the point gap between the opening price and closing price
+
+        Parameters:
+            - open_price(float_price): the opening price
+            - close_price(float_price): the closing price
+            - symbol(str): the underlying symbol
+        
+        Returns:
+            - int: the point difference
+        
+        """
+
+        points = round((close_price - open_price) / self._get_multiplier(symbol))
+        return int(points) 
 
     def get_start_day(self):
         """Get the current time, based on the timezone
