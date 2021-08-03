@@ -36,12 +36,31 @@ class ForexAnalyzer:
             quit()
 
     def _get_multiplier(self, symbol=None):
+        """Get the multiplier, based on number of digits
+
+        Parameters:
+            - symbol(str): Get the underlying symbol
+        
+        Returns:
+            - float: Return the divisor, based on number of decimal places
+        
+        """
 
         symbol_info = mt5.symbol_info(symbol or self._symbol)
 
         return 10 ** -symbol_info.digits
 
     def _calculate_lagging_indicators(self, day_stats, timeframe):
+        """Create the lagging indicators and store in object attribute (self._lagging_indicators)
+
+        Parameters:
+            - day_stats(dataframe): dataframe containting the stats of the given symbol
+            - timeframe(str): the given timeframe to create the stats on
+        
+        Returns:
+            - None
+        
+        """
 
         timeperiod = 14
 
@@ -73,6 +92,16 @@ class ForexAnalyzer:
         return None
     
     def _create_trend_indicators(self, day_stats, timeframe):
+        """Create the trend indicators and store in object attribute (self._indicator_stats_df)
+
+        Parameters:
+            - day_stats(dataframe): dataframe containting the stats of the given symbol
+            - timeframe(str): the given timeframe to create the stats on
+        
+        Returns:
+            - None
+        
+        """
 
         day_stats.rename(
             columns={
@@ -95,6 +124,17 @@ class ForexAnalyzer:
         return None
 
     def _fetch_data_mt5(self, timeframe, bar_count, symbol=None):
+        """Fetch the data from MT5 servers, based on the given symbol
+
+        Parameters:
+            - timeframe(str): the given timeframe to fetch the stats
+            - bar_count(int): the number of candlesticks to fetch
+            - symbol(str): the underlying symbol
+        
+        Returns:
+            - dataframe: the statistical data from MT5 for the given symbol 
+        
+        """
 
         rates = mt5.copy_rates_from(
             symbol or self._symbol,
@@ -107,19 +147,33 @@ class ForexAnalyzer:
         rates['time'] = pd.to_datetime(rates['time'], unit='s')
 
         return rates
-    
-    def calculate_point_gap(self, open_price, close_price, symbol=None):
-
-        points = round((close_price - open_price) / self._get_multiplier(symbol))
-        return int(points)
 
     def find_ask_bid(self):
+        """Find the ask and bid price for the given symbol
+
+        Parameters:
+            None
+        
+        Returns:
+            - str: the ask price of the symbol
+            - str: the bid price of the symbol 
+        
+        """
 
         last_tick_info = mt5.symbol_info_tick(self._symbol)
         return last_tick_info.ask, last_tick_info.bid
 
 
     def update_symbol(self, symbol):
+        """Update the symbol, whenever there is a new symbol passed
+
+        Parameters:
+            - symbol(str): the new symbol to be updated
+        
+        Returns:
+            - None
+        
+        """
 
         self._symbol = symbol
         return None
