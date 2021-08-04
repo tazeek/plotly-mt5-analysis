@@ -22,6 +22,15 @@ def register_callbacks(app):
         ]
     )
     def update_new_forex(changed_currency):
+        """Callback for updating the symbol attribute
+
+        Parameters:
+           - changed_currency(str): the underlying symbol
+        
+        Returns:
+            - list: the list of areas to update in layout
+        
+        """
 
         forex_analyzer.update_symbol(changed_currency)
         graph_generator.update_symbol(changed_currency)
@@ -39,6 +48,15 @@ def register_callbacks(app):
         prevent_initial_call=True
     )
     def update_new_forex(tab_value):
+        """Callback for displaying the currency strength analysis
+
+        Parameters:
+           - tab_value(str): the tab currently displayed at
+        
+        Returns:
+            - list: the list of areas to update in layout
+        
+        """
 
         # Only update for currency strength tab
         if tab_value != 'currency-strength-tab':
@@ -70,6 +88,16 @@ def register_callbacks(app):
         ]
     )
     def update_all_graphs(value, clicks):
+        """Callback for updating the respective graphs, of a given symbol
+
+        Parameters:
+            - value(str): the new symbol to update at
+            - clicks(int): dummy click whenever the refresh button is clicked
+        
+        Returns:
+            - list: the list of areas to update in layout
+        
+        """
 
         ask_value, bid_value = forex_analyzer.find_ask_bid()
         
@@ -106,6 +134,7 @@ def register_callbacks(app):
         prevent_initial_call=True
     )
     def perform_profit_calculation(click_count, bal, pct_tar, pct_loss, lev, min_trade):
+        
         bal = float(bal)
 
         amount_target = 0
