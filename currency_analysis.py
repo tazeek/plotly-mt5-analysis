@@ -2,6 +2,7 @@ from src.ForexAnalyzer import ForexAnalyzer
 
 def load_forex_pairs():
     """Load all the symbols, based on the text file
+    Replace with: https://www.mql5.com/en/docs/integration/python_metatrader5/mt5symbolsget_py
 
         Parameters:
            None
