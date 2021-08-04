@@ -22,6 +22,15 @@ def register_callbacks(app):
         ]
     )
     def update_new_forex(changed_currency):
+        """Callback for updating the symbol attribute
+
+        Parameters:
+           - changed_currency(str): the underlying symbol
+        
+        Returns:
+            - list: the list of areas to update in layout
+        
+        """
 
         forex_analyzer.update_symbol(changed_currency)
         graph_generator.update_symbol(changed_currency)
@@ -39,6 +48,15 @@ def register_callbacks(app):
         prevent_initial_call=True
     )
     def update_new_forex(tab_value):
+        """Callback for displaying the currency strength analysis
+
+        Parameters:
+           - tab_value(str): the tab currently displayed at
+        
+        Returns:
+            - list: the list of areas to update in layout
+        
+        """
 
         # Only update for currency strength tab
         if tab_value != 'currency-strength-tab':
@@ -58,12 +76,10 @@ def register_callbacks(app):
         [
             Output("ask-value","children"),
             Output("bid-value","children"),
-            Output("atr-graph-4H","figure"),
-            Output("adx-graph-4H","figure"),
-            Output("candlestick-1H-fig","figure"),
             Output("candlestick-4H-fig","figure"),
             Output("candlestick-15M-fig","figure"),
-            Output("rsi-1H-fig","figure"),
+            Output("atr-graph-4H","figure"),
+            Output("adx-graph-15M","figure"),
             Output("rsi-15M-fig","figure")
         ],
         [
@@ -72,22 +88,29 @@ def register_callbacks(app):
         ]
     )
     def update_all_graphs(value, clicks):
+        """Callback for updating the respective graphs, of a given symbol
+
+        Parameters:
+            - value(str): the new symbol to update at
+            - clicks(int): dummy click whenever the refresh button is clicked
+        
+        Returns:
+            - list: the list of areas to update in layout
+        
+        """
 
         ask_value, bid_value = forex_analyzer.find_ask_bid()
         
         stats_15M = forex_analyzer.get_daily_stats('15M',600)
-        stats_1H = forex_analyzer.get_daily_stats('1H',600)
         stats_4H = forex_analyzer.get_daily_stats('4H',600)
 
         return [
             f"Ask value: {ask_value:.5f}",
             f"Bid value: {bid_value:.5f}",
-            graph_generator.plot_atr(forex_analyzer.get_trend_indicators('4H')),
-            graph_generator.plot_adx_figure(forex_analyzer.get_lagging_indicator('4H', 'adx')),
-            graph_generator.plot_candlesticks_fullday(stats_1H, '1H', forex_analyzer.get_trend_indicators('1H')),
             graph_generator.plot_candlesticks_fullday(stats_4H, '4H', forex_analyzer.get_trend_indicators('4H')),
             graph_generator.plot_candlesticks_fullday(stats_15M, '15M', forex_analyzer.get_trend_indicators('15M')),
-            graph_generator.plot_rsi_figure(forex_analyzer.get_lagging_indicator('1H', 'rsi')),
+            graph_generator.plot_atr(forex_analyzer.get_trend_indicators('4H')),
+            graph_generator.plot_adx_figure(forex_analyzer.get_lagging_indicator('15M', 'adx')),
             graph_generator.plot_rsi_figure(forex_analyzer.get_lagging_indicator('15M', 'rsi')),
         ]
 
@@ -111,6 +134,21 @@ def register_callbacks(app):
         prevent_initial_call=True
     )
     def perform_profit_calculation(click_count, bal, pct_tar, pct_loss, lev, min_trade):
+        """Callback for performing risk management, on different currencies
+
+        Parameters:
+            - click(int): dummy click whenever the button is clicked
+            - bal(float): the balance in the account
+            - pct_tar(float): how much percentage of profit
+            - pct_loss(float): how much percentage of loss
+            - lev(float): the leverage input
+            - min_trade(int): the number of trades to use
+        
+        Returns:
+            - list: the list of areas to update in layout
+        
+        """
+        
         bal = float(bal)
 
         amount_target = 0
@@ -168,6 +206,18 @@ def register_callbacks(app):
         prevent_initial_call=True
     )
     def calculate_point_percentage(click, upper_num, lower_num, underlying):
+        """Callback for finding the percentage, of points in a range
+
+        Parameters:
+            - click(int): dummy click whenever the button is clicked
+            - upper_num(float): the upper bound
+            - lower_num(float): the lower bound
+            - underlying(str): the symbol to compare against
+        
+        Returns:
+            - list: the list of areas to update in layout
+        
+        """
 
         # Find the number of points
         points_diff = forex_analyzer.calculate_point_gap(float(lower_num), float(upper_num), underlying)
@@ -197,6 +247,16 @@ def register_callbacks(app):
         prevent_initial_call=True
     )
     def calculate_point_percentage(click, profit_target):
+        """Callback for finding the percentage, of a profit target
+
+        Parameters:
+            - click(int): dummy click whenever the button is clicked
+            - profit_target(int): the profit target, broken down
+        
+        Returns:
+            - list: the list of areas to update in layout
+        
+        """
  
         percentage_target = {0: 0}
         profit_target = float(profit_target)
