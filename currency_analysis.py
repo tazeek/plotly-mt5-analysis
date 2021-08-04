@@ -1,6 +1,15 @@
 from src.ForexAnalyzer import ForexAnalyzer
 
 def load_forex_pairs():
+    """Load all the symbols, based on the text file
+
+        Parameters:
+           None
+        
+        Returns:
+            - list: return all the symbols from the text file
+        
+    """
 
     forex_pairs = []
 
@@ -12,6 +21,16 @@ def load_forex_pairs():
     return sorted(forex_pairs)
 
 def calculate_currency_strength():
+
+    """Find the currency strength, based on the given symbols
+
+        Parameters:
+           None
+        
+        Returns:
+            - dict: return the strength of all currencies, in sorted order (strongest to weakest)
+        
+    """
 
     forex_analyzer = ForexAnalyzer()
     forex_pairs = []
