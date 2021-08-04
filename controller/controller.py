@@ -134,6 +134,20 @@ def register_callbacks(app):
         prevent_initial_call=True
     )
     def perform_profit_calculation(click_count, bal, pct_tar, pct_loss, lev, min_trade):
+        """Callback for performing risk management, on different currencies
+
+        Parameters:
+            - click(int): dummy click whenever the button is clicked
+            - bal(float): the balance in the account
+            - pct_tar(float): how much percentage of profit
+            - pct_loss(float): how much percentage of loss
+            - lev(float): the leverage input
+            - min_trade(int): the number of trades to use
+        
+        Returns:
+            - list: the list of areas to update in layout
+        
+        """
         
         bal = float(bal)
 
@@ -192,6 +206,18 @@ def register_callbacks(app):
         prevent_initial_call=True
     )
     def calculate_point_percentage(click, upper_num, lower_num, underlying):
+        """Callback for finding the percentage, of points in a range
+
+        Parameters:
+            - click(int): dummy click whenever the button is clicked
+            - upper_num(float): the upper bound
+            - lower_num(float): the lower bound
+            - underlying(str): the symbol to compare against
+        
+        Returns:
+            - list: the list of areas to update in layout
+        
+        """
 
         # Find the number of points
         points_diff = forex_analyzer.calculate_point_gap(float(lower_num), float(upper_num), underlying)
@@ -221,6 +247,16 @@ def register_callbacks(app):
         prevent_initial_call=True
     )
     def calculate_point_percentage(click, profit_target):
+        """Callback for finding the percentage, of a profit target
+
+        Parameters:
+            - click(int): dummy click whenever the button is clicked
+            - profit_target(int): the profit target, broken down
+        
+        Returns:
+            - list: the list of areas to update in layout
+        
+        """
  
         percentage_target = {0: 0}
         profit_target = float(profit_target)
