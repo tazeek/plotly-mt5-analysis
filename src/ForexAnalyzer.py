@@ -53,7 +53,27 @@ class ForexAnalyzer:
         return 10 ** -symbol_info.digits
 
     def _create_heiken_ashi(self, data, timeframe):
-        ...
+        """Create data for heiken ashi plots, based on the given timeframe
+
+        Parameters:
+            - data: a copy of the forex data fetched
+            - timeframe: the given timeframe
+        
+        Return:
+            - None
+        
+        """
+        
+        for i in range(data.shape[0]):
+            if i > 0:
+                data.loc[data.index[i],'Open'] = (data['Open'][i-1] + data['Close'][i-1])/2
+            
+            data.loc[data.index[i],'Close'] = (data['Open'][i] + data['Close'][i] + data['Low'][i] +  data['High'][i])/4
+            data = data.iloc[1:,:]
+        
+        self._heiken_ashi_df[timeframe] = data
+
+        return None
 
     def _calculate_lagging_indicators(self, day_stats, timeframe):
         """Create the lagging indicators and store in object attribute (self._lagging_indicators)
