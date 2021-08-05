@@ -1,4 +1,5 @@
 import plotly.graph_objects as go
+import numpy as np
 import pandas as pd
 
 class Graphs:
@@ -285,3 +286,32 @@ class Graphs:
         )
 
         return fig
+
+    def plot_heiken_ashi(self, data):
+
+        candlesticks_fig = go.Figure(
+            data=[
+                go.Candlestick(
+                    x=data['time'],
+                    open=data['open'], 
+                    high=data['high'],
+                    low=data['low'], 
+                    close=data['close'],
+                    hoverinfo='none',
+                    showlegend=False
+                )
+            ]
+        )
+
+        candlesticks_fig.update_layout(
+            title=f"{self._symbol} - Series (15M)",
+            xaxis_title="Time",
+            yaxis_title="Price",
+            hovermode='x',
+            yaxis_tickformat='.5f',
+            xaxis_rangeslider_visible=False,
+        )
+
+        self._fill_missing_dates(candlesticks_fig, data, '15M')
+        
+        return candlesticks_fig

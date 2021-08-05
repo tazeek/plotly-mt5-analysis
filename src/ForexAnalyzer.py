@@ -236,6 +236,9 @@ class ForexAnalyzer:
 
         points = round((close_price - open_price) / self._get_multiplier(symbol))
         return int(points) 
+    
+    def get_heiken_ashi(self, timeframe):
+        return self._heiken_ashi_df[timeframe]
 
     def get_start_day(self):
         """Get the current time, based on the timezone
