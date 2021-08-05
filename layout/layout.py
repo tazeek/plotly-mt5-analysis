@@ -209,6 +209,10 @@ def generate_layout():
                         _loading_figure_layout('atr-graph-4H')
                     ]),
 
+                    dcc.Tab(label='Heiken Ashi (15M)',value='medium-timeframe-heiken', children=[
+                        _loading_figure_layout('candlesticks-15M-heiken')
+                    ]),
+
                     dcc.Tab(label='Entry Timeframe (15M)', value='medium-timeframe', children=[
                         _loading_figure_layout('candlestick-15M-fig', draw_config),
                         _loading_figure_layout('rsi-15M-fig', draw_config),

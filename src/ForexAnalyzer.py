@@ -31,6 +31,8 @@ class ForexAnalyzer:
 
         self._indicators_stats_df = {}
 
+        self._heiken_ashi_df = {}
+
         if not mt5.initialize():
             print("initialize() failed, error code =",mt5.last_error())
             quit()
@@ -49,6 +51,32 @@ class ForexAnalyzer:
         symbol_info = mt5.symbol_info(symbol or self._symbol)
 
         return 10 ** -symbol_info.digits
+
+    def _create_heiken_ashi(self, rates_df, timeframe):
+        """Create data for heiken ashi plots, based on the given timeframe
+
+        Parameters:
+            - data: a copy of the forex data fetched
+            - timeframe: the given timeframe
+        
+        Return:
+            - None
+        
+        """
+
+        data = rates_df.copy()
+        
+        for i in range(data.shape[0]):
+            if i > 0:
+                data.loc[data.index[i],'open'] = (rates_df['open'][i-1] + rates_df['close'][i-1])/2
+            
+            data.loc[data.index[i],'close'] = (rates_df['open'][i] + rates_df['close'][i] + rates_df['low'][i] +  rates_df['high'][i])/4
+        
+        data = data.iloc[1:,:]
+        
+        self._heiken_ashi_df[timeframe] = data
+
+        return None
 
     def _calculate_lagging_indicators(self, day_stats, timeframe):
         """Create the lagging indicators and store in object attribute (self._lagging_indicators)
@@ -207,6 +235,9 @@ class ForexAnalyzer:
 
         points = round((close_price - open_price) / self._get_multiplier(symbol))
         return int(points) 
+    
+    def get_heiken_ashi(self, timeframe):
+        return self._heiken_ashi_df[timeframe]
 
     def get_start_day(self):
         """Get the current time, based on the timezone
@@ -266,6 +297,8 @@ class ForexAnalyzer:
         self._calculate_lagging_indicators(rates_df, timeframe)
             
         self._create_trend_indicators(rates_df.copy(), timeframe)
+
+        self._create_heiken_ashi(rates_df, timeframe)
 
         return rates_df
 
