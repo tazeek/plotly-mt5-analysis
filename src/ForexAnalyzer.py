@@ -31,6 +31,8 @@ class ForexAnalyzer:
 
         self._indicators_stats_df = {}
 
+        self._heiken_ashi_df = {}
+
         if not mt5.initialize():
             print("initialize() failed, error code =",mt5.last_error())
             quit()
@@ -49,6 +51,9 @@ class ForexAnalyzer:
         symbol_info = mt5.symbol_info(symbol or self._symbol)
 
         return 10 ** -symbol_info.digits
+
+    def _create_heiken_ashi(self, data, timeframe):
+        ...
 
     def _calculate_lagging_indicators(self, day_stats, timeframe):
         """Create the lagging indicators and store in object attribute (self._lagging_indicators)
@@ -266,6 +271,8 @@ class ForexAnalyzer:
         self._calculate_lagging_indicators(rates_df, timeframe)
             
         self._create_trend_indicators(rates_df.copy(), timeframe)
+
+        self._create_heiken_ashi(rates_df.copy(), timeframe)
 
         return rates_df
 
