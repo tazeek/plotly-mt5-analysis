@@ -52,7 +52,7 @@ class ForexAnalyzer:
 
         return 10 ** -symbol_info.digits
 
-    def _create_heiken_ashi(self, data, timeframe):
+    def _create_heiken_ashi(self, rates_df, timeframe):
         """Create data for heiken ashi plots, based on the given timeframe
 
         Parameters:
@@ -63,14 +63,18 @@ class ForexAnalyzer:
             - None
         
         """
+
+        data = rates_df.copy()
         
         for i in range(data.shape[0]):
             if i > 0:
-                data.loc[data.index[i],'Open'] = (data['Open'][i-1] + data['Close'][i-1])/2
+                data.loc[data.index[i],'open'] = (rates_df['open'][i-1] + rates_df['close'][i-1])/2
             
-            data.loc[data.index[i],'Close'] = (data['Open'][i] + data['Close'][i] + data['Low'][i] +  data['High'][i])/4
-            data = data.iloc[1:,:]
+            data.loc[data.index[i],'close'] = (rates_df['open'][i] + rates_df['close'][i] + rates_df['low'][i] +  rates_df['high'][i])/4
         
+        data = data.iloc[1:,:]
+        
+        print(data)
         self._heiken_ashi_df[timeframe] = data
 
         return None
@@ -292,7 +296,7 @@ class ForexAnalyzer:
             
         self._create_trend_indicators(rates_df.copy(), timeframe)
 
-        self._create_heiken_ashi(rates_df.copy(), timeframe)
+        self._create_heiken_ashi(rates_df, timeframe)
 
         return rates_df
 
