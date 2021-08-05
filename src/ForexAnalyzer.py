@@ -74,7 +74,6 @@ class ForexAnalyzer:
         
         data = data.iloc[1:,:]
         
-        print(data)
         self._heiken_ashi_df[timeframe] = data
 
         return None
