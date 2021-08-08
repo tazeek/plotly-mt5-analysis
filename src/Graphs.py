@@ -179,15 +179,8 @@ class Graphs:
 
         self._fill_missing_dates(adx_fig, adx_df, '1H')
 
-        atr_info_dict = {
-            25: 'Weak',
-            50: 'Strong',
-            75: 'Very Strong',
-            100: 'Extremely Strong'
-        }
-
-        for num, annotation in atr_info_dict.items():
-            self._draw_hline(adx_fig, num, 'dash', 'black', annotation)
+        for num in [25,50,75,100]:
+            self._draw_hline(adx_fig, num, 'dash', 'black')
 
         return adx_fig
 
