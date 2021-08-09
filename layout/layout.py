@@ -210,13 +210,13 @@ def generate_layout():
                     ]),
 
                     dcc.Tab(label='Heiken Ashi (15M)',value='medium-timeframe-heiken', children=[
-                        _loading_figure_layout('candlesticks-15M-heiken')
+                        _loading_figure_layout('candlesticks-15M-heiken'),
+                        _loading_figure_layout('rsi-15M-fig'),
+                        _loading_figure_layout('adx-graph-15M')
                     ]),
 
                     dcc.Tab(label='Entry Timeframe (15M)', value='medium-timeframe', children=[
                         _loading_figure_layout('candlestick-15M-fig', draw_config),
-                        _loading_figure_layout('rsi-15M-fig', draw_config),
-                        _loading_figure_layout('adx-graph-15M')
                     ])
 
                 ])
