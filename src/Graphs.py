@@ -279,7 +279,7 @@ class Graphs:
 
         return fig
 
-    def plot_heiken_ashi(self, data):
+    def plot_heiken_ashi(self, data, indicator_df):
 
         candlesticks_fig = go.Figure(
             data=[
@@ -290,6 +290,20 @@ class Graphs:
                     low=data['low'], 
                     close=data['close'],
                     hoverinfo='none',
+                    showlegend=False
+                ),
+                go.Scatter(
+                    x=indicator_df['time'],
+                    y=indicator_df['upper_bound'],
+                    line=dict(color='black',width=2),
+                    name="Upper bound",
+                    showlegend=False
+                ),
+                go.Scatter(
+                    x=indicator_df['time'],
+                    y=indicator_df['lower_bound'],
+                    line=dict(color='black',width=2),
+                    name="Lower bound",
                     showlegend=False
                 )
             ]

@@ -147,6 +147,13 @@ class ForexAnalyzer:
         indicators.smma(period=200, column_name='sma_200', apply_to='Close')
         indicators.atr(period=50, column_name='atr')
 
+        indicators.bollinger_bands(
+            period=20, deviation=2, 
+            column_name_top='upper_bound', 
+            column_name_mid='sma_bollinger', 
+            column_name_bottom='lower_bound'
+        )
+
         self._indicators_stats_df[timeframe] = indicators.df
 
         return None

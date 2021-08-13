@@ -110,7 +110,7 @@ def register_callbacks(app):
             f"Bid value: {bid_value:.5f}",
             graph_generator.plot_candlesticks_fullday(stats_4H, '4H', forex_analyzer.get_trend_indicators('4H')),
             graph_generator.plot_candlesticks_fullday(stats_15M, '15M', forex_analyzer.get_trend_indicators('15M')),
-            graph_generator.plot_heiken_ashi(forex_analyzer.get_heiken_ashi('15M')),
+            graph_generator.plot_heiken_ashi(forex_analyzer.get_heiken_ashi('15M'), forex_analyzer.get_trend_indicators('15M')),
             graph_generator.plot_atr(forex_analyzer.get_trend_indicators('4H')),
             graph_generator.plot_adx_figure(forex_analyzer.get_lagging_indicator('15M', 'adx')),
             graph_generator.plot_rsi_figure(forex_analyzer.get_lagging_indicator('15M', 'rsi')),
