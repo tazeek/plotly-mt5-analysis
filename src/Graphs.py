@@ -295,13 +295,15 @@ class Graphs:
                 go.Scatter(
                     x=indicator_df['time'],
                     y=indicator_df['upper_bound'],
-                    line=dict(color='green',width=2),
+                    line=dict(color='black',width=2),
+                    name="Upper bound",
                     showlegend=False
                 ),
                 go.Scatter(
                     x=indicator_df['time'],
                     y=indicator_df['lower_bound'],
-                    line=dict(color='green',width=2),
+                    line=dict(color='black',width=2),
+                    name="Lower bound",
                     showlegend=False
                 )
             ]
