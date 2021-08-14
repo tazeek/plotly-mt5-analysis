@@ -229,6 +229,7 @@ def register_callbacks(app):
 
     @app.callback(
         [
+            Output('currency-correlation-fig', 'figure'),
             Output('currency-correlation-fig','style')
         ],
         [
@@ -253,8 +254,8 @@ def register_callbacks(app):
 
         currencies_list = currencies.split(',')
         correlated_df = forex_analyzer.get_currency_correlations(currencies_list)
-        graph_generator.plot_correlation_heatmap(correlated_df)
 
         return [
-            {'display':'hidden'}
+            graph_generator.plot_correlation_heatmap(correlated_df),
+            {'display':'block'}
         ]

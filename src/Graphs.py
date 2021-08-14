@@ -325,7 +325,14 @@ class Graphs:
     def plot_correlation_heatmap(self, correlation_df):
         currency_pairs = list(correlation_df.columns)
         values = correlation_df.values.tolist()
-        print(currency_pairs)
-        print(values)
 
-        ...
+        fig = go.Figure(
+            data=go.Heatmap(
+                z=values,
+                x=currency_pairs,
+                y=currency_pairs,
+                hoverongaps = False
+            )
+        )
+
+        return fig
