@@ -253,8 +253,7 @@ def register_callbacks(app):
 
         currencies_list = currencies.split(',')
         correlated_df = forex_analyzer.get_currency_correlations(currencies_list)
-
-        print(correlated_df)
+        graph_generator.plot_correlation_heatmap(correlated_df)
 
         return [
             {'display':'hidden'}

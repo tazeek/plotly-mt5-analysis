@@ -321,3 +321,7 @@ class Graphs:
         self._fill_missing_dates(candlesticks_fig, data, '15M')
         
         return candlesticks_fig
+
+    def plot_correlation_heatmap(self, correlation_df):
+        print(correlation_df)
+        ...
