@@ -51,7 +51,7 @@ def _generate_currency_correlation_input():
                 id=f"input_currencies_list",
                 type="text",
                 placeholder="Symbols (seperated by ,)",
-                style={"margin-right": "15px"}
+                style={"margin-right": "15px", "width": "30%"}
             )
         ]),
 

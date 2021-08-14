@@ -226,3 +226,34 @@ def register_callbacks(app):
             graph_generator.plot_profit_target(percentage_target, 'Profit'),
             {'display':'block'}
         ]
+
+    @app.callback(
+        [
+            Output('currency-correlation-fig','style')
+        ],
+        [
+            Input('show-correlation-heatmap','n_clicks')
+        ],
+        [
+            State('input_currencies_list','value')
+        ],
+        prevent_initial_call=True
+    )
+    def calculate_correlation_currencies(click, currencies):
+        """Callback for finding the percentage, of a profit target
+
+        Parameters:
+            - click(int): dummy click whenever the button is clicked
+            - profit_target(int): the profit target, broken down
+        
+        Returns:
+            - list: the list of areas to update in layout
+        
+        """
+
+        currencies_list = currencies.split(',')
+        print(currencies_list)
+
+        return [
+            {'display':'hidden'}
+        ]
