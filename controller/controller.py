@@ -192,49 +192,6 @@ def register_callbacks(app):
 
     @app.callback(
         [
-            Output('points-percentage-fig','figure'),
-            Output('points-percentage-fig','style')
-        ],
-        [
-            Input('show-graph-points','n_clicks')
-        ],
-        [
-            State('input_upper','value'),
-            State('input_lower','value'),
-            State('input_currency','value')
-        ],
-        prevent_initial_call=True
-    )
-    def calculate_point_percentage(click, upper_num, lower_num, underlying):
-        """Callback for finding the percentage, of points in a range
-
-        Parameters:
-            - click(int): dummy click whenever the button is clicked
-            - upper_num(float): the upper bound
-            - lower_num(float): the lower bound
-            - underlying(str): the symbol to compare against
-        
-        Returns:
-            - list: the list of areas to update in layout
-        
-        """
-
-        # Find the number of points
-        points_diff = forex_analyzer.calculate_point_gap(float(lower_num), float(upper_num), underlying)
-        
-        percentage_target = {0: 0}
-
-        for i in range(1, 11):
-            perc = i * 10
-            percentage_target[perc] = int(points_diff * (perc/100))
-
-        return [
-            graph_generator.plot_profit_target(percentage_target, 'Points'),
-            {'display':'block'}
-        ]
-
-    @app.callback(
-        [
             Output('profit-percentage-fig','figure'),
             Output('profit-percentage-fig','style')
         ],
