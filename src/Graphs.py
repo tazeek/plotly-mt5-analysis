@@ -331,7 +331,8 @@ class Graphs:
                 z=values,
                 x=currency_pairs,
                 y=currency_pairs,
-                hoverongaps = False
+                hoverongaps = False,
+                colorscale="YlGnBu"
             )
         )
 
