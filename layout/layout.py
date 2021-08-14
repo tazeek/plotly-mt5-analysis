@@ -63,6 +63,30 @@ def _generate_profit_percentage_graph():
 
     ])
 
+def _generate_currency_correlation_input():
+
+    return html.Div([
+        html.H1(
+            children="Currency correlation"
+        ),
+
+        html.Div([
+            dcc.Input(
+                id=f"input_currencies_list",
+                type="text",
+                placeholder="Symbols (seperated by ,)",
+                style={"margin-right": "15px"}
+            )
+        ]),
+
+        html.Button(
+            'Calculate', 
+            id='show-correlation-heatmap',
+            style={"margin-top": "15px", "margin-bottom": "15px"}
+        )
+
+    ]) 
+
 def _generate_profit_pip_calculator():
 
     profit_loss_rm_dict = {
@@ -194,8 +218,11 @@ def generate_layout():
                 _loading_figure_layout('profit-percentage-fig',None,hide_display)
             ]),
 
-            dcc.Tab(label='Currency Strength Analysis', value='currency-strength-tab', children=[
-                _loading_figure_layout('bar-currency-strength-analysis',None,hide_display)
+            dcc.Tab(label='Currency Analysis', value='currency-strength-tab', children=[
+                _loading_figure_layout('bar-currency-strength-analysis',None,hide_display),
+                html.Hr(),
+                _generate_currency_correlation_input(),
+                _loading_figure_layout('currency-correlation-fig',None,hide_display)
             ]),
 
             dcc.Tab(label='Price Analysis', value='price-analysis-tab', children=[
