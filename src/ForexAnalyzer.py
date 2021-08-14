@@ -142,9 +142,7 @@ class ForexAnalyzer:
         )
 
         indicators = Indicators(day_stats)
-        indicators.smma(period=21, column_name='sma_21', apply_to='Close')
         indicators.smma(period=50, column_name='sma_50', apply_to='Close')
-        indicators.smma(period=200, column_name='sma_200', apply_to='Close')
         indicators.atr(period=50, column_name='atr')
 
         indicators.bollinger_bands(
