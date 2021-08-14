@@ -142,9 +142,7 @@ class ForexAnalyzer:
         )
 
         indicators = Indicators(day_stats)
-        indicators.smma(period=21, column_name='sma_21', apply_to='Close')
         indicators.smma(period=50, column_name='sma_50', apply_to='Close')
-        indicators.smma(period=200, column_name='sma_200', apply_to='Close')
         indicators.atr(period=50, column_name='atr')
 
         indicators.bollinger_bands(
@@ -302,9 +300,7 @@ class ForexAnalyzer:
         rates_df = self._fetch_data_mt5(timeframe, bar_count)
 
         self._calculate_lagging_indicators(rates_df, timeframe)
-            
         self._create_trend_indicators(rates_df.copy(), timeframe)
-
         self._create_heiken_ashi(rates_df, timeframe)
 
         return rates_df
@@ -329,3 +325,25 @@ class ForexAnalyzer:
         percentage_strength = ((current_close_price - oldest_close_price)/oldest_close_price) * 100
 
         return round(percentage_strength,3)
+
+    def get_currency_correlations(self, symbols_list):
+        """Get the correlations between different currency pairs
+
+        Parameters:
+            - symbols_list(list): the list of symbols
+
+        Returns:
+            - dataframe: the dataframe containing the correlated data
+        """
+
+        currency_correlation_df = pd.DataFrame()
+
+        for currency_pair in symbols_list:
+            # 1. Fetch the last 30 days data, in 4-hour intervals
+            # 1 day = 24 hours (6 4-hour intervals); 30 days = (6 * 30 = 180)
+            data = self._fetch_data_mt5('4H', 180, currency_pair)
+
+            # 2. Fetch only the closing price of the given pair
+            currency_correlation_df[currency_pair] = data['close']
+
+        return currency_correlation_df.corr().round(3)

@@ -77,7 +77,6 @@ def register_callbacks(app):
             Output("ask-value","children"),
             Output("bid-value","children"),
             Output("candlestick-4H-fig","figure"),
-            Output("candlestick-15M-fig","figure"),
             Output("candlesticks-15M-heiken","figure"),
             Output("atr-graph-4H","figure"),
             Output("adx-graph-15M","figure"),
@@ -109,7 +108,6 @@ def register_callbacks(app):
             f"Ask value: {ask_value:.5f}",
             f"Bid value: {bid_value:.5f}",
             graph_generator.plot_candlesticks_fullday(stats_4H, '4H', forex_analyzer.get_trend_indicators('4H')),
-            graph_generator.plot_candlesticks_fullday(stats_15M, '15M', forex_analyzer.get_trend_indicators('15M')),
             graph_generator.plot_heiken_ashi(forex_analyzer.get_heiken_ashi('15M'), forex_analyzer.get_trend_indicators('15M')),
             graph_generator.plot_atr(forex_analyzer.get_trend_indicators('4H')),
             graph_generator.plot_adx_figure(forex_analyzer.get_lagging_indicator('15M', 'adx')),
@@ -194,49 +192,6 @@ def register_callbacks(app):
 
     @app.callback(
         [
-            Output('points-percentage-fig','figure'),
-            Output('points-percentage-fig','style')
-        ],
-        [
-            Input('show-graph-points','n_clicks')
-        ],
-        [
-            State('input_upper','value'),
-            State('input_lower','value'),
-            State('input_currency','value')
-        ],
-        prevent_initial_call=True
-    )
-    def calculate_point_percentage(click, upper_num, lower_num, underlying):
-        """Callback for finding the percentage, of points in a range
-
-        Parameters:
-            - click(int): dummy click whenever the button is clicked
-            - upper_num(float): the upper bound
-            - lower_num(float): the lower bound
-            - underlying(str): the symbol to compare against
-        
-        Returns:
-            - list: the list of areas to update in layout
-        
-        """
-
-        # Find the number of points
-        points_diff = forex_analyzer.calculate_point_gap(float(lower_num), float(upper_num), underlying)
-        
-        percentage_target = {0: 0}
-
-        for i in range(1, 11):
-            perc = i * 10
-            percentage_target[perc] = int(points_diff * (perc/100))
-
-        return [
-            graph_generator.plot_profit_target(percentage_target, 'Points'),
-            {'display':'block'}
-        ]
-
-    @app.callback(
-        [
             Output('profit-percentage-fig','figure'),
             Output('profit-percentage-fig','style')
         ],
@@ -269,5 +224,38 @@ def register_callbacks(app):
 
         return [
             graph_generator.plot_profit_target(percentage_target, 'Profit'),
+            {'display':'block'}
+        ]
+
+    @app.callback(
+        [
+            Output('currency-correlation-fig', 'figure'),
+            Output('currency-correlation-fig','style')
+        ],
+        [
+            Input('show-correlation-heatmap','n_clicks')
+        ],
+        [
+            State('input_currencies_list','value')
+        ],
+        prevent_initial_call=True
+    )
+    def calculate_correlation_currencies(click, currencies):
+        """Callback for finding the percentage, of a profit target
+
+        Parameters:
+            - click(int): dummy click whenever the button is clicked
+            - profit_target(int): the profit target, broken down
+        
+        Returns:
+            - list: the list of areas to update in layout
+        
+        """
+
+        currencies_list = currencies.split(',')
+        correlated_df = forex_analyzer.get_currency_correlations(currencies_list)
+
+        return [
+            graph_generator.plot_correlation_heatmap(correlated_df),
             {'display':'block'}
         ]

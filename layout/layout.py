@@ -15,30 +15,6 @@ def _loading_figure_layout(fig_id, config=None, style=None):
         ])
     )
 
-def _generate_points_percentage_graph():
-    return html.Div(
-        [
-            html.H1(
-                children="Points aim (percentage)"
-            ),
-
-            html.Div([
-                dcc.Input(
-                    id=f"input_{field}",
-                    type="text",
-                    placeholder=f"Enter {field}",
-                    style={"margin-right": "15px"}
-                ) for field in ['lower', 'upper', 'currency']
-            ]),
-
-            html.Button(
-                'Display', 
-                id='show-graph-points',
-                style={"margin-top": "15px", "margin-bottom": "15px"}
-            )
-        ]
-    )
-
 def _generate_profit_percentage_graph():
 
     return html.Div([
@@ -62,6 +38,30 @@ def _generate_profit_percentage_graph():
             )
 
     ])
+
+def _generate_currency_correlation_input():
+
+    return html.Div([
+        html.H1(
+            children="Currency correlation"
+        ),
+
+        html.Div([
+            dcc.Input(
+                id=f"input_currencies_list",
+                type="text",
+                placeholder="Symbols (seperated by ,)",
+                style={"margin-right": "15px", "width": "30%"}
+            )
+        ]),
+
+        html.Button(
+            'Calculate', 
+            id='show-correlation-heatmap',
+            style={"margin-top": "15px", "margin-bottom": "15px"}
+        )
+
+    ]) 
 
 def _generate_profit_pip_calculator():
 
@@ -187,15 +187,15 @@ def generate_layout():
                 _generate_profit_pip_calculator(),
                 _loading_figure_layout('bar-average-pip-fig',None,hide_display),
                 html.Hr(),
-                _generate_points_percentage_graph(),
-                _loading_figure_layout('points-percentage-fig',None,hide_display),
-                html.Hr(),
                 _generate_profit_percentage_graph(),
                 _loading_figure_layout('profit-percentage-fig',None,hide_display)
             ]),
 
-            dcc.Tab(label='Currency Strength Analysis', value='currency-strength-tab', children=[
-                _loading_figure_layout('bar-currency-strength-analysis',None,hide_display)
+            dcc.Tab(label='Currency Analysis', value='currency-strength-tab', children=[
+                _loading_figure_layout('bar-currency-strength-analysis',None,hide_display),
+                html.Hr(),
+                _generate_currency_correlation_input(),
+                _loading_figure_layout('currency-correlation-fig',None,hide_display)
             ]),
 
             dcc.Tab(label='Price Analysis', value='price-analysis-tab', children=[
@@ -213,10 +213,6 @@ def generate_layout():
                         _loading_figure_layout('candlesticks-15M-heiken'),
                         _loading_figure_layout('rsi-15M-fig'),
                         _loading_figure_layout('adx-graph-15M')
-                    ]),
-
-                    dcc.Tab(label='Entry Timeframe (15M)', value='medium-timeframe', children=[
-                        _loading_figure_layout('candlestick-15M-fig', draw_config),
                     ])
 
                 ])

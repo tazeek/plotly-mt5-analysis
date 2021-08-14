@@ -1,5 +1,6 @@
 import plotly.graph_objects as go
 import pandas as pd
+import plotly.figure_factory as ff
 
 class Graphs:
 
@@ -241,9 +242,9 @@ class Graphs:
 
         bar_fig.update_layout(
             template='simple_white',
-            xaxis_title="symbol",
+            xaxis_title="Symbol",
             yaxis_title="Strength",
-            title=f"symbol Strength (with JPY as the apple)",
+            title=f"Symbol Strength (with JPY as the apple)",
             hovermode='x unified',
             height=700
         )
@@ -321,3 +322,24 @@ class Graphs:
         self._fill_missing_dates(candlesticks_fig, data, '15M')
         
         return candlesticks_fig
+
+    def plot_correlation_heatmap(self, correlation_df):
+        currency_pairs = list(correlation_df.columns)
+        values = correlation_df.values.tolist()
+
+        ff_fig = ff.create_annotated_heatmap(
+            x=currency_pairs, 
+            y=currency_pairs, 
+            z=values, 
+            colorscale='Viridis',
+            showscale = True
+        )
+
+        fig = go.FigureWidget(ff_fig)
+        fig.layout.annotations = ff_fig.layout.annotations
+
+        fig.update_layout(
+            title=f"Currency correlation",
+        )
+
+        return fig
