@@ -336,4 +336,16 @@ class ForexAnalyzer:
             - dataframe: the dataframe containing the correlated data
         """
 
+        currency_correlation_df = pd.DataFrame()
+
+        for currency_pair in symbols_list:
+            # 1. Fetch the last 30 days data, in 4-hour intervals
+            # 1 day = 24 hours (6 4-hour intervals); 30 days = (6 * 30 = 180)
+            data = self._fetch_data_mt5('4H', 180, currency_pair)
+
+            # 2. Fetch only the closing price of the given pair
+            currency_correlation_df[currency_pair] = data['close']
+
+        print(currency_correlation_df.head())
+
         ...

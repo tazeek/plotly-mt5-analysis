@@ -252,7 +252,7 @@ def register_callbacks(app):
         """
 
         currencies_list = currencies.split(',')
-        print(currencies_list)
+        correlated_df = forex_analyzer.get_currency_correlations(currencies_list)
 
         return [
             {'display':'hidden'}
