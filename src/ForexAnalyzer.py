@@ -300,9 +300,7 @@ class ForexAnalyzer:
         rates_df = self._fetch_data_mt5(timeframe, bar_count)
 
         self._calculate_lagging_indicators(rates_df, timeframe)
-            
         self._create_trend_indicators(rates_df.copy(), timeframe)
-
         self._create_heiken_ashi(rates_df, timeframe)
 
         return rates_df
@@ -327,3 +325,15 @@ class ForexAnalyzer:
         percentage_strength = ((current_close_price - oldest_close_price)/oldest_close_price) * 100
 
         return round(percentage_strength,3)
+
+    def get_currency_correlations(self, symbols_list):
+        """Get the correlations between different currency pairs
+
+        Parameters:
+            - symbols_list(list): the list of symbols
+
+        Returns:
+            - dataframe: the dataframe containing the correlated data
+        """
+
+        ...
