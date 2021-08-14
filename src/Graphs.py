@@ -1,5 +1,6 @@
 import plotly.graph_objects as go
 import pandas as pd
+import plotly.figure_factory as ff
 
 class Graphs:
 
@@ -326,14 +327,21 @@ class Graphs:
         currency_pairs = list(correlation_df.columns)
         values = correlation_df.values.tolist()
 
-        fig = go.Figure(
-            data=go.Heatmap(
-                z=values,
-                x=currency_pairs,
-                y=currency_pairs,
-                hoverongaps = False,
-                colorscale="YlGnBu"
-            )
+        print(len(currency_pairs))
+        print(len(values))
+
+        ff_fig = ff.create_annotated_heatmap(
+            x=currency_pairs, 
+            y=currency_pairs, 
+            z=values, 
+            showscale = True
+        )
+
+        fig  = go.FigureWidget(ff_fig)
+        fig.layout.annotations = ff_fig.layout.annotations
+
+        fig.update_layout(
+            title=f"Currency correlation",
         )
 
         return fig
