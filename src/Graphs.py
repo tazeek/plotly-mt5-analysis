@@ -241,9 +241,9 @@ class Graphs:
 
         bar_fig.update_layout(
             template='simple_white',
-            xaxis_title="symbol",
+            xaxis_title="Symbol",
             yaxis_title="Strength",
-            title=f"symbol Strength (with JPY as the apple)",
+            title=f"Symbol Strength (with JPY as the apple)",
             hovermode='x unified',
             height=700
         )
