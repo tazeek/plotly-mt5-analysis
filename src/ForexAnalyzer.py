@@ -346,6 +346,4 @@ class ForexAnalyzer:
             # 2. Fetch only the closing price of the given pair
             currency_correlation_df[currency_pair] = data['close']
 
-        print(currency_correlation_df.head())
-
-        ...
+        return currency_correlation_df.corr()
