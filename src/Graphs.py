@@ -327,17 +327,15 @@ class Graphs:
         currency_pairs = list(correlation_df.columns)
         values = correlation_df.values.tolist()
 
-        print(len(currency_pairs))
-        print(len(values))
-
         ff_fig = ff.create_annotated_heatmap(
             x=currency_pairs, 
             y=currency_pairs, 
             z=values, 
+            colorscale='Viridis',
             showscale = True
         )
 
-        fig  = go.FigureWidget(ff_fig)
+        fig = go.FigureWidget(ff_fig)
         fig.layout.annotations = ff_fig.layout.annotations
 
         fig.update_layout(
