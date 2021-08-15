@@ -9,7 +9,14 @@ import talib
 
 class ForexAnalyzer:
 
+    __instance__ = None
+
     def __init__(self, symbol=None):
+
+        if ForexAnalyzer.__instance__ is None:
+           ForexAnalyzer.__instance__ = self
+        else:
+            raise Exception("You cannot create another ForexAnalyzer class")     
 
         self._mt5_timeframe_dict = {
             '15M': mt5.TIMEFRAME_M15,
@@ -36,6 +43,16 @@ class ForexAnalyzer:
         if not mt5.initialize():
             print("initialize() failed, error code =",mt5.last_error())
             quit()
+
+    @staticmethod
+    def get_instance():
+        """Static method to fetch the current instance
+        """
+
+        if not ForexAnalyzer.__instance__:
+            ForexAnalyzer()
+        
+        return ForexAnalyzer.__instance__
 
     def _get_multiplier(self, symbol=None):
         """Get the multiplier, based on number of digits

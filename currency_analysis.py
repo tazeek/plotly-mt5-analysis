@@ -33,7 +33,7 @@ def calculate_currency_strength():
         
     """
 
-    forex_analyzer = ForexAnalyzer()
+    forex_analyzer = ForexAnalyzer.get_instance()
     print("In currency_analysis.py\n")
     print(forex_analyzer)
     print("\n\n")

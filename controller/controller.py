@@ -10,7 +10,7 @@ import math
 
 def register_callbacks(app):
     
-    forex_analyzer = ForexAnalyzer()
+    forex_analyzer = ForexAnalyzer.get_instance()
     print("\nInside controller.py\n")
     print(forex_analyzer)
     print("\n\n")
