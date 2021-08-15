@@ -364,3 +364,6 @@ class ForexAnalyzer:
             currency_correlation_df[currency_pair] = data['close']
 
         return currency_correlation_df.corr().round(3)
+
+    def get_symbol_list(self):
+        ...
