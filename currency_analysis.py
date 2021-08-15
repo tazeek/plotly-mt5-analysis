@@ -34,6 +34,9 @@ def calculate_currency_strength():
     """
 
     forex_analyzer = ForexAnalyzer()
+    print("In currency_analysis.py\n")
+    print(forex_analyzer)
+    print("\n\n")
     forex_pairs = []
 
     with open('files\\currency_strength_pairs.txt') as f:
