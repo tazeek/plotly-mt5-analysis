@@ -209,7 +209,7 @@ class ForexAnalyzer:
             - str: the bid price of the symbol 
         
         """
-
+        
         last_tick_info = mt5.symbol_info_tick(self._symbol)
         return last_tick_info.ask, last_tick_info.bid
 
@@ -364,3 +364,11 @@ class ForexAnalyzer:
             currency_correlation_df[currency_pair] = data['close']
 
         return currency_correlation_df.corr().round(3)
+
+    def get_symbol_list(self):
+        """Get all the symbols list from MT5
+        """
+        group_filter = "!*BTC*, !*PLN*,!*GBX*,!*XBT*,!*ETH*,*USD*,*EUR*,*JPY*,*AUD*,*NZD*"
+        symbols = mt5.symbols_get(group=group_filter)
+
+        return [symbol.name for symbol in symbols]

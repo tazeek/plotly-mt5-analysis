@@ -1,8 +1,8 @@
 from src.ForexAnalyzer import ForexAnalyzer
 
 def load_forex_pairs():
-    """Load all the symbols, based on the text file
-    Replace with: https://www.mql5.com/en/docs/integration/python_metatrader5/mt5symbolsget_py
+    """Load all the symbols
+        Source: https://www.mql5.com/en/docs/integration/python_metatrader5/mt5symbolsget_py
 
         Parameters:
            None
@@ -12,14 +12,11 @@ def load_forex_pairs():
         
     """
 
-    forex_pairs = []
+    forex_analyzer = ForexAnalyzer.get_instance()
 
-    with open("files\\forex_pairs.txt") as f:
-        for line in f.readlines():
-
-            forex_pairs.append(line.rstrip())
+    symbols_list = forex_analyzer.get_symbol_list()
     
-    return sorted(forex_pairs)
+    return sorted(symbols_list)
 
 def calculate_currency_strength():
 
