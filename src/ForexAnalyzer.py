@@ -366,4 +366,11 @@ class ForexAnalyzer:
         return currency_correlation_df.corr().round(3)
 
     def get_symbol_list(self):
+        """Get all the symbols list from MT5
+        """
+
+        symbols = mt5.symbols_get()
+        symbols = [symbol.name for symbol in symbols]
+        
+        print(symbols)
         ...
