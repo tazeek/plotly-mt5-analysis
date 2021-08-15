@@ -10,7 +10,7 @@ import math
 
 def register_callbacks(app):
     
-    forex_analyzer = ForexAnalyzer()
+    forex_analyzer = ForexAnalyzer.get_instance()
     graph_generator = Graphs()
 
     @app.callback(
