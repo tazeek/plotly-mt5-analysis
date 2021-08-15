@@ -15,7 +15,8 @@ def load_forex_pairs():
     forex_pairs = []
     forex_analyzer = ForexAnalyzer.get_instance()
 
-    forex_analyzer.get_symbol_list()
+    symbols_list = forex_analyzer.get_symbol_list()
+    print(sorted(symbols_list))
 
     with open("files\\forex_pairs.txt") as f:
         for line in f.readlines():

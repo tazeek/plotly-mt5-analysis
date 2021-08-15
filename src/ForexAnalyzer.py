@@ -370,7 +370,5 @@ class ForexAnalyzer:
         """
 
         symbols = mt5.symbols_get()
-        symbols = [symbol.name for symbol in symbols]
-        
-        print(symbols)
-        ...
+
+        return [symbol.name for symbol in symbols]
