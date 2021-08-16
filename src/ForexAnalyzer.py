@@ -11,7 +11,7 @@ class ForexAnalyzer:
 
     __instance__ = None
 
-    def __init__(self, symbol=None):
+    def __init__(self):
 
         if ForexAnalyzer.__instance__ is None:
            ForexAnalyzer.__instance__ = self
@@ -26,13 +26,9 @@ class ForexAnalyzer:
             '1W': mt5.TIMEFRAME_W1
         }
         
-        self._symbol = symbol
+        self._symbol = None
         
         self._timezone = pytz.timezone('Europe/Moscow') # MT5 timezone
-
-        self._rsi_df = {}
-
-        self._adx_df = {}
 
         self._lagging_indicators = {}
 
@@ -365,10 +361,12 @@ class ForexAnalyzer:
 
         return currency_correlation_df.corr().round(3)
 
-    def get_symbol_list(self, filter=None):
+    def get_symbol_list(self):
         """Get all the symbols list from MT5
         """
-        group_filter = filter or "!*BTC*, !*PLN*,!*GBX*,!*XBT*,!*ETH*,*USD*,*EUR*,*JPY*,*AUD*,*NZD*"
-        symbols = mt5.symbols_get(group=group_filter)
 
-        return [symbol.name for symbol in symbols]
+        group_filter = "!*BTC*, !*PLN*,!*GBX*,!*XBT*,!*ETH*,*USD*,*EUR*,*JPY*,*AUD*,*NZD*"
+        symbols = mt5.symbols_get(group=group_filter)
+        symbols = [symbol.name for symbol in symbols]
+
+        return symbols
