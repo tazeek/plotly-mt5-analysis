@@ -297,17 +297,23 @@ class Graphs:
                     x=indicator_df['time'],
                     y=indicator_df['upper_bound'],
                     line=dict(color='black',width=2),
-                    name="Upper bound",
-                    showlegend=False
+                    name="Upper bound"
                 ),
                 go.Scatter(
                     x=indicator_df['time'],
                     y=indicator_df['lower_bound'],
                     line=dict(color='black',width=2),
-                    name="Lower bound",
-                    showlegend=False
+                    name="Lower bound"
                 )
             ]
+        )
+
+        legend_config=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.02,
+            xanchor="right",
+            x=1
         )
 
         candlesticks_fig.update_layout(
@@ -317,6 +323,7 @@ class Graphs:
             hovermode='x',
             yaxis_tickformat='.5f',
             xaxis_rangeslider_visible=False,
+            legend=legend_config
         )
 
         self._fill_missing_dates(candlesticks_fig, data, '15M')
