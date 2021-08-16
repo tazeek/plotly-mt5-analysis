@@ -320,7 +320,7 @@ class ForexAnalyzer:
 
         return rates_df
 
-    def get_currency_strength(self, symbol):
+    def get_currency_strength(self):
         """Get the strength of the symbol for currency strength analysis
 
         Parameters:
@@ -330,16 +330,23 @@ class ForexAnalyzer:
             - float: the strength of the given symbol
         
         """
-        rates_df = self._fetch_data_mt5('1W', 5, symbol)
+        currency_strength = {
+            'JPY': 0.00
+        }
 
-        close_price_series = rates_df['close']
+        for symbol in self._currency_strength_list:
 
-        oldest_close_price = close_price_series.iat[0]
-        current_close_price = close_price_series.iat[-1]
+            rates_df = self._fetch_data_mt5('1W', 5, symbol)
 
-        percentage_strength = ((current_close_price - oldest_close_price)/oldest_close_price) * 100
+            close_price_series = rates_df['close']
 
-        return round(percentage_strength,3)
+            oldest_close_price = close_price_series.iat[0]
+            current_close_price = close_price_series.iat[-1]
+
+            percentage_strength = ((current_close_price - oldest_close_price)/oldest_close_price) * 100
+            currency_strength[symbol[:3]] = round(percentage_strength,3)
+
+        return currency_strength
 
     def get_currency_correlations(self, symbols_list):
         """Get the correlations between different currency pairs

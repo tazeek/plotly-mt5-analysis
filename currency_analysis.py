@@ -20,7 +20,7 @@ def load_forex_pairs():
 
 def calculate_currency_strength():
 
-    """Find the currency strength, based on the given symbols
+    """Find the currency strength, based on JPY pairs
 
         Parameters:
            None
@@ -31,22 +31,7 @@ def calculate_currency_strength():
     """
 
     forex_analyzer = ForexAnalyzer.get_instance()
-    symbols_list = forex_analyzer.get_symbol_list()
-    print(symbols_list)
-    forex_pairs = []
-
-    with open('files\\currency_strength_pairs.txt') as f:
-        for line in f.readlines():
-            forex_pairs.append(line.rstrip())
-    
-    currency_strength = {
-        'JPY': 0.00
-    }
-
-    for pair in forex_pairs:
-        strength = forex_analyzer.get_currency_strength(pair)
-
-        currency_strength[pair[:3]] = strength
+    currency_strength = forex_analyzer.get_currency_strength()
 
     # Sort out dictionary in descending order
     currency_strength = dict(
