@@ -28,6 +28,9 @@ class Graphs:
 
             self._missing_dates[timeframe] = break_dates
 
+        print(self._missing_dates)
+        print('\n\n')
+
         return self._missing_dates[timeframe]
 
     def _add_sma_graphs(self, fig, data, color, col_name):
@@ -155,7 +158,7 @@ class Graphs:
         )
 
         self._draw_hline(rsi_fig, 50, "solid", "black")
-        self._fill_missing_dates(rsi_fig, rsi_today, '1H')
+        self._fill_missing_dates(rsi_fig, rsi_today, '15M')
 
         return rsi_fig
 
@@ -177,7 +180,7 @@ class Graphs:
             yaxis_tickformat='.2f'
         )
 
-        self._fill_missing_dates(adx_fig, adx_df, '1H')
+        self._fill_missing_dates(adx_fig, adx_df, '15M')
 
         for num in [25,50,75,100]:
             self._draw_hline(adx_fig, num, 'dash', 'black')
