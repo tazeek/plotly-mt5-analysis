@@ -28,9 +28,6 @@ class Graphs:
 
             self._missing_dates[timeframe] = break_dates
 
-        print(self._missing_dates)
-        print('\n\n')
-
         return self._missing_dates[timeframe]
 
     def _add_sma_graphs(self, fig, data, color, col_name):
@@ -247,7 +244,7 @@ class Graphs:
             template='simple_white',
             xaxis_title="Symbol",
             yaxis_title="Strength",
-            title=f"Symbol Strength (with JPY as the apple)",
+            title=f"Symbol Strength (with JPY as the apple) - Recent 5 weeks",
             hovermode='x unified',
             height=700
         )

@@ -11,7 +11,7 @@ class ForexAnalyzer:
 
     __instance__ = None
 
-    def __init__(self, symbol=None):
+    def __init__(self):
 
         if ForexAnalyzer.__instance__ is None:
            ForexAnalyzer.__instance__ = self
@@ -26,19 +26,17 @@ class ForexAnalyzer:
             '1W': mt5.TIMEFRAME_W1
         }
         
-        self._symbol = symbol
+        self._symbol = None
         
         self._timezone = pytz.timezone('Europe/Moscow') # MT5 timezone
-
-        self._rsi_df = {}
-
-        self._adx_df = {}
 
         self._lagging_indicators = {}
 
         self._indicators_stats_df = {}
 
         self._heiken_ashi_df = {}
+
+        self._currency_strength_list = []
 
         if not mt5.initialize():
             print("initialize() failed, error code =",mt5.last_error())
@@ -322,7 +320,7 @@ class ForexAnalyzer:
 
         return rates_df
 
-    def get_currency_strength(self, symbol):
+    def get_currency_strength(self):
         """Get the strength of the symbol for currency strength analysis
 
         Parameters:
@@ -332,16 +330,28 @@ class ForexAnalyzer:
             - float: the strength of the given symbol
         
         """
-        rates_df = self._fetch_data_mt5('1W', 5, symbol)
+        currency_strength = {
+            'JPY': 0.00
+        }
 
-        close_price_series = rates_df['close']
+        for symbol in self._currency_strength_list:
 
-        oldest_close_price = close_price_series.iat[0]
-        current_close_price = close_price_series.iat[-1]
+            rates_df = self._fetch_data_mt5('1W', 5, symbol)
 
-        percentage_strength = ((current_close_price - oldest_close_price)/oldest_close_price) * 100
+            close_price_series = rates_df['close']
 
-        return round(percentage_strength,3)
+            oldest_close_price = close_price_series.iat[0]
+            current_close_price = close_price_series.iat[-1]
+
+            percentage_strength = ((current_close_price - oldest_close_price)/oldest_close_price) * 100
+            currency_strength[symbol[:3]] = round(percentage_strength,3)
+
+        # Sort out dictionary in descending order
+        currency_strength = dict(
+            sorted(currency_strength.items(), key=lambda item: item[1], reverse=True)
+        )
+
+        return currency_strength
 
     def get_currency_correlations(self, symbols_list):
         """Get the correlations between different currency pairs
@@ -368,7 +378,11 @@ class ForexAnalyzer:
     def get_symbol_list(self):
         """Get all the symbols list from MT5
         """
+
         group_filter = "!*BTC*, !*PLN*,!*GBX*,!*XBT*,!*ETH*,*USD*,*EUR*,*JPY*,*AUD*,*NZD*"
         symbols = mt5.symbols_get(group=group_filter)
+        symbols = [symbol.name for symbol in symbols]
 
-        return [symbol.name for symbol in symbols]
+        self._currency_strength_list = [symbol for symbol in symbols if 'JPY' in symbol]
+
+        return symbols
