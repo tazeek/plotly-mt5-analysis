@@ -244,7 +244,7 @@ class Graphs:
             template='simple_white',
             xaxis_title="Symbol",
             yaxis_title="Strength",
-            title=f"Symbol Strength (with JPY as the apple)",
+            title=f"Symbol Strength (with JPY as the apple) - Recent 5 weeks",
             hovermode='x unified',
             height=700
         )

@@ -346,6 +346,11 @@ class ForexAnalyzer:
             percentage_strength = ((current_close_price - oldest_close_price)/oldest_close_price) * 100
             currency_strength[symbol[:3]] = round(percentage_strength,3)
 
+        # Sort out dictionary in descending order
+        currency_strength = dict(
+            sorted(currency_strength.items(), key=lambda item: item[1], reverse=True)
+        )
+
         return currency_strength
 
     def get_currency_correlations(self, symbols_list):

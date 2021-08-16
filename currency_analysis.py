@@ -31,11 +31,5 @@ def calculate_currency_strength():
     """
 
     forex_analyzer = ForexAnalyzer.get_instance()
-    currency_strength = forex_analyzer.get_currency_strength()
 
-    # Sort out dictionary in descending order
-    currency_strength = dict(
-        sorted(currency_strength.items(), key=lambda item: item[1], reverse=True)
-    )
-
-    return currency_strength
+    return forex_analyzer.get_currency_strength()
