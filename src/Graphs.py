@@ -28,9 +28,6 @@ class Graphs:
 
             self._missing_dates[timeframe] = break_dates
 
-        print(self._missing_dates)
-        print('\n\n')
-
         return self._missing_dates[timeframe]
 
     def _add_sma_graphs(self, fig, data, color, col_name):
