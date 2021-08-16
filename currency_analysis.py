@@ -31,6 +31,8 @@ def calculate_currency_strength():
     """
 
     forex_analyzer = ForexAnalyzer.get_instance()
+    symbols_list = forex_analyzer.get_symbol_list()
+    print(symbols_list)
     forex_pairs = []
 
     with open('files\\currency_strength_pairs.txt') as f:

@@ -36,6 +36,8 @@ class ForexAnalyzer:
 
         self._heiken_ashi_df = {}
 
+        self._currency_strength_list = []
+
         if not mt5.initialize():
             print("initialize() failed, error code =",mt5.last_error())
             quit()
@@ -368,5 +370,7 @@ class ForexAnalyzer:
         group_filter = "!*BTC*, !*PLN*,!*GBX*,!*XBT*,!*ETH*,*USD*,*EUR*,*JPY*,*AUD*,*NZD*"
         symbols = mt5.symbols_get(group=group_filter)
         symbols = [symbol.name for symbol in symbols]
+
+        self._currency_strength_list = [symbol for symbol in symbols if 'JPY' in symbol]
 
         return symbols
