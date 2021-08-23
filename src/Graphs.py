@@ -56,10 +56,13 @@ class Graphs:
         return None
 
     def _fill_missing_dates(self, fig, data_day, timeframe):
+
+        missing_dates = self._filter_missing_dates(data_day, timeframe)
+
         fig.update_xaxes(
             rangebreaks=[
                 dict(
-                    values=self._filter_missing_dates(data_day, timeframe)
+                    values=missing_dates
                 )
             ]
         )
