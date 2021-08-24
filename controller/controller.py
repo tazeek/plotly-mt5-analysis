@@ -270,6 +270,14 @@ def register_callbacks(app):
         prevent_initial_call=True,
     )
     def get_symbol_volume_sorted(n_clicks):
+
+        symbol_list_vol = forex_analyzer.get_symbol_volume()
+
+        file_text = ""
+
+        for symbol in symbol_list_vol:
+            file_text += f"{symbol}\n"
+        
         return [
-            dict(content="Hello world!", filename="hello.txt")
+            dict(content=file_text, filename="volume_data.txt")
         ]
