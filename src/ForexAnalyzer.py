@@ -38,6 +38,8 @@ class ForexAnalyzer:
 
         self._currency_strength_list = []
 
+        self._full_currency_list = []
+
         if not mt5.initialize():
             print("initialize() failed, error code =",mt5.last_error())
             quit()
@@ -133,6 +135,9 @@ class ForexAnalyzer:
         }
 
         return None
+
+    def _get_symbol_info_tick(self, symbol):
+        return mt5.symbol_info_tick(symbol)
     
     def _create_trend_indicators(self, day_stats, timeframe):
         """Create the trend indicators and store in object attribute (self._indicator_stats_df)
@@ -208,7 +213,7 @@ class ForexAnalyzer:
         
         """
         
-        last_tick_info = mt5.symbol_info_tick(self._symbol)
+        last_tick_info = self._get_symbol_info_tick(self._symbol)
         return last_tick_info.ask, last_tick_info.bid
 
 
@@ -381,8 +386,37 @@ class ForexAnalyzer:
 
         group_filter = "!*BTC*, !*PLN*,!*GBX*,!*XBT*,!*ETH*,*USD*,*EUR*,*JPY*,*AUD*,*NZD*"
         symbols = mt5.symbols_get(group=group_filter)
-        symbols = [symbol.name for symbol in symbols]
 
-        self._currency_strength_list = [symbol for symbol in symbols if 'JPY' in symbol]
+        for symbol in symbols:
 
-        return symbols
+            symbol = symbol.name
+
+            if 'JPY' in symbol:
+                self._currency_strength_list.append(symbol)
+            
+            self._full_currency_list.append(symbol)
+    
+        return self._full_currency_list
+
+    def get_symbol_volume(self):
+        """Get the volume data, based on the weekly timeframe
+        """
+
+        symbol_info_list = []
+
+        for symbol in self._full_currency_list:
+            data = self._fetch_data_mt5('1W', 1, symbol)
+            symbol_info_list.append({
+                'symbol': symbol,
+                'volume': data['tick_volume'].iat[0]
+            })
+        
+        symbol_info_list = sorted(symbol_info_list, key=lambda k: k['volume'], reverse=True)
+
+        symbols_only = []
+
+        for symbol_info in symbol_info_list:
+            if symbol_info['symbol'] not in symbols_only:
+                symbols_only.append(symbol_info['symbol'])
+        
+        return symbols_only

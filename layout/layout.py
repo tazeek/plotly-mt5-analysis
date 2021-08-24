@@ -172,6 +172,18 @@ def _generate_dropdown(forex_list):
         ),
     ])
 
+def _generate_download_button():
+    return html.Div(
+        [
+            html.Button(
+                "Download volume data", 
+                id="download-volume-data", 
+                style={"margin-top": "15px", "margin-bottom": "15px"}
+            ), 
+            dcc.Download(id="download-begin")
+        ]
+    )
+
 def generate_layout():
 
     forex_list = load_forex_pairs()
@@ -192,6 +204,8 @@ def generate_layout():
             ]),
 
             dcc.Tab(label='Currency Analysis', value='currency-strength-tab', children=[
+                _generate_download_button(),
+                html.Hr(),
                 _loading_figure_layout('bar-currency-strength-analysis',None,hide_display),
                 html.Hr(),
                 _generate_currency_correlation_input(),
