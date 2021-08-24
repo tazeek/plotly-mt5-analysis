@@ -275,8 +275,8 @@ def register_callbacks(app):
 
         file_text = ""
 
-        for symbol in symbol_list_vol:
-            file_text += f"{symbol}\n"
+        for index, symbol in enumerate(symbol_list_vol):
+            file_text += f"{index+1}. {symbol}\n"
         
         return [
             dict(content=file_text, filename="volume_data.txt")
