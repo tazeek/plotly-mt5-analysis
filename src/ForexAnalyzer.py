@@ -390,8 +390,6 @@ class ForexAnalyzer:
 
         self._currency_strength_list = [symbol for symbol in symbols if 'JPY' in symbol]
 
-        self.get_symbol_volume()
-
         return self._full_currency_list
 
     def get_symbol_volume(self):
@@ -402,7 +400,9 @@ class ForexAnalyzer:
 
         for symbol in self._full_currency_list:
             data = self._fetch_data_mt5('1W', 1, symbol)
-            print(data['tick_volume'])
-            break
+            symbol_info_list.append({
+                'symbol': symbol,
+                'volume': data['tick_volume'].iat[0]
+            })
         
-        ...
+        return sorted(symbol_info_list, key=lambda k: k['volume'])
