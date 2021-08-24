@@ -411,7 +411,12 @@ class ForexAnalyzer:
                 'volume': data['tick_volume'].iat[0]
             })
         
-        symbol_info_list = sorted(symbol_info_list, key=lambda k: k['volume'])
+        symbol_info_list = sorted(symbol_info_list, key=lambda k: k['volume'], reverse=True)
+
+        symbols_only = []
+
+        for symbol_info in symbol_info_list:
+            if symbol_info['symbol'] not in symbols_only:
+                symbols_only.append(symbol_info['symbol'])
         
-        
-        return list(set([symbol_info['symbol'] for symbol_info in symbol_info_list]))
+        return symbols_only
