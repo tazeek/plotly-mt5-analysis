@@ -259,3 +259,17 @@ def register_callbacks(app):
             graph_generator.plot_correlation_heatmap(correlated_df),
             {'display':'block'}
         ]
+
+    @app.callback(
+        [
+            Output("download-begin", "data")
+        ],
+        [
+            Input("download-volume-data", "n_clicks")
+        ],
+        prevent_initial_call=True,
+    )
+    def get_symbol_volume_sorted(n_clicks):
+        return [
+            dict(content="Hello world!", filename="hello.txt")
+        ]

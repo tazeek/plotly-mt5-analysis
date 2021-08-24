@@ -176,11 +176,11 @@ def _generate_download_button():
     return html.Div(
         [
             html.Button(
-                "Download Text", 
-                id="btn_txt", 
+                "Download volume data", 
+                id="download-volume-data", 
                 style={"margin-top": "15px", "margin-bottom": "15px"}
             ), 
-            dcc.Download(id="download-text")
+            dcc.Download(id="download-begin")
         ]
     )
 
