@@ -38,7 +38,7 @@ class ForexAnalyzer:
 
         self._currency_strength_list = []
 
-        self.full_currency_list = []
+        self._full_currency_list = []
 
         if not mt5.initialize():
             print("initialize() failed, error code =",mt5.last_error())
@@ -386,10 +386,16 @@ class ForexAnalyzer:
 
         group_filter = "!*BTC*, !*PLN*,!*GBX*,!*XBT*,!*ETH*,*USD*,*EUR*,*JPY*,*AUD*,*NZD*"
         symbols = mt5.symbols_get(group=group_filter)
-        self._full_currency_list = [symbol.name for symbol in symbols]
 
-        self._currency_strength_list = [symbol for symbol in symbols if 'JPY' in symbol]
+        for symbol in symbols:
 
+            symbol = symbol.name
+
+            if 'JPY' in symbol:
+                self._currency_strength_list.append(symbol)
+            
+            self._full_currency_list.append(symbol)
+    
         return self._full_currency_list
 
     def get_symbol_volume(self):
