@@ -135,6 +135,9 @@ class ForexAnalyzer:
         }
 
         return None
+
+    def _get_symbol_info_tick(self, symbol):
+        return mt5.symbol_info_tick(symbol)
     
     def _create_trend_indicators(self, day_stats, timeframe):
         """Create the trend indicators and store in object attribute (self._indicator_stats_df)
@@ -210,7 +213,7 @@ class ForexAnalyzer:
         
         """
         
-        last_tick_info = mt5.symbol_info_tick(self._symbol)
+        last_tick_info = self._get_symbol_info_tick(self._symbol)
         return last_tick_info.ask, last_tick_info.bid
 
 
@@ -387,4 +390,19 @@ class ForexAnalyzer:
 
         self._currency_strength_list = [symbol for symbol in symbols if 'JPY' in symbol]
 
+        self.get_symbol_volume()
+
         return self._full_currency_list
+
+    def get_symbol_volume(self):
+        """Get the volume data, based on the weekly timeframe
+        """
+
+        symbol_info_list = []
+
+        for symbol in self._full_currency_list:
+            data = self._fetch_data_mt5('1W', 1, symbol)
+            print(data['tick_volume'])
+            break
+        
+        ...
