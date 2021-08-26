@@ -172,6 +172,30 @@ def _generate_dropdown(forex_list):
         ),
     ])
 
+def _generate_points_percentage_graph():
+    return html.Div(
+        [
+            html.H1(
+                children="Points aim (Certain profit)"
+            ),
+
+            html.Div([
+                dcc.Input(
+                    id=f"input_{field}",
+                    type="text",
+                    placeholder=f"Enter {field}",
+                    style={"margin-right": "15px"}
+                ) for field in ['amount', 'volume']
+            ]),
+
+            html.Button(
+                'Display', 
+                id='show-graph-points',
+                style={"margin-top": "15px", "margin-bottom": "15px"}
+            )
+        ]
+    )
+
 def _generate_download_button():
     return html.Div(
         [
@@ -200,7 +224,10 @@ def generate_layout():
                 _loading_figure_layout('bar-average-pip-fig',None,hide_display),
                 html.Hr(),
                 _generate_profit_percentage_graph(),
-                _loading_figure_layout('profit-percentage-fig',None,hide_display)
+                _loading_figure_layout('profit-percentage-fig',None,hide_display),
+                html.Hr(),
+                _generate_points_percentage_graph(),
+                _loading_figure_layout('points-fig',None,hide_display)
             ]),
 
             dcc.Tab(label='Currency Analysis', value='currency-strength-tab', children=[
