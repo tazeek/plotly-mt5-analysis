@@ -304,9 +304,8 @@ def register_callbacks(app):
         points_req_dict = {}
 
         for currency, cur_rate in settlement_conversion.items():
-            points = math.ceil((amount / leverage)/cur_rate)
 
-            points_req_dict[currency] = points
+            points_req_dict[currency] = math.ceil((amount / leverage)/cur_rate)
 
         return [
             graph_generator.plot_minimum_profit(points_req_dict),
