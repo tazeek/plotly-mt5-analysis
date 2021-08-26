@@ -301,6 +301,14 @@ def register_callbacks(app):
         amount = float(amount)
         leverage = float(leverage)
 
+        points_req_dict = {}
+
+        for currency, cur_rate in settlement_conversion.items():
+            points = math.ceil((amount / leverage)/cur_rate)
+
+            points_req_dict[currency] = {
+                'points': points
+            }
         
 
         return [
