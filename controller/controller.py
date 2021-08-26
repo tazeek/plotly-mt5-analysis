@@ -284,8 +284,8 @@ def register_callbacks(app):
 
     @app.callback(
         [
-            Output('points-percentage-fig','figure'),
-            Output('points-percentage-fig','style')
+            Output('points-fig','figure'),
+            Output('points-fig','style')
         ],
         [
             Input('show-graph-points','n_clicks')

@@ -359,9 +359,6 @@ class Graphs:
         x_val = list(data_dict.keys())
         y_val = list(data_dict.values())
 
-        print(x_val)
-        print(y_val)
-
         fig = go.Figure(
             [
                 go.Scatter(
