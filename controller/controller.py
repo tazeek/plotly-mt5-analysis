@@ -284,7 +284,7 @@ def register_callbacks(app):
 
     @app.callback(
         [
-            #Output('points-percentage-fig','figure'),
+            Output('points-percentage-fig','figure'),
             Output('points-percentage-fig','style')
         ],
         [
@@ -306,12 +306,9 @@ def register_callbacks(app):
         for currency, cur_rate in settlement_conversion.items():
             points = math.ceil((amount / leverage)/cur_rate)
 
-            points_req_dict[currency] = {
-                'points': points
-            }
-        
+            points_req_dict[currency] = points
 
         return [
-            #graph_generator.plot_point_percentage_target(percentage_target),
+            graph_generator.plot_minimum_profit(points_req_dict),
             {'display':'block'}
         ]

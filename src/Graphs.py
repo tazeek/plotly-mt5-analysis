@@ -353,3 +353,30 @@ class Graphs:
         )
 
         return fig
+
+    def plot_minimum_profit(self, data_dict):
+
+        x_val = list(data_dict.keys())
+        y_val = list(data_dict.values())
+
+        print(x_val)
+        print(y_val)
+
+        fig = go.Figure(
+            [
+                go.Scatter(
+                    x=x_val, 
+                    y=y_val,
+                    mode="lines"
+                )
+            ]
+        )
+
+        fig.update_layout(
+            title=f"Points target",
+            xaxis_title="Currency",
+            yaxis_title=f"Points",
+            hovermode='x'
+        )
+
+        return fig

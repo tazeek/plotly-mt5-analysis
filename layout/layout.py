@@ -176,7 +176,7 @@ def _generate_points_percentage_graph():
     return html.Div(
         [
             html.H1(
-                children="Points aim (percentage)"
+                children="Points aim (Certain profit)"
             ),
 
             html.Div([
