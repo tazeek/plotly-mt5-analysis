@@ -13,6 +13,14 @@ def register_callbacks(app):
     forex_analyzer = ForexAnalyzer.get_instance()
     graph_generator = Graphs()
 
+    settlement_conversion = {
+        'GBP': 1.40,
+        'CHF': 1.10,
+        'USD': 1.00,
+        'JPY': 0.90,
+        'CAD': 0.80,
+    }
+
     @app.callback(
         [
             Output("current-currency","data"),
@@ -160,14 +168,6 @@ def register_callbacks(app):
         min_trade = float(min_trade)
         avg_pip_list = {}
 
-        settlement_conversion = {
-            'GBP': 1.40,
-            'CHF': 1.10,
-            'USD': 1.00,
-            'JPY': 0.90,
-            'CAD': 0.80,
-        }
-
         if bal > 0 and lev > 0 and min_trade > 0:
 
             amount_target = bal * (pct_tar / 100)
@@ -280,4 +280,34 @@ def register_callbacks(app):
         
         return [
             dict(content=file_text, filename="volume_data.txt")
+        ]
+
+    @app.callback(
+        [
+            Output('points-fig','figure'),
+            Output('points-fig','style')
+        ],
+        [
+            Input('show-graph-points','n_clicks')
+        ],
+        [
+            State('input_amount','value'),
+            State('input_volume','value')
+        ],
+        prevent_initial_call=True
+    )
+    def calculate_point_profit(click, amount, leverage):
+
+        amount = float(amount)
+        leverage = float(leverage)
+
+        points_req_dict = {}
+
+        for currency, cur_rate in settlement_conversion.items():
+
+            points_req_dict[currency] = math.ceil((amount / leverage)/cur_rate)
+
+        return [
+            graph_generator.plot_minimum_profit(points_req_dict),
+            {'display':'block'}
         ]
