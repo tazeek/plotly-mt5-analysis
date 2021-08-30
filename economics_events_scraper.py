@@ -19,7 +19,26 @@ class ForexFactoryScraper:
     def begin_extraction(self):
         parsed_html = self._extract_html_data()
         table = parsed_html.find_all("tr", class_="calendar_row")
-        return None
+        
+        for item in table:
+            
+            date = item.find_all("td", {"class": "calendar__date"})
+            currency = item.find_all("td", {"class":"calendar__currency"})
+            event = item.find_all("td",{"class":"calendar__event"})
+            time = item.find_all("td", {"class":"calendar__time"})
+            impact = item.find_all("td", {"class":"impact"})
+
+            print("\n\n")
+            print(date)
+            print("\n\n")
+            print(currency)
+            print("\n\n")
+            print(event)
+            print("\n\n")
+            print(time)
+            print("\n\n")
+            print(impact)
+            break
 
 ff_scraper = ForexFactoryScraper('this')
 ff_scraper.begin_extraction()
