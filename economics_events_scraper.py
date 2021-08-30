@@ -13,9 +13,7 @@ class ForexFactoryScraper:
         return day_date[:3], day_date[3:]
 
     def _extract_currency(self, row_html):
-        currency = row_html.find("td", {"class":"calendar__currency"}).text.strip()
-
-        return currency
+        return row_html.find("td", {"class":"calendar__currency"}).text.strip()
 
     def _extract_html_data(self):
 
@@ -51,8 +49,8 @@ class ForexFactoryScraper:
             print(current_extracted_date)
             print(current_extracted_day)
             print(currency)
-            print("\n\n")
             #print(event)
+            print("\n\n")
             #print("\n\n")
             #print(time)
             #print("\n\n")
