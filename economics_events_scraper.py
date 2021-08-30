@@ -24,6 +24,8 @@ class ForexFactoryScraper:
     def begin_extraction(self):
         parsed_html = self._extract_html_data()
         table = parsed_html.find_all("tr", class_="calendar_row")
+
+        current_extracted_day = None
         
         for index,item in enumerate(table):
             
@@ -35,6 +37,9 @@ class ForexFactoryScraper:
 
             if day in ['Sat', 'Sun']:
                 continue
+            
+            # Recurring day is blank sometimes
+            current_extracted_day = day or current_extracted_day
 
             #print("\n\n")
             #print(currency)
