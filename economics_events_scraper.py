@@ -12,6 +12,11 @@ class ForexFactoryScraper:
 
         return day_date[:3], day_date[3:]
 
+    def _extract_currency(self, row_html):
+        currency = row_html.find("td", {"class":"calendar__currency"}).text.strip()
+
+        return currency
+
     def _extract_html_data(self):
 
         opener = urllib.request.build_opener()
@@ -25,25 +30,28 @@ class ForexFactoryScraper:
         parsed_html = self._extract_html_data()
         table = parsed_html.find_all("tr", class_="calendar_row")
 
-        current_extracted_day = None
+        current_extracted_day, current_extracted_date = None, None
         
-        for index,item in enumerate(table):
+        for row in table:
             
-            day, date = self._extract_day(item)
-            currency = item.find_all("td", {"class":"calendar__currency"})
-            event = item.find_all("td",{"class":"calendar__event"})
-            time = item.find_all("td", {"class":"calendar__time"})
-            impact = item.find_all("td", {"class":"impact"})
-
-            if day in ['Sat', 'Sun']:
-                continue
-            
-            # Recurring day is blank sometimes
+            # Recurring day and date is blank
+            day, date = self._extract_day(row)
             current_extracted_day = day or current_extracted_day
+            current_extracted_date = date or current_extracted_date
+
+            currency = self._extract_currency(row)
+            event = row.find_all("td",{"class":"calendar__event"})
+            time = row.find_all("td", {"class":"calendar__time"})
+            impact = row.find_all("td", {"class":"impact"})
+
+            if current_extracted_day in ['Sat', 'Sun']:
+                continue
 
             #print("\n\n")
-            #print(currency)
-            #print("\n\n")
+            print(current_extracted_date)
+            print(current_extracted_day)
+            print(currency)
+            print("\n\n")
             #print(event)
             #print("\n\n")
             #print(time)
