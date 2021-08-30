@@ -19,9 +19,7 @@ class ForexAnalyzer:
             raise Exception("You cannot create another ForexAnalyzer class")     
 
         self._mt5_timeframe_dict = {
-            '15M': mt5.TIMEFRAME_M15,
             '1H': mt5.TIMEFRAME_H1,
-            '1D': mt5.TIMEFRAME_D1,
             '4H': mt5.TIMEFRAME_H4,
             '1W': mt5.TIMEFRAME_W1
         }
