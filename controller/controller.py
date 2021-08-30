@@ -85,10 +85,10 @@ def register_callbacks(app):
             Output("ask-value","children"),
             Output("bid-value","children"),
             Output("candlestick-4H-fig","figure"),
-            Output("candlesticks-15M-heiken","figure"),
+            Output("candlesticks-1H-heiken","figure"),
             Output("atr-graph-4H","figure"),
-            Output("adx-graph-15M","figure"),
-            Output("rsi-15M-fig","figure")
+            Output("adx-graph-1H","figure"),
+            Output("rsi-1H-fig","figure")
         ],
         [
             Input("current-currency", "data"),
