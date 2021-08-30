@@ -15,6 +15,9 @@ class ForexFactoryScraper:
     def _extract_currency(self, row_html):
         return row_html.find("td", {"class":"calendar__currency"}).text.strip()
 
+    def _extract_event(self, row_html):
+        return row_html.find("td", {"class":"calendar__event"}).text.strip()
+
     def _extract_html_data(self):
 
         opener = urllib.request.build_opener()
@@ -38,7 +41,7 @@ class ForexFactoryScraper:
             current_extracted_date = date or current_extracted_date
 
             currency = self._extract_currency(row)
-            event = row.find_all("td",{"class":"calendar__event"})
+            event = self._extract_event(row)
             time = row.find_all("td", {"class":"calendar__time"})
             impact = row.find_all("td", {"class":"impact"})
 
@@ -49,7 +52,7 @@ class ForexFactoryScraper:
             print(current_extracted_date)
             print(current_extracted_day)
             print(currency)
-            #print(event)
+            print(event)
             print("\n\n")
             #print("\n\n")
             #print(time)
