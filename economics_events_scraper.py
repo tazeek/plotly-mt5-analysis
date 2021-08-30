@@ -25,14 +25,17 @@ class ForexFactoryScraper:
         parsed_html = self._extract_html_data()
         table = parsed_html.find_all("tr", class_="calendar_row")
         
-        for item in table:
+        for index,item in enumerate(table):
             
             day, date = self._extract_day(item)
             currency = item.find_all("td", {"class":"calendar__currency"})
             event = item.find_all("td",{"class":"calendar__event"})
             time = item.find_all("td", {"class":"calendar__time"})
             impact = item.find_all("td", {"class":"impact"})
-            
+
+            if day in ['Sat', 'Sun']:
+                continue
+
             #print("\n\n")
             #print(currency)
             #print("\n\n")
