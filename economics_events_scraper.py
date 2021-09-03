@@ -43,6 +43,12 @@ class ForexFactoryScraper:
         current_time = None
         
         for row in table:
+
+            currency = self._extract_currency(row)
+
+            # Sometimes there are no events. This can be checked via the currency
+            if not currency:
+                continue
             
             # Recurring day and date is blank
             day, date = self._extract_day(row)
@@ -52,12 +58,6 @@ class ForexFactoryScraper:
             # Events at the same time is blank
             time = self._extract_time(row)
             current_time = time or current_time
-
-            currency = self._extract_currency(row)
-
-            # Sometimes there are no events. This can be checked via the currency
-            if not currency:
-                continue
 
             event = self._extract_event(row)
             impact = self._extract_impact(row)
