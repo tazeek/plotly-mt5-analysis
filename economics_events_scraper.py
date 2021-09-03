@@ -76,9 +76,7 @@ class ForexFactoryScraper:
         # Remove leading 0 from date.
         # If using non-windows, replace '#' with '-'
         current_date = datetime.now().strftime("%b %#d")
-        print(current_date)
-        ...
+        return self._extracted_events[self._extracted_events['date'] == current_date]
 
 ff_scraper = ForexFactoryScraper('this')
 ff_scraper.begin_extraction()
-ff_scraper.get_today_events()
