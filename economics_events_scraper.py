@@ -10,7 +10,7 @@ class ForexFactoryScraper:
     def _extract_day(self, row_html):
         day_date = row_html.find("td", {"class": "calendar__date"}).text.strip()
 
-        return day_date[:3], day_date[3:]
+        return day_date[3:]
 
     def _extract_currency(self, row_html):
         return row_html.find("td", {"class":"calendar__currency"}).text.strip()
@@ -39,7 +39,7 @@ class ForexFactoryScraper:
 
         economic_events_dict = {}
 
-        current_extracted_day = current_extracted_date = None
+        current_extracted_date = None
         current_time = None
         
         for row in table:
@@ -51,20 +51,16 @@ class ForexFactoryScraper:
                 continue
             
             # Recurring day and date is blank
-            day, date = self._extract_day(row)
-            current_extracted_day = day or current_extracted_day
-            current_extracted_date = date or current_extracted_date
+            current_extracted_date = self._extract_day(row) or current_extracted_date
 
             # Events at the same time is blank
-            time = self._extract_time(row)
-            current_time = time or current_time
+            current_time = self._extract_time(row) or current_time
 
             event = self._extract_event(row)
             impact = self._extract_impact(row)
 
             #print("\n\n")
             print(current_extracted_date)
-            print(current_extracted_day)
             print(current_time)
             print(currency)
             print(event)
