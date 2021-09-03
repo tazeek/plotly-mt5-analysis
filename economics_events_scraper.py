@@ -70,5 +70,8 @@ class ForexFactoryScraper:
         
         self._extracted_events = pd.DataFrame(economic_events_list)
 
+    def get_today_events(self):
+        ...
+
 ff_scraper = ForexFactoryScraper('this')
 ff_scraper.begin_extraction()
