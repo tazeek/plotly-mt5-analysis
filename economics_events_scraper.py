@@ -72,7 +72,10 @@ class ForexFactoryScraper:
         self._extracted_events = pd.DataFrame(economic_events_list)
 
     def get_today_events(self):
-        current_date = datetime.now().strftime('%b %d')
+
+        # Remove leading 0 from date.
+        # If using non-windows, replace '#' with '-'
+        current_date = datetime.now().strftime("%b %#d")
         print(current_date)
         ...
 
