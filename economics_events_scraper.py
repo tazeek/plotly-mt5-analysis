@@ -34,7 +34,8 @@ class ForexFactoryScraper:
         parsed_html = self._extract_html_data()
         table = parsed_html.find_all("tr", class_="calendar_row")
 
-        current_extracted_day, current_extracted_date = None, None
+        current_extracted_day = current_extracted_date = None
+        current_time = None
         
         for row in table:
             
@@ -43,20 +44,21 @@ class ForexFactoryScraper:
             current_extracted_day = day or current_extracted_day
             current_extracted_date = date or current_extracted_date
 
+            # Events at the same time is blank
+            time = self._extract_time(row)
+            current_time = time or current_time
+
             currency = self._extract_currency(row)
             event = self._extract_event(row)
-            time = self._extract_time(row)
-            impact = row.find_all("td", {"class":"impact"})
-
-            if current_extracted_day in ['Sat', 'Sun']:
-                continue
+            
+            #impact = row.find_all("td", {"class":"impact"})
 
             #print("\n\n")
             print(current_extracted_date)
             print(current_extracted_day)
             print(currency)
             print(event)
-            print(time)
+            print(current_time)
             print("\n\n")
             #print("\n\n")
             #print("\n\n")
