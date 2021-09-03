@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup
+from datetime import datetime
 
 import pandas as pd
 import urllib.request
@@ -69,6 +70,13 @@ class ForexFactoryScraper:
             })
         
         self._extracted_events = pd.DataFrame(economic_events_list)
+
+    def get_today_events(self):
+
+        # Remove leading 0 from date.
+        # If using non-windows, replace '#' with '-'
+        current_date = datetime.now().strftime("%b %#d")
+        return self._extracted_events[self._extracted_events['date'] == current_date]
 
 ff_scraper = ForexFactoryScraper('this')
 ff_scraper.begin_extraction()
