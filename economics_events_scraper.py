@@ -1,15 +1,16 @@
 from bs4 import BeautifulSoup
 
+import pandas as pd
 import urllib.request
 
 class ForexFactoryScraper:
 
     def __init__(self, month_select):
         self._url = 'https://www.forexfactory.com/calendar.php?month=' + month_select
+        self._extracted_events = None
 
     def _extract_day(self, row_html):
         day_date = row_html.find("td", {"class": "calendar__date"}).text.strip()
-
         return day_date[3:]
 
     def _extract_currency(self, row_html):
@@ -37,7 +38,7 @@ class ForexFactoryScraper:
         parsed_html = self._extract_html_data()
         table = parsed_html.find_all("tr", class_="calendar_row")
 
-        economic_events_dict = {}
+        economic_events_list = []
 
         current_extracted_date = None
         current_time = None
@@ -59,15 +60,15 @@ class ForexFactoryScraper:
             event = self._extract_event(row)
             impact = self._extract_impact(row)
 
-            #print("\n\n")
-            print(current_extracted_date)
-            print(current_time)
-            print(currency)
-            print(event)
-            print(impact)
-            print("\n\n")
-            #print("\n\n")
-            #print("\n\n")
+            economic_events_list.append({
+                'date': current_extracted_date,
+                'time': current_time,
+                'currency': currency,
+                'event': event,
+                'impact': impact
+            })
+        
+        self._extracted_events = pd.DataFrame(economic_events_list)
 
 ff_scraper = ForexFactoryScraper('this')
 ff_scraper.begin_extraction()
