@@ -22,9 +22,7 @@ class ForexFactoryScraper:
         return row_html.find("td", {"class":"calendar__time"}).text.strip()
 
     def _extract_impact(self, row_html):
-        test = row_html.find_all("td", {"class":"impact"})
-        print(test)
-        return None
+        return row_html.find("td", {"class":"impact"}).find("span").get("class")[0]
 
     def _extract_html_data(self):
 
@@ -56,20 +54,24 @@ class ForexFactoryScraper:
             current_time = time or current_time
 
             currency = self._extract_currency(row)
+
+            # Sometimes there are no events. This can be checked via the currency
+            if not currency:
+                continue
+
             event = self._extract_event(row)
             impact = self._extract_impact(row)
 
             #print("\n\n")
             print(current_extracted_date)
             print(current_extracted_day)
+            print(current_time)
             print(currency)
             print(event)
-            print(current_time)
+            print(impact)
             print("\n\n")
             #print("\n\n")
             #print("\n\n")
-            #print(impact)
-            break
 
 ff_scraper = ForexFactoryScraper('this')
 ff_scraper.begin_extraction()
