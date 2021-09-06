@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import plotly.graph_objects as go
 import pandas as pd
 import plotly.figure_factory as ff
@@ -361,7 +363,11 @@ class Graphs:
             points = round((close_price - open_price) / multiplier)
             return int(abs(points))
 
-        data_day = data_day[data_day['time'] >= pd.to_datetime('today').floor('D')]
+        # Find the earliest point in the day
+        current_date_time = datetime.strptime(str(data_day['time'].iat[-1]), "%Y-%m-%d %H:%M:%S")
+        current_date_time = datetime.combine(current_date_time, datetime.min.time())
+
+        data_day = data_day[data_day['time'] >= current_date_time]
 
         points_diff = data_day.apply(
             lambda x: _calculate_points(x['open'], x['close']), axis=1
