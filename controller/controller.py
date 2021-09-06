@@ -109,7 +109,7 @@ def register_callbacks(app):
 
         ask_value, bid_value = forex_analyzer.find_ask_bid()
         
-        forex_analyzer.get_daily_stats('1H',600)
+        stats_1H = forex_analyzer.get_daily_stats('1H',600)
         stats_4H = forex_analyzer.get_daily_stats('4H',600)
 
         return [
