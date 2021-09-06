@@ -82,7 +82,7 @@ class ForexFactoryScraper:
 
         for currency, frame in filtered_events:
             print(f"For currency: {currency}\n")
-            print(frame, end="\n\n")
+            print(frame[['time','event','impact']], end="\n\n")
 
         return None
 
