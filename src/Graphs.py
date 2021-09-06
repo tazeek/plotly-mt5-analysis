@@ -1,5 +1,3 @@
-from datetime import datetime
-
 import plotly.graph_objects as go
 import pandas as pd
 import plotly.figure_factory as ff
@@ -70,19 +68,6 @@ class Graphs:
         )
 
         return None
-
-    def _get_start_day(self):
-        """Get the current time, based on the timezone
-
-        Parameters:
-            - additional_hours(int): the extra hours to be added in
-        
-        Returns:
-            - datetime: datetime object that is ahead, based on the addition_hours
-        
-        """
-        
-        return datetime.now(self._timezone).replace(hour=0,minute=0,second=0).strftime("%Y-%m-%d %H:%M:%S")
 
     def plot_atr(self, data):
         
@@ -369,9 +354,21 @@ class Graphs:
 
         return fig
 
-    def plot_pip_range_counts(self, data_day):
+    def plot_pip_range_counts(self, data_day, multiplier):
 
-        data_day = data_day[data_day['time'] >= self._get_start_day]
+        def _calculate_points(open_price, close_price):
+
+            points = round((close_price - open_price) / multiplier)
+            return int(points)
+
+        data_day = data_day[data_day['time'] >= pd.to_datetime('today').floor('D')]
+        print(data_day)
+
+        points_diff = data_day.apply(
+            lambda x: _calculate_points(x['open'], x['close']), axis=1
+        )
+
+        print(points_diff)
         ...
 
     def plot_minimum_profit(self, data_dict):
