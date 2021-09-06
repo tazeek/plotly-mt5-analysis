@@ -367,7 +367,8 @@ class Graphs:
             lambda x: _calculate_points(x['open'], x['close']), axis=1
         )
 
-        print(points_diff)
+        points_diff = list(points_diff)
+        
         ...
 
     def plot_minimum_profit(self, data_dict):
