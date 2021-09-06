@@ -368,7 +368,20 @@ class Graphs:
         )
 
         points_diff = list(points_diff)
-        
+        x_val = [x for x in range(0, len(points_diff) + 1)]
+
+        bar_fig = go.Figure(
+            [
+                go.Bar(
+                    x=x_val, 
+                    y=points_diff,
+                    opacity=0.35
+                )
+            ]
+        )
+
+        return bar_fig
+
         ...
 
     def plot_minimum_profit(self, data_dict):
