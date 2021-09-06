@@ -52,21 +52,6 @@ class ForexAnalyzer:
         
         return ForexAnalyzer.__instance__
 
-    def _get_multiplier(self, symbol=None):
-        """Get the multiplier, based on number of digits
-
-        Parameters:
-            - symbol(str): Get the underlying symbol
-        
-        Returns:
-            - float: Return the divisor, based on number of decimal places
-        
-        """
-
-        symbol_info = mt5.symbol_info(symbol or self._symbol)
-
-        return 10 ** -symbol_info.digits
-
     def _create_heiken_ashi(self, rates_df, timeframe):
         """Create data for heiken ashi plots, based on the given timeframe
 
@@ -198,6 +183,21 @@ class ForexAnalyzer:
         rates['time'] = pd.to_datetime(rates['time'], unit='s')
 
         return rates
+    
+    def get_multiplier(self, symbol=None):
+        """Get the multiplier, based on number of digits
+
+        Parameters:
+            - symbol(str): Get the underlying symbol
+        
+        Returns:
+            - float: Return the divisor, based on number of decimal places
+        
+        """
+
+        symbol_info = mt5.symbol_info(symbol or self._symbol)
+
+        return 10 ** -symbol_info.digits
 
     def find_ask_bid(self):
         """Find the ask and bid price for the given symbol
@@ -256,7 +256,7 @@ class ForexAnalyzer:
         
         """
 
-        points = round((close_price - open_price) / self._get_multiplier(symbol))
+        points = round((close_price - open_price) / self.get_multiplier(symbol))
         return int(points) 
     
     def get_heiken_ashi(self, timeframe):
