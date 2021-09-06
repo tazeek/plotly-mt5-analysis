@@ -69,7 +69,12 @@ class ForexFactoryScraper:
                 'impact': impact
             })
         
-        self._extracted_events = pd.DataFrame(economic_events_list)
+        events_df = pd.DataFrame(economic_events_list)
+        events_df['impact'] = events_df.impact.map({'high': 1, 'medium': 2, 'low': 3}).fillna(4).astype(int)
+
+        self._extracted_events = events_df
+
+        return None
 
     def get_today_events(self):
 
