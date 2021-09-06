@@ -359,10 +359,9 @@ class Graphs:
         def _calculate_points(open_price, close_price):
 
             points = round((close_price - open_price) / multiplier)
-            return int(points)
+            return int(abs(points))
 
         data_day = data_day[data_day['time'] >= pd.to_datetime('today').floor('D')]
-        print(data_day)
 
         points_diff = data_day.apply(
             lambda x: _calculate_points(x['open'], x['close']), axis=1
