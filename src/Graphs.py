@@ -354,6 +354,47 @@ class Graphs:
 
         return fig
 
+    def plot_pip_range_counts(self, data_day, multiplier):
+
+        def _calculate_points(open_price, close_price):
+
+            points = round((close_price - open_price) / multiplier)
+            return int(abs(points))
+
+        data_day = data_day[data_day['time'] >= pd.to_datetime('today').floor('D')]
+
+        points_diff = data_day.apply(
+            lambda x: _calculate_points(x['open'], x['close']), axis=1
+        )
+
+        points_diff = list(points_diff)
+        x_val = [x for x in range(0, len(points_diff) + 1)]
+
+        bar_fig = go.Figure(
+            [
+                go.Bar(
+                    x=x_val, 
+                    y=points_diff,
+                    opacity=0.35,
+                    hovertemplate='Hour: %{x}:00<br>Points: %{y}<extra></extra>'
+                )
+            ]
+        )
+
+        bar_fig.update_layout(
+            template='simple_white',
+            xaxis_title="Hour",
+            yaxis_title="Points",
+            title=f"Points count for the day",
+            hovermode='x unified',
+            height=700
+        )
+
+        for val in [100,200,300]:
+            self._draw_hline(bar_fig, val, "solid","black")
+
+        return bar_fig
+
     def plot_minimum_profit(self, data_dict):
 
         x_val = list(data_dict.keys())

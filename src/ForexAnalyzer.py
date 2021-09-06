@@ -52,21 +52,6 @@ class ForexAnalyzer:
         
         return ForexAnalyzer.__instance__
 
-    def _get_multiplier(self, symbol=None):
-        """Get the multiplier, based on number of digits
-
-        Parameters:
-            - symbol(str): Get the underlying symbol
-        
-        Returns:
-            - float: Return the divisor, based on number of decimal places
-        
-        """
-
-        symbol_info = mt5.symbol_info(symbol or self._symbol)
-
-        return 10 ** -symbol_info.digits
-
     def _create_heiken_ashi(self, rates_df, timeframe):
         """Create data for heiken ashi plots, based on the given timeframe
 
@@ -198,6 +183,21 @@ class ForexAnalyzer:
         rates['time'] = pd.to_datetime(rates['time'], unit='s')
 
         return rates
+    
+    def get_multiplier(self, symbol=None):
+        """Get the multiplier, based on number of digits
+
+        Parameters:
+            - symbol(str): Get the underlying symbol
+        
+        Returns:
+            - float: Return the divisor, based on number of decimal places
+        
+        """
+
+        symbol_info = mt5.symbol_info(symbol or self._symbol)
+
+        return 10 ** -symbol_info.digits
 
     def find_ask_bid(self):
         """Find the ask and bid price for the given symbol
@@ -256,24 +256,11 @@ class ForexAnalyzer:
         
         """
 
-        points = round((close_price - open_price) / self._get_multiplier(symbol))
+        points = round((close_price - open_price) / self.get_multiplier(symbol))
         return int(points) 
     
     def get_heiken_ashi(self, timeframe):
         return self._heiken_ashi_df[timeframe]
-
-    def get_start_day(self):
-        """Get the current time, based on the timezone
-
-        Parameters:
-            - additional_hours(int): the extra hours to be added in
-        
-        Returns:
-            - datetime: datetime object that is ahead, based on the addition_hours
-        
-        """
-        
-        return datetime.now(self._timezone).replace(hour=0,minute=0,second=0).strftime("%Y-%m-%d %H:%M:%S")
 
     def get_lagging_indicator(self,timeframe, indicator):
         """Get the respective lagging indicator, based on the timeframe

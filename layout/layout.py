@@ -254,8 +254,11 @@ def generate_layout():
                         _loading_figure_layout('candlesticks-1H-heiken', draw_config),
                         _loading_figure_layout('rsi-1H-fig', draw_config),
                         _loading_figure_layout('adx-graph-1H')
-                    ])
+                    ]),
 
+                    dcc.Tab(label='Point counts today (1H)',value='point-counts-today', children=[
+                        _loading_figure_layout('point-counts-1H'),
+                    ])
                 ])
             ])
         ])
