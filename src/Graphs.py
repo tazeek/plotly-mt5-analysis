@@ -380,9 +380,16 @@ class Graphs:
             ]
         )
 
-        return bar_fig
+        bar_fig.update_layout(
+            template='simple_white',
+            xaxis_title="Hour",
+            yaxis_title="Points",
+            title=f"Points count for the day",
+            hovermode='x unified',
+            height=700
+        )
 
-        ...
+        return bar_fig
 
     def plot_minimum_profit(self, data_dict):
 
