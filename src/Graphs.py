@@ -370,6 +370,8 @@ class Graphs:
         return fig
 
     def plot_pip_range_counts(self, data_day):
+
+        data_day = data_day[data_day['time'] >= self._get_start_day]
         ...
 
     def plot_minimum_profit(self, data_dict):
