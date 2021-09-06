@@ -63,20 +63,38 @@ class ForexFactoryScraper:
 
             economic_events_list.append({
                 'date': current_extracted_date,
-                'time': current_time,
+                'time_minus_12hours': current_time,
                 'currency': currency,
                 'event': event,
                 'impact': impact
             })
         
-        self._extracted_events = pd.DataFrame(economic_events_list)
+        events_df = pd.DataFrame(economic_events_list)
+        events_df['impact'] = events_df.impact.map({'high': 1, 'medium': 2, 'low': 3}).fillna(4).astype(int)
+
+        self._extracted_events = events_df
+
+        return None
 
     def get_today_events(self):
 
         # Remove leading 0 from date.
         # If using non-windows, replace '#' with '-'
         current_date = datetime.now().strftime("%b %#d")
-        return self._extracted_events[self._extracted_events['date'] == current_date]
+        extracted_events_copy = self._extracted_events.copy()
+
+        filtered_events = extracted_events_copy[extracted_events_copy['date'] == current_date]
+        filtered_events = filtered_events.groupby('currency')
+
+        for currency, frame in filtered_events:
+            print(f"For currency: {currency}\n")
+            print(frame[['time_minus_12hours','event','impact']], end="\n\n")
+            print('=' * 15)
+            print("\n\n")
+
+        return None
 
 ff_scraper = ForexFactoryScraper('this')
 ff_scraper.begin_extraction()
+
+today_events = ff_scraper.get_today_events()
