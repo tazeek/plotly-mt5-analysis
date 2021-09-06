@@ -375,7 +375,8 @@ class Graphs:
                 go.Bar(
                     x=x_val, 
                     y=points_diff,
-                    opacity=0.35
+                    opacity=0.35,
+                    hovertemplate='Hour: %{x}:00<br>Points: %{y}<extra></extra>'
                 )
             ]
         )
@@ -389,9 +390,8 @@ class Graphs:
             height=700
         )
 
-        self._draw_hline(bar_fig, 100, "solid", "black")
-        self._draw_hline(bar_fig, 200, "solid", "black")
-        self._draw_hline(bar_fig, 300, "solid", "black")
+        for val in [100,200,300]:
+            self._draw_hline(bar_fig, val, "solid","black")
 
         return bar_fig
 
