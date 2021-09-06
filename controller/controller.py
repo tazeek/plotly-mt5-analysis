@@ -88,7 +88,8 @@ def register_callbacks(app):
             Output("candlesticks-1H-heiken","figure"),
             Output("atr-graph-4H","figure"),
             Output("adx-graph-1H","figure"),
-            Output("rsi-1H-fig","figure")
+            Output("rsi-1H-fig","figure"),
+            Output("point-counts-1H", "figure")
         ],
         [
             Input("current-currency", "data"),
@@ -112,8 +113,6 @@ def register_callbacks(app):
         stats_1H = forex_analyzer.get_daily_stats('1H',600)
         stats_4H = forex_analyzer.get_daily_stats('4H',600)
 
-        graph_generator.plot_pip_range_counts(stats_1H, forex_analyzer.get_multiplier())
-
         return [
             f"Ask value: {ask_value:.5f}",
             f"Bid value: {bid_value:.5f}",
@@ -122,6 +121,7 @@ def register_callbacks(app):
             graph_generator.plot_atr(forex_analyzer.get_trend_indicators('4H')),
             graph_generator.plot_adx_figure(forex_analyzer.get_lagging_indicator('1H', 'adx')),
             graph_generator.plot_rsi_figure(forex_analyzer.get_lagging_indicator('1H', 'rsi')),
+            graph_generator.plot_pip_range_counts(stats_1H, forex_analyzer.get_multiplier())
         ]
 
     @app.callback(
