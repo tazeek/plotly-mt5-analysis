@@ -71,7 +71,7 @@ class Graphs:
 
         return None
 
-    def get_start_day(self):
+    def _get_start_day(self):
         """Get the current time, based on the timezone
 
         Parameters:
@@ -368,6 +368,9 @@ class Graphs:
         )
 
         return fig
+
+    def plot_pip_range_counts(self, data_day):
+        ...
 
     def plot_minimum_profit(self, data_dict):
 
