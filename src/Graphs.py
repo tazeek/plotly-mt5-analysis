@@ -389,6 +389,10 @@ class Graphs:
             height=700
         )
 
+        self._draw_hline(bar_fig, 100, "solid", "black")
+        self._draw_hline(bar_fig, 200, "solid", "black")
+        self._draw_hline(bar_fig, 300, "solid", "black")
+
         return bar_fig
 
     def plot_minimum_profit(self, data_dict):
