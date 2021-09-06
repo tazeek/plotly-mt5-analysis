@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import plotly.graph_objects as go
 import pandas as pd
 import plotly.figure_factory as ff
@@ -68,6 +70,19 @@ class Graphs:
         )
 
         return None
+
+    def get_start_day(self):
+        """Get the current time, based on the timezone
+
+        Parameters:
+            - additional_hours(int): the extra hours to be added in
+        
+        Returns:
+            - datetime: datetime object that is ahead, based on the addition_hours
+        
+        """
+        
+        return datetime.now(self._timezone).replace(hour=0,minute=0,second=0).strftime("%Y-%m-%d %H:%M:%S")
 
     def plot_atr(self, data):
         

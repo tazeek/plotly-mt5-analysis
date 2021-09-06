@@ -262,19 +262,6 @@ class ForexAnalyzer:
     def get_heiken_ashi(self, timeframe):
         return self._heiken_ashi_df[timeframe]
 
-    def get_start_day(self):
-        """Get the current time, based on the timezone
-
-        Parameters:
-            - additional_hours(int): the extra hours to be added in
-        
-        Returns:
-            - datetime: datetime object that is ahead, based on the addition_hours
-        
-        """
-        
-        return datetime.now(self._timezone).replace(hour=0,minute=0,second=0).strftime("%Y-%m-%d %H:%M:%S")
-
     def get_lagging_indicator(self,timeframe, indicator):
         """Get the respective lagging indicator, based on the timeframe
 
