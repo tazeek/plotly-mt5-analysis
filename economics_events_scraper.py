@@ -63,7 +63,7 @@ class ForexFactoryScraper:
 
             economic_events_list.append({
                 'date': current_extracted_date,
-                'time': current_time,
+                'time_minus_12hours': current_time,
                 'currency': currency,
                 'event': event,
                 'impact': impact
@@ -76,13 +76,16 @@ class ForexFactoryScraper:
         # Remove leading 0 from date.
         # If using non-windows, replace '#' with '-'
         current_date = datetime.now().strftime("%b %#d")
+        extracted_events_copy = self._extracted_events.copy()
 
-        filtered_events = self._extracted_events[self._extracted_events['date'] == current_date]
+        filtered_events = extracted_events_copy[extracted_events_copy['date'] == current_date]
         filtered_events = filtered_events.groupby('currency')
 
         for currency, frame in filtered_events:
             print(f"For currency: {currency}\n")
-            print(frame[['time','event','impact']], end="\n\n")
+            print(frame[['time_minus_12hours','event','impact']], end="\n\n")
+            print('=' * 15)
+            print("\n\n")
 
         return None
 
