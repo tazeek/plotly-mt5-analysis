@@ -95,7 +95,7 @@ class ForexFactoryScraper:
             events_str += f"{currency}\n\n"
 
             for index, row in frame.iterrows():
-                events_str += f"{row['event']} at {row['time_minus_12hours']}.\n"
+                events_str += f"{row['event']} at {row['time_minus_12hours']} (GMT-4: USA TIME).\n"
                 events_str += f"Impact: {row['impact']}\n\n"
 
             events_str += "\n\n-----\n\n"
