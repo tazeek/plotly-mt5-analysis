@@ -87,10 +87,12 @@ class ForexFactoryScraper:
         filtered_events = filtered_events.groupby('currency')
 
         for currency, frame in filtered_events:
-            print(f"For currency: {currency}\n")
-            print(frame[['time_minus_12hours','event','impact']], end="\n\n")
-            print('=' * 15)
-            print("\n\n")
+            print(f"{currency}\n")
+
+            for index, row in frame.iterrows():
+                print(f"{row['event']} at {row['time_minus_12hours']}.\nImpact: {row['impact']}\n")
+
+            print("\n\n-----\n\n")
 
         return None
 
