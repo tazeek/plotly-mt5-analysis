@@ -333,5 +333,5 @@ def register_callbacks(app):
             file_text += f"{index+1}. {symbol}\n"
         
         return [
-            dict(content=file_text, filename="volume_data.txt")
+            dict(content=file_text, filename="today_economic_events.txt")
         ]
