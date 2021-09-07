@@ -154,6 +154,7 @@ class Graphs:
         rsi_fig.update_layout(
             xaxis_title="Time",
             yaxis_title="RSI Value",
+            yaxis_range=[0,100],
             title=f"RSI of {self._symbol}",
             hovermode='x',
             yaxis_tickformat='.2f'

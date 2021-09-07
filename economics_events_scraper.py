@@ -10,6 +10,8 @@ class ForexFactoryScraper:
         self._url = 'https://www.forexfactory.com/calendar.php?month=' + month_select
         self._extracted_events = None
 
+        self._begin_extraction()
+
     def _extract_day(self, row_html):
         day_date = row_html.find("td", {"class": "calendar__date"}).text.strip()
         return day_date[3:]
@@ -35,7 +37,7 @@ class ForexFactoryScraper:
 
         return BeautifulSoup(result,"html.parser")
 
-    def begin_extraction(self):
+    def _begin_extraction(self):
         parsed_html = self._extract_html_data()
         table = parsed_html.find_all("tr", class_="calendar_row")
 
@@ -86,15 +88,16 @@ class ForexFactoryScraper:
         filtered_events = extracted_events_copy[extracted_events_copy['date'] == current_date]
         filtered_events = filtered_events.groupby('currency')
 
+        events_str = ""
+
         for currency, frame in filtered_events:
-            print(f"For currency: {currency}\n")
-            print(frame[['time_minus_12hours','event','impact']], end="\n\n")
-            print('=' * 15)
-            print("\n\n")
 
-        return None
+            events_str += f"{currency}\n\n"
 
-ff_scraper = ForexFactoryScraper('this')
-ff_scraper.begin_extraction()
+            for index, row in frame.iterrows():
+                events_str += f"{row['event']} at {row['time_minus_12hours']} (GMT-4: USA TIME).\n"
+                events_str += f"Impact: {row['impact']}\n\n"
 
-today_events = ff_scraper.get_today_events()
+            events_str += "\n\n-----\n\n"
+
+        return events_str

@@ -2,6 +2,7 @@ import dash
 from dash.dependencies import Input, Output, State
 
 from currency_analysis import calculate_currency_strength
+from economics_events_scraper import ForexFactoryScraper
 
 from src.Graphs import Graphs
 from src.ForexAnalyzer import ForexAnalyzer
@@ -114,8 +115,8 @@ def register_callbacks(app):
         stats_4H = forex_analyzer.get_daily_stats('4H',600)
 
         return [
-            f"Ask value: {ask_value:.5f}",
-            f"Bid value: {bid_value:.5f}",
+            f"Ask value: {ask_value}",
+            f"Bid value: {bid_value}",
             graph_generator.plot_candlesticks_fullday(stats_4H, '4H', forex_analyzer.get_trend_indicators('4H')),
             graph_generator.plot_heiken_ashi(forex_analyzer.get_heiken_ashi('1H'), forex_analyzer.get_trend_indicators('1H')),
             graph_generator.plot_atr(forex_analyzer.get_trend_indicators('4H')),
@@ -264,7 +265,7 @@ def register_callbacks(app):
 
     @app.callback(
         [
-            Output("download-begin", "data")
+            Output("download-volume-begin", "data")
         ],
         [
             Input("download-volume-data", "n_clicks")
@@ -312,4 +313,21 @@ def register_callbacks(app):
         return [
             graph_generator.plot_minimum_profit(points_req_dict),
             {'display':'block'}
+        ]
+
+    @app.callback(
+        [
+            Output("download-economic-begin", "data")
+        ],
+        [
+            Input("download-today-economic", "n_clicks")
+        ],
+        prevent_initial_call=True,
+    )
+    def get_symbol_volume_sorted(n_clicks):
+
+        economic_obj = ForexFactoryScraper('this')
+        
+        return [
+            dict(content=economic_obj.get_today_events(), filename="today_economic_events.txt")
         ]
