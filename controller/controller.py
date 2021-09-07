@@ -114,8 +114,8 @@ def register_callbacks(app):
         stats_4H = forex_analyzer.get_daily_stats('4H',600)
 
         return [
-            f"Ask value: {ask_value:.5f}",
-            f"Bid value: {bid_value:.5f}",
+            f"Ask value: {ask_value}",
+            f"Bid value: {bid_value}",
             graph_generator.plot_candlesticks_fullday(stats_4H, '4H', forex_analyzer.get_trend_indicators('4H')),
             graph_generator.plot_heiken_ashi(forex_analyzer.get_heiken_ashi('1H'), forex_analyzer.get_trend_indicators('1H')),
             graph_generator.plot_atr(forex_analyzer.get_trend_indicators('4H')),
