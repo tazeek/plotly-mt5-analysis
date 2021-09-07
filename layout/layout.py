@@ -204,7 +204,7 @@ def _generate_download_button():
                 id="download-volume-data", 
                 style={"margin-top": "15px", "margin-bottom": "15px"}
             ), 
-            dcc.Download(id="download-begin"),
+            dcc.Download(id="download-volume-begin"),
 
             html.Button(
                 "Download today economic events", 
