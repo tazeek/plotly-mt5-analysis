@@ -88,16 +88,16 @@ class ForexFactoryScraper:
         filtered_events = extracted_events_copy[extracted_events_copy['date'] == current_date]
         filtered_events = filtered_events.groupby('currency')
 
+        events_str = ""
+
         for currency, frame in filtered_events:
-            print(f"{currency}\n")
+
+            events_str += f"{currency}\n\n"
 
             for index, row in frame.iterrows():
-                print(f"{row['event']} at {row['time_minus_12hours']}.\nImpact: {row['impact']}\n")
+                events_str += f"{row['event']} at {row['time_minus_12hours']}.\n"
+                events_str += f"Impact: {row['impact']}\n\n"
 
-            print("\n\n-----\n\n")
+            events_str += "\n\n-----\n\n"
 
-        return None
-
-ff_scraper = ForexFactoryScraper('this')
-
-today_events = ff_scraper.get_today_events()
+        return events_str
