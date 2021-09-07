@@ -369,6 +369,9 @@ class ForexAnalyzer:
         """Get all the symbols list from MT5
         """
 
+        if self._full_currency_list:
+            return self._full_currency_list
+
         group_filter = "!*BTC*, !*PLN*,!*GBX*,!*XBT*,!*ETH*,*USD*,*EUR*,*JPY*,*AUD*,*NZD*"
         symbols = mt5.symbols_get(group=group_filter)
 
