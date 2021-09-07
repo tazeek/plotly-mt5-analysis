@@ -10,6 +10,8 @@ class ForexFactoryScraper:
         self._url = 'https://www.forexfactory.com/calendar.php?month=' + month_select
         self._extracted_events = None
 
+        self._begin_extraction()
+
     def _extract_day(self, row_html):
         day_date = row_html.find("td", {"class": "calendar__date"}).text.strip()
         return day_date[3:]
@@ -35,7 +37,7 @@ class ForexFactoryScraper:
 
         return BeautifulSoup(result,"html.parser")
 
-    def begin_extraction(self):
+    def _begin_extraction(self):
         parsed_html = self._extract_html_data()
         table = parsed_html.find_all("tr", class_="calendar_row")
 
@@ -97,6 +99,5 @@ class ForexFactoryScraper:
         return None
 
 ff_scraper = ForexFactoryScraper('this')
-ff_scraper.begin_extraction()
 
 today_events = ff_scraper.get_today_events()
