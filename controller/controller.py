@@ -264,7 +264,7 @@ def register_callbacks(app):
 
     @app.callback(
         [
-            Output("download-begin", "data")
+            Output("download-volume-begin", "data")
         ],
         [
             Input("download-volume-data", "n_clicks")
@@ -312,4 +312,26 @@ def register_callbacks(app):
         return [
             graph_generator.plot_minimum_profit(points_req_dict),
             {'display':'block'}
+        ]
+
+    @app.callback(
+        [
+            Output("download-economic-begin", "data")
+        ],
+        [
+            Input("download-today-economic", "n_clicks")
+        ],
+        prevent_initial_call=True,
+    )
+    def get_symbol_volume_sorted(n_clicks):
+
+        symbol_list_vol = forex_analyzer.get_symbol_volume()
+
+        file_text = ""
+
+        for index, symbol in enumerate(symbol_list_vol):
+            file_text += f"{index+1}. {symbol}\n"
+        
+        return [
+            dict(content=file_text, filename="volume_data.txt")
         ]
