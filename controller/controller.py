@@ -2,6 +2,7 @@ import dash
 from dash.dependencies import Input, Output, State
 
 from currency_analysis import calculate_currency_strength
+from economics_events_scraper import ForexFactoryScraper
 
 from src.Graphs import Graphs
 from src.ForexAnalyzer import ForexAnalyzer
@@ -325,13 +326,8 @@ def register_callbacks(app):
     )
     def get_symbol_volume_sorted(n_clicks):
 
-        symbol_list_vol = forex_analyzer.get_symbol_volume()
-
-        file_text = ""
-
-        for index, symbol in enumerate(symbol_list_vol):
-            file_text += f"{index+1}. {symbol}\n"
+        economic_obj = ForexFactoryScraper('this')
         
         return [
-            dict(content=file_text, filename="today_economic_events.txt")
+            dict(content=economic_obj.get_today_events(), filename="today_economic_events.txt")
         ]
