@@ -1,5 +1,8 @@
+from datetime import datetime
+
 import plotly.graph_objects as go
 import pandas as pd
+import plotly.figure_factory as ff
 
 class Graphs:
 
@@ -55,10 +58,13 @@ class Graphs:
         return None
 
     def _fill_missing_dates(self, fig, data_day, timeframe):
+
+        missing_dates = self._filter_missing_dates(data_day, timeframe)
+
         fig.update_xaxes(
             rangebreaks=[
                 dict(
-                    values=self._filter_missing_dates(data_day, timeframe)
+                    values=missing_dates
                 )
             ]
         )
@@ -74,13 +80,11 @@ class Graphs:
                 mode="lines"
             )
         ])
-
-        current_atr = str(data['atr'].iat[-1]).split('.')
-        current_atr = [num for num in current_atr[1] if num != '0']
-        current_atr = ''.join(current_atr[:2])
+        
+        current_atr = data['atr'].iat[-1]
 
         atr_fig.update_layout(
-            title=f"{self._symbol} - ATR (4H) (Current value: {current_atr})",
+            title=f"{self._symbol} - ATR (4H) (Current value: {current_atr: .5f})",
             template='simple_white',
             xaxis_title="Time",
             hovermode='x',
@@ -148,13 +152,14 @@ class Graphs:
         rsi_fig.update_layout(
             xaxis_title="Time",
             yaxis_title="RSI Value",
+            yaxis_range=[0,100],
             title=f"RSI of {self._symbol}",
             hovermode='x',
             yaxis_tickformat='.2f'
         )
 
         self._draw_hline(rsi_fig, 50, "solid", "black")
-        self._fill_missing_dates(rsi_fig, rsi_today, '1H')
+        self._fill_missing_dates(rsi_fig, rsi_today, '15M')
 
         return rsi_fig
 
@@ -176,7 +181,7 @@ class Graphs:
             yaxis_tickformat='.2f'
         )
 
-        self._fill_missing_dates(adx_fig, adx_df, '1H')
+        self._fill_missing_dates(adx_fig, adx_df, '15M')
 
         for num in [25,50,75,100]:
             self._draw_hline(adx_fig, num, 'dash', 'black')
@@ -241,9 +246,9 @@ class Graphs:
 
         bar_fig.update_layout(
             template='simple_white',
-            xaxis_title="symbol",
+            xaxis_title="Symbol",
             yaxis_title="Strength",
-            title=f"symbol Strength (with JPY as the apple)",
+            title=f"Symbol Strength (with JPY as the apple) - Recent 5 weeks",
             hovermode='x unified',
             height=700
         )
@@ -279,7 +284,7 @@ class Graphs:
 
         return fig
 
-    def plot_heiken_ashi(self, data):
+    def plot_heiken_ashi(self, data, indicator_df):
 
         candlesticks_fig = go.Figure(
             data=[
@@ -291,8 +296,28 @@ class Graphs:
                     close=data['close'],
                     hoverinfo='none',
                     showlegend=False
+                ),
+                go.Scatter(
+                    x=indicator_df['time'],
+                    y=indicator_df['upper_bound'],
+                    line=dict(color='black',width=2),
+                    name="Upper bound"
+                ),
+                go.Scatter(
+                    x=indicator_df['time'],
+                    y=indicator_df['lower_bound'],
+                    line=dict(color='black',width=2),
+                    name="Lower bound"
                 )
             ]
+        )
+
+        legend_config=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.02,
+            xanchor="right",
+            x=1
         )
 
         candlesticks_fig.update_layout(
@@ -302,8 +327,99 @@ class Graphs:
             hovermode='x',
             yaxis_tickformat='.5f',
             xaxis_rangeslider_visible=False,
+            legend=legend_config
         )
 
         self._fill_missing_dates(candlesticks_fig, data, '15M')
         
         return candlesticks_fig
+
+    def plot_correlation_heatmap(self, correlation_df):
+        currency_pairs = list(correlation_df.columns)
+        values = correlation_df.values.tolist()
+
+        ff_fig = ff.create_annotated_heatmap(
+            x=currency_pairs, 
+            y=currency_pairs, 
+            z=values, 
+            colorscale='Viridis',
+            showscale = True
+        )
+
+        fig = go.FigureWidget(ff_fig)
+        fig.layout.annotations = ff_fig.layout.annotations
+
+        fig.update_layout(
+            title=f"Currency correlation",
+        )
+
+        return fig
+
+    def plot_pip_range_counts(self, data_day, multiplier):
+
+        def _calculate_points(open_price, close_price):
+
+            points = round((close_price - open_price) / multiplier)
+            return int(abs(points))
+
+        # Find the earliest point in the day
+        current_date_time = datetime.strptime(str(data_day['time'].iat[-1]), "%Y-%m-%d %H:%M:%S")
+        current_date_time = datetime.combine(current_date_time, datetime.min.time())
+
+        data_day = data_day[data_day['time'] >= current_date_time]
+
+        points_diff = data_day.apply(
+            lambda x: _calculate_points(x['open'], x['close']), axis=1
+        )
+
+        points_diff = list(points_diff)
+        x_val = [x for x in range(0, len(points_diff) + 1)]
+
+        bar_fig = go.Figure(
+            [
+                go.Bar(
+                    x=x_val, 
+                    y=points_diff,
+                    opacity=0.35,
+                    hovertemplate='Hour: %{x}:00<br>Points: %{y}<extra></extra>'
+                )
+            ]
+        )
+
+        bar_fig.update_layout(
+            template='simple_white',
+            xaxis_title="Hour",
+            yaxis_title="Points",
+            title=f"Points count for the day",
+            hovermode='x unified',
+            height=700
+        )
+
+        for val in [100,200,300]:
+            self._draw_hline(bar_fig, val, "solid","black")
+
+        return bar_fig
+
+    def plot_minimum_profit(self, data_dict):
+
+        x_val = list(data_dict.keys())
+        y_val = list(data_dict.values())
+
+        fig = go.Figure(
+            [
+                go.Scatter(
+                    x=x_val, 
+                    y=y_val,
+                    mode="lines"
+                )
+            ]
+        )
+
+        fig.update_layout(
+            title=f"Points target",
+            xaxis_title="Currency",
+            yaxis_title=f"Points",
+            hovermode='x'
+        )
+
+        return fig

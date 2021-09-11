@@ -9,23 +9,24 @@ import talib
 
 class ForexAnalyzer:
 
-    def __init__(self, symbol=None):
+    __instance__ = None
+
+    def __init__(self):
+
+        if ForexAnalyzer.__instance__ is None:
+           ForexAnalyzer.__instance__ = self
+        else:
+            raise Exception("You cannot create another ForexAnalyzer class")     
 
         self._mt5_timeframe_dict = {
-            '15M': mt5.TIMEFRAME_M15,
             '1H': mt5.TIMEFRAME_H1,
-            '1D': mt5.TIMEFRAME_D1,
             '4H': mt5.TIMEFRAME_H4,
             '1W': mt5.TIMEFRAME_W1
         }
         
-        self._symbol = symbol
+        self._symbol = None
         
         self._timezone = pytz.timezone('Europe/Moscow') # MT5 timezone
-
-        self._rsi_df = {}
-
-        self._adx_df = {}
 
         self._lagging_indicators = {}
 
@@ -33,24 +34,23 @@ class ForexAnalyzer:
 
         self._heiken_ashi_df = {}
 
+        self._currency_strength_list = []
+
+        self._full_currency_list = []
+
         if not mt5.initialize():
             print("initialize() failed, error code =",mt5.last_error())
             quit()
 
-    def _get_multiplier(self, symbol=None):
-        """Get the multiplier, based on number of digits
-
-        Parameters:
-            - symbol(str): Get the underlying symbol
-        
-        Returns:
-            - float: Return the divisor, based on number of decimal places
-        
+    @staticmethod
+    def get_instance():
+        """Static method to fetch the current instance
         """
 
-        symbol_info = mt5.symbol_info(symbol or self._symbol)
-
-        return 10 ** -symbol_info.digits
+        if not ForexAnalyzer.__instance__:
+            ForexAnalyzer()
+        
+        return ForexAnalyzer.__instance__
 
     def _create_heiken_ashi(self, rates_df, timeframe):
         """Create data for heiken ashi plots, based on the given timeframe
@@ -118,6 +118,9 @@ class ForexAnalyzer:
         }
 
         return None
+
+    def _get_symbol_info_tick(self, symbol):
+        return mt5.symbol_info_tick(symbol)
     
     def _create_trend_indicators(self, day_stats, timeframe):
         """Create the trend indicators and store in object attribute (self._indicator_stats_df)
@@ -142,10 +145,15 @@ class ForexAnalyzer:
         )
 
         indicators = Indicators(day_stats)
-        indicators.smma(period=21, column_name='sma_21', apply_to='Close')
         indicators.smma(period=50, column_name='sma_50', apply_to='Close')
-        indicators.smma(period=200, column_name='sma_200', apply_to='Close')
         indicators.atr(period=50, column_name='atr')
+
+        indicators.bollinger_bands(
+            period=20, deviation=2, 
+            column_name_top='upper_bound', 
+            column_name_mid='sma_bollinger', 
+            column_name_bottom='lower_bound'
+        )
 
         self._indicators_stats_df[timeframe] = indicators.df
 
@@ -175,6 +183,21 @@ class ForexAnalyzer:
         rates['time'] = pd.to_datetime(rates['time'], unit='s')
 
         return rates
+    
+    def get_multiplier(self, symbol=None):
+        """Get the multiplier, based on number of digits
+
+        Parameters:
+            - symbol(str): Get the underlying symbol
+        
+        Returns:
+            - float: Return the divisor, based on number of decimal places
+        
+        """
+
+        symbol_info = mt5.symbol_info(symbol or self._symbol)
+
+        return 10 ** -symbol_info.digits
 
     def find_ask_bid(self):
         """Find the ask and bid price for the given symbol
@@ -187,8 +210,8 @@ class ForexAnalyzer:
             - str: the bid price of the symbol 
         
         """
-
-        last_tick_info = mt5.symbol_info_tick(self._symbol)
+        
+        last_tick_info = self._get_symbol_info_tick(self._symbol)
         return last_tick_info.ask, last_tick_info.bid
 
 
@@ -233,24 +256,11 @@ class ForexAnalyzer:
         
         """
 
-        points = round((close_price - open_price) / self._get_multiplier(symbol))
+        points = round((close_price - open_price) / self.get_multiplier(symbol))
         return int(points) 
     
     def get_heiken_ashi(self, timeframe):
         return self._heiken_ashi_df[timeframe]
-
-    def get_start_day(self):
-        """Get the current time, based on the timezone
-
-        Parameters:
-            - additional_hours(int): the extra hours to be added in
-        
-        Returns:
-            - datetime: datetime object that is ahead, based on the addition_hours
-        
-        """
-        
-        return datetime.now(self._timezone).replace(hour=0,minute=0,second=0).strftime("%Y-%m-%d %H:%M:%S")
 
     def get_lagging_indicator(self,timeframe, indicator):
         """Get the respective lagging indicator, based on the timeframe
@@ -295,14 +305,12 @@ class ForexAnalyzer:
         rates_df = self._fetch_data_mt5(timeframe, bar_count)
 
         self._calculate_lagging_indicators(rates_df, timeframe)
-            
         self._create_trend_indicators(rates_df.copy(), timeframe)
-
         self._create_heiken_ashi(rates_df, timeframe)
 
         return rates_df
 
-    def get_currency_strength(self, symbol):
+    def get_currency_strength(self):
         """Get the strength of the symbol for currency strength analysis
 
         Parameters:
@@ -312,13 +320,91 @@ class ForexAnalyzer:
             - float: the strength of the given symbol
         
         """
-        rates_df = self._fetch_data_mt5('1W', 5, symbol)
+        currency_strength = {
+            'JPY': 0.00
+        }
 
-        close_price_series = rates_df['close']
+        for symbol in self._currency_strength_list:
 
-        oldest_close_price = close_price_series.iat[0]
-        current_close_price = close_price_series.iat[-1]
+            rates_df = self._fetch_data_mt5('1W', 5, symbol)
 
-        percentage_strength = ((current_close_price - oldest_close_price)/oldest_close_price) * 100
+            close_price_series = rates_df['close']
 
-        return round(percentage_strength,3)
+            oldest_close_price = close_price_series.iat[0]
+            current_close_price = close_price_series.iat[-1]
+
+            percentage_strength = ((current_close_price - oldest_close_price)/oldest_close_price) * 100
+            currency_strength[symbol[:3]] = round(percentage_strength,3)
+
+        # Sort out dictionary in descending order
+        currency_strength = dict(
+            sorted(currency_strength.items(), key=lambda item: item[1], reverse=True)
+        )
+
+        return currency_strength
+
+    def get_currency_correlations(self, symbols_list):
+        """Get the correlations between different currency pairs
+
+        Parameters:
+            - symbols_list(list): the list of symbols
+
+        Returns:
+            - dataframe: the dataframe containing the correlated data
+        """
+
+        currency_correlation_df = pd.DataFrame()
+
+        for currency_pair in symbols_list:
+            # 1. Fetch the last 30 days data, in 4-hour intervals
+            # 1 day = 24 hours (6 4-hour intervals); 30 days = (6 * 30 = 180)
+            data = self._fetch_data_mt5('4H', 180, currency_pair)
+
+            # 2. Fetch only the closing price of the given pair
+            currency_correlation_df[currency_pair] = data['close']
+
+        return currency_correlation_df.corr().round(3)
+
+    def get_symbol_list(self):
+        """Get all the symbols list from MT5
+        """
+
+        if self._full_currency_list:
+            return self._full_currency_list
+
+        group_filter = "!*BTC*, !*PLN*,!*GBX*,!*XBT*,!*ETH*,*USD*,*EUR*,*JPY*,*AUD*,*NZD*"
+        symbols = mt5.symbols_get(group=group_filter)
+
+        for symbol in symbols:
+
+            symbol = symbol.name
+
+            if 'JPY' in symbol:
+                self._currency_strength_list.append(symbol)
+            
+            self._full_currency_list.append(symbol)
+    
+        return self._full_currency_list
+
+    def get_symbol_volume(self):
+        """Get the volume data, based on the weekly timeframe
+        """
+
+        symbol_info_list = []
+
+        for symbol in self._full_currency_list:
+            data = self._fetch_data_mt5('1W', 1, symbol)
+            symbol_info_list.append({
+                'symbol': symbol,
+                'volume': data['tick_volume'].iat[0]
+            })
+        
+        symbol_info_list = sorted(symbol_info_list, key=lambda k: k['volume'], reverse=True)
+
+        symbols_only = []
+
+        for symbol_info in symbol_info_list:
+            if symbol_info['symbol'] not in symbols_only:
+                symbols_only.append(symbol_info['symbol'])
+        
+        return symbols_only
