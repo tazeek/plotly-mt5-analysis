@@ -80,13 +80,11 @@ class Graphs:
                 mode="lines"
             )
         ])
-
-        current_atr = str(data['atr'].iat[-1]).split('.')
-        current_atr = [num for num in current_atr[1] if num != '0']
-        current_atr = ''.join(current_atr[:2])
+        
+        current_atr = data['atr'].iat[-1]
 
         atr_fig.update_layout(
-            title=f"{self._symbol} - ATR (4H) (Current value: {current_atr})",
+            title=f"{self._symbol} - ATR (4H) (Current value: {current_atr: .5f})",
             template='simple_white',
             xaxis_title="Time",
             hovermode='x',
