@@ -2,7 +2,8 @@ from datetime import datetime
 
 import plotly.graph_objects as go
 import pandas as pd
-import plotly.figure_factory as ff
+
+import logging
 
 class Graphs:
 
@@ -60,6 +61,7 @@ class Graphs:
     def _fill_missing_dates(self, fig, data_day, timeframe):
 
         missing_dates = self._filter_missing_dates(data_day, timeframe)
+        logging.info(missing_dates)
 
         fig.update_xaxes(
             rangebreaks=[
@@ -71,7 +73,7 @@ class Graphs:
 
         return None
 
-    def plot_atr(self, data):
+    def plot_atr(self, data, data_day, timeframe):
         
         atr_fig = go.Figure([
             go.Scatter(
@@ -92,6 +94,8 @@ class Graphs:
             showlegend=False,
             yaxis={'visible': False, 'showticklabels': False}
         )
+
+        self._fill_missing_dates(atr_fig, data_day, timeframe)
 
         return atr_fig
 
