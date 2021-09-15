@@ -88,7 +88,7 @@ class Graphs:
         current_atr = data['atr'].iat[-1]
 
         atr_fig.update_layout(
-            title=f"{self._symbol} - ATR (4H) (Current value: {current_atr: .{self._digits_precision}f})",
+            title=f"{self._symbol} - ATR (Current value: {current_atr: .{self._digits_precision}f})",
             template='simple_white',
             xaxis_title="Time",
             hovermode='x',
