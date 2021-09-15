@@ -6,12 +6,14 @@ import plotly.figure_factory as ff
 
 class Graphs:
 
-    def __init__(self, symbol=None):
-        self._symbol = symbol
+    def __init__(self):
+        self._symbol = None
+        self._digits_precision = None
         self._missing_dates = {}
 
-    def update_symbol(self, symbol):
+    def update_symbol(self, symbol, digits):
         self._symbol = symbol
+        self._digits_precision = digits
 
         return None
 
@@ -84,7 +86,7 @@ class Graphs:
         current_atr = data['atr'].iat[-1]
 
         atr_fig.update_layout(
-            title=f"{self._symbol} - ATR (4H) (Current value: {current_atr: .5f})",
+            title=f"{self._symbol} - ATR (4H) (Current value: {current_atr: .{self._digits_precision}f})",
             template='simple_white',
             xaxis_title="Time",
             hovermode='x',
