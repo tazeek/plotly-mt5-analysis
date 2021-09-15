@@ -183,6 +183,11 @@ class ForexAnalyzer:
         rates['time'] = pd.to_datetime(rates['time'], unit='s')
 
         return rates
+
+    def get_digits(self, symbol):
+        symbol_info = mt5.symbol_info(symbol or self._symbol)
+        
+        return symbol_info.digits
     
     def get_multiplier(self, symbol=None):
         """Get the multiplier, based on number of digits
@@ -195,9 +200,7 @@ class ForexAnalyzer:
         
         """
 
-        symbol_info = mt5.symbol_info(symbol or self._symbol)
-
-        return 10 ** -symbol_info.digits
+        return 10 ** self.get_digits(symbol)
 
     def find_ask_bid(self):
         """Find the ask and bid price for the given symbol
