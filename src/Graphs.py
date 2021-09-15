@@ -6,13 +6,15 @@ import plotly.figure_factory as ff
 
 class Graphs:
 
-    def __init__(self, symbol=None):
-        self._symbol = symbol
+    def __init__(self):
+        self._symbol = None
+        self._digits_precision = None
         self._missing_dates = {}
 
-    def update_symbol(self, symbol):
+    def update_symbol(self, symbol, digits):
         self._symbol = symbol
-
+        self._digits_precision = digits
+        
         return None
 
     def _filter_missing_dates(self, data, timeframe):
