@@ -14,7 +14,7 @@ class Graphs:
     def update_symbol(self, symbol, digits):
         self._symbol = symbol
         self._digits_precision = digits
-        
+
         return None
 
     def _filter_missing_dates(self, data, timeframe):
@@ -86,7 +86,7 @@ class Graphs:
         current_atr = data['atr'].iat[-1]
 
         atr_fig.update_layout(
-            title=f"{self._symbol} - ATR (4H) (Current value: {current_atr: .5f})",
+            title=f"{self._symbol} - ATR (4H) (Current value: {current_atr: .{self._digits_precision}f})",
             template='simple_white',
             xaxis_title="Time",
             hovermode='x',

@@ -47,7 +47,7 @@ def register_callbacks(app):
         print("\n\n")
 
         forex_analyzer.update_symbol(changed_currency)
-        graph_generator.update_symbol(changed_currency)
+        graph_generator.update_symbol(changed_currency, digits)
 
         return [changed_currency]
 
