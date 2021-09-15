@@ -183,6 +183,11 @@ class ForexAnalyzer:
         rates['time'] = pd.to_datetime(rates['time'], unit='s')
 
         return rates
+
+    def get_digits(self, symbol=None):
+        symbol_info = mt5.symbol_info(symbol or self._symbol)
+
+        return symbol_info.digits
     
     def get_multiplier(self, symbol=None):
         """Get the multiplier, based on number of digits
@@ -195,9 +200,7 @@ class ForexAnalyzer:
         
         """
 
-        symbol_info = mt5.symbol_info(symbol or self._symbol)
-
-        return 10 ** -symbol_info.digits
+        return 10 ** -self.get_digits(symbol)
 
     def find_ask_bid(self):
         """Find the ask and bid price for the given symbol
@@ -242,22 +245,6 @@ class ForexAnalyzer:
 
         # Local time is 3 hours behind
         return datetime.now()  + timedelta(hours=addition_hours)
-
-    def calculate_point_gap(self, open_price, close_price, symbol=None):
-        """Find the point gap between the opening price and closing price
-
-        Parameters:
-            - open_price(float_price): the opening price
-            - close_price(float_price): the closing price
-            - symbol(str): the underlying symbol
-        
-        Returns:
-            - int: the point difference
-        
-        """
-
-        points = round((close_price - open_price) / self.get_multiplier(symbol))
-        return int(points) 
     
     def get_heiken_ashi(self, timeframe):
         return self._heiken_ashi_df[timeframe]
