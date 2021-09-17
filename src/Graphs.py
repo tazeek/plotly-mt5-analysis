@@ -136,7 +136,6 @@ class Graphs:
             xaxis_title="Time",
             yaxis_title="Price",
             hovermode='x',
-            yaxis_tickformat='.5f',
             xaxis_rangeslider_visible=False,
             legend=legend_config
         )
