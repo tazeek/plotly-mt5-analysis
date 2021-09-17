@@ -89,9 +89,8 @@ def register_callbacks(app):
             Output("bid-value","children"),
             Output("candlestick-4H-fig","figure"),
             Output("candlesticks-1H-heiken","figure"),
-            Output("atr-graph-4H","figure"),
             Output("adx-graph-1H","figure"),
-            Output("rsi-1H-fig","figure"),
+            Output("rsi-4H-fig","figure"),
             Output("point-counts-1H", "figure"),
             Output("atr-graph-1H", "figure")
         ],
@@ -123,9 +122,8 @@ def register_callbacks(app):
             f"Bid value: {bid_value: .{digit_precision}f}",
             graph_generator.plot_candlesticks_fullday(stats_4H, '4H', forex_analyzer.get_trend_indicators('4H')),
             graph_generator.plot_heiken_ashi(forex_analyzer.get_heiken_ashi('1H'), forex_analyzer.get_trend_indicators('1H')),
-            graph_generator.plot_atr(forex_analyzer.get_trend_indicators('4H'), stats_1H, '4H'),
             graph_generator.plot_adx_figure(forex_analyzer.get_lagging_indicator('1H', 'adx')),
-            graph_generator.plot_rsi_figure(forex_analyzer.get_lagging_indicator('1H', 'rsi')),
+            graph_generator.plot_rsi_figure(forex_analyzer.get_lagging_indicator('4H', 'rsi')),
             graph_generator.plot_pip_range_counts(stats_1H, forex_analyzer.get_multiplier()),
             graph_generator.plot_atr(forex_analyzer.get_trend_indicators('1H'), stats_1H, '1H'),
         ]
