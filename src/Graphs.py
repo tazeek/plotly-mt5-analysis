@@ -4,6 +4,8 @@ import plotly.graph_objects as go
 import pandas as pd
 import plotly.figure_factory as ff
 
+import logging
+
 class Graphs:
 
     def __init__(self):
@@ -62,6 +64,7 @@ class Graphs:
     def _fill_missing_dates(self, fig, data_day, timeframe):
 
         missing_dates = self._filter_missing_dates(data_day, timeframe)
+        logging.info(missing_dates)
 
         fig.update_xaxes(
             rangebreaks=[
@@ -73,7 +76,7 @@ class Graphs:
 
         return None
 
-    def plot_atr(self, data):
+    def plot_atr(self, data, data_day, timeframe):
         
         atr_fig = go.Figure([
             go.Scatter(
@@ -86,7 +89,7 @@ class Graphs:
         current_atr = data['atr'].iat[-1]
 
         atr_fig.update_layout(
-            title=f"{self._symbol} - ATR (4H) (Current value: {current_atr: .{self._digits_precision}f})",
+            title=f"{self._symbol} - ATR (Current value: {current_atr: .{self._digits_precision}f})",
             template='simple_white',
             xaxis_title="Time",
             hovermode='x',
@@ -94,6 +97,8 @@ class Graphs:
             showlegend=False,
             yaxis={'visible': False, 'showticklabels': False}
         )
+
+        self._fill_missing_dates(atr_fig, data_day, timeframe)
 
         return atr_fig
 
@@ -132,7 +137,6 @@ class Graphs:
             xaxis_title="Time",
             yaxis_title="Price",
             hovermode='x',
-            yaxis_tickformat='.5f',
             xaxis_rangeslider_visible=False,
             legend=legend_config
         )

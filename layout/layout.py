@@ -254,12 +254,11 @@ def generate_layout():
 
                     dcc.Tab(label='High Timeframe (4H)', value='high-timeframe', children=[
                         _loading_figure_layout('candlestick-4H-fig', draw_config),
-                        _loading_figure_layout('atr-graph-4H')
+                        _loading_figure_layout('rsi-4H-fig', draw_config),
                     ]),
 
                     dcc.Tab(label='Heiken Ashi (1H)',value='medium-timeframe-heiken', children=[
                         _loading_figure_layout('candlesticks-1H-heiken', draw_config),
-                        _loading_figure_layout('rsi-1H-fig', draw_config),
                         _loading_figure_layout('adx-graph-1H'),
                         _loading_figure_layout('atr-graph-1H')
                     ]),
