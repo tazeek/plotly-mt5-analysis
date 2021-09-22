@@ -159,6 +159,7 @@ class Graphs:
             xaxis_title="Time",
             yaxis_title="RSI Value",
             yaxis_range=[0,100],
+            yaxis_dtick=10,
             title=f"RSI of {self._symbol}",
             hovermode='x',
             yaxis_tickformat='.2f'
