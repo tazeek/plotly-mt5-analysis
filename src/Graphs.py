@@ -366,18 +366,13 @@ class Graphs:
 
         def _calculate_points(open_price, close_price):
 
-            points = round((close_price - open_price) / multiplier)
-            return int(abs(points))
+            return round((close_price - open_price) / multiplier)
 
         # Find the earliest point in the day
         current_date_time = datetime.strptime(str(data_day['time'].iat[-1]), "%Y-%m-%d %H:%M:%S")
         current_date_time = datetime.combine(current_date_time, datetime.min.time())
 
         data_day = data_day[data_day['time'] >= current_date_time]
-
-        points_diff = data_day.apply(
-            lambda x: _calculate_points(x['open'], x['close']), axis=1
-        )
 
         points_diff_lambda = lambda x: _calculate_points(x['open'], x['close'])
 
@@ -389,17 +384,14 @@ class Graphs:
             colors_list.append('green' if diff > 0 else 'red')
             points_list.append(int(abs(diff)))
 
-        print(colors_list)
-        print(points_list)
-
-        points_diff = list(points_diff)
-        x_val = [x for x in range(0, len(points_diff) + 1)]
+        x_val = [x for x in range(0, len(points_list) + 1)]
 
         bar_fig = go.Figure(
             [
                 go.Bar(
                     x=x_val, 
-                    y=points_diff,
+                    y=points_list,
+                    marker_color=colors_list,
                     opacity=0.35,
                     hovertemplate='Hour: %{x}:00<br>Points: %{y}<extra></extra>'
                 )
