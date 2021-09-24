@@ -379,6 +379,17 @@ class Graphs:
             lambda x: _calculate_points(x['open'], x['close']), axis=1
         )
 
+        points_diff_lambda = lambda x: _calculate_points(x['open'], x['close'])
+
+        colors_list = []
+        points_list = []
+
+        for index, row in data_day.iterrows():
+            diff = points_diff_lambda(row)
+            colors_list.append('green' if diff > 0 else 'red')
+
+        print(colors_list)
+
         points_diff = list(points_diff)
         x_val = [x for x in range(0, len(points_diff) + 1)]
 
