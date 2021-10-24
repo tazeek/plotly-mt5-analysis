@@ -215,6 +215,7 @@ class ForexAnalyzer:
         """
         
         last_tick_info = self._get_symbol_info_tick(self._symbol)
+        print(last_tick_info)
         return last_tick_info.ask, last_tick_info.bid
 
 

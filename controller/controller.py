@@ -85,8 +85,6 @@ def register_callbacks(app):
 
     @app.callback(
         [
-            Output("ask-value","children"),
-            Output("bid-value","children"),
             Output("candlestick-4H-fig","figure"),
             Output("candlesticks-1H-heiken","figure"),
             Output("adx-graph-1H","figure"),
@@ -110,16 +108,11 @@ def register_callbacks(app):
             - list: the list of areas to update in layout
         
         """
-
-        digit_precision = forex_analyzer.get_digits()
-        ask_value, bid_value = forex_analyzer.find_ask_bid()
         
         stats_1H = forex_analyzer.get_daily_stats('1H',600)
         stats_4H = forex_analyzer.get_daily_stats('4H',600)
 
         return [
-            f"Ask value: {ask_value: .{digit_precision}f}",
-            f"Bid value: {bid_value: .{digit_precision}f}",
             graph_generator.plot_candlesticks_fullday(stats_4H, '4H', forex_analyzer.get_trend_indicators('4H')),
             graph_generator.plot_heiken_ashi(forex_analyzer.get_heiken_ashi('1H'), forex_analyzer.get_trend_indicators('1H')),
             graph_generator.plot_adx_figure(forex_analyzer.get_lagging_indicator('1H', 'adx')),
