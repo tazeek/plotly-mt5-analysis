@@ -22,3 +22,9 @@ The main tools used for this project are:
 - Plotly: Data Visualization purposes
 - Dash: Dashboard framework
 - Others: Other tools for the purpose of technical analysis
+
+## Picking the symbols
+
+## Economic Events
+
+## Strategies
