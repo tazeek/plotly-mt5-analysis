@@ -38,4 +38,10 @@ In addition, check the **coorelation of the chosen symbols**. Symbols that are s
 
 ## Economic Events
 
+Economic events can be downloaded for the current day only. It is divided into:
+
+- **Currency**: The given currency affected
+- **Time**: The time at which the economic event takes place
+- **Impact**: How big of an impact is the economic event
+
 ## Strategies 
