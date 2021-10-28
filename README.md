@@ -44,4 +44,6 @@ Economic events can be downloaded for the current day only. It is divided into:
 - **Time**: The time at which the economic event takes place
 - **Impact**: How big of an impact is the economic event
 
-## Strategies 
+## Strategy
+
+**NOTE**: This is only based on a personal opinion after trading, understanding, learning, and researching on how market prices work in general. DO NOT take it as a **get-rich quick idea**. Do try to read on how other traders trade or how their approaches are.
