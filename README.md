@@ -6,6 +6,7 @@
 This project is an analysis done on the forex prices from MetaTrader5 (MT5). The analysis is in the form of a dashboard, which have the following features:
 
 * Currency Strength Analysis
+* Currency Coorelation
 * Risk Management Analysis
 * Price action trading
 * Support and Resistance
@@ -25,6 +26,16 @@ The main tools used for this project are:
 
 ## Picking the symbols
 
+1. Observe the **Currency Strength Analysis**
+2. Symbols divided into two categories: **Uptrend** or **Downtrend**
+3. The strength of the trend is divided into two: **Weak** or **Strong**
+4. Based on the symbols, download the weekly activity of the previous week
+5. Check if the symbols were actively traded or not
+
+**Hypothesis**: A symbol that is not commonly traded will have a wider spread.
+
+In addition, check the **coorelation of the chosen symbols**. Symbols that are strongly coorelated (either positively or negatively) should be narrowed down as much as possible, or discarded as well.
+
 ## Economic Events
 
-## Strategies
+## Strategies 
