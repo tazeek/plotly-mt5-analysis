@@ -153,18 +153,6 @@ def _generate_dropdown(forex_list):
                 style={"width": "10%", "margin-top": 10}
         ),
 
-        html.Div(children=[
-            html.Div(
-                id='ask-value',
-                style={"margin-top": 10}
-            ),
-
-            html.Div(
-                id='bid-value',
-                style={"margin-top": 10}
-            ),
-        ]),
-
         html.Button(
             'Refresh Page', 
             id='refresh-stats',

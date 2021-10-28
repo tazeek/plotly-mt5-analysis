@@ -215,6 +215,7 @@ class ForexAnalyzer:
         """
         
         last_tick_info = self._get_symbol_info_tick(self._symbol)
+        print(last_tick_info)
         return last_tick_info.ask, last_tick_info.bid
 
 
@@ -359,7 +360,14 @@ class ForexAnalyzer:
         if self._full_currency_list:
             return self._full_currency_list
 
-        group_filter = "!*BTC*, !*PLN*,!*GBX*,!*XBT*,!*ETH*,*USD*,*EUR*,*JPY*,*AUD*,*NZD*"
+
+
+        group_filter = """
+        !*BTC*,!*LTC*,!*XMR*,!*LINK*,!*DOT*,
+        !*DOGE*,!*PLN*,!*ADA*,!*GBX*,!*XBT*,
+        !*SOL*,!*TRX*,!*ATOM*,!*XRP*,!*BCH*,!*XLM*,
+        !*ETH*,*USD*,*EUR*,*JPY*,*AUD*,*NZD*
+        """
         symbols = mt5.symbols_get(group=group_filter)
 
         for symbol in symbols:
