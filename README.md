@@ -50,10 +50,10 @@ Economic events can be downloaded for the current day only. It is divided into:
 
 Inspiration from [Rayner Teo's MAEE](https://www.tradingwithrayner.com/the-maee-formula/) and [The Moving Average](https://www.youtube.com/c/TheMovingAverage):
 
-- **M**arket: Observe the market chart on the 4 Hour time-frame
-- **A**rea: Check if the price is on an area of value (Moving Average, Static/Resistance)
-- **E**ntry: Check if there are any reasons to enter the market (Candlestick patterns, price rejection, etc)
-- **E**xit: Identify the area where you will exit the market from
+- **M**arket (4H): Observe the market chart. The result is either *trending* or *ranging*.
+- **A**rea (1H): Check if the price is on an area of value (Moving Average, Static/Resistance).
+- **E**ntry (1H or 15M): Check if there are any reasons to enter the market (Candlestick patterns, price rejection, etc).
+- **E**xit (4H or 1H): Identify the area where you will exit the market from.
 
 Additional Information:
 
