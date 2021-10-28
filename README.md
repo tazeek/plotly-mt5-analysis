@@ -52,9 +52,11 @@ Inspiration from [Rayner Teo's MAEE](https://www.tradingwithrayner.com/the-maee-
 
 - **M**arket (4H): Observe the market chart. The result is either *trending* or *ranging*.
 - **A**rea (1H): Check if the price is on an area of value (Moving Average, Static/Resistance).
-- **E**ntry (1H or 15M): Check if there are any reasons to enter the market (Candlestick patterns, price rejection, etc).
+- **E**ntry ($H, 1H or 15M): Check if there are any signals to enter the market (Candlestick patterns, price rejection, etc). In addition, **observe** the full picture of the trend and decide what needs to be done.
 - **E**xit (4H or 1H): Identify the area where you will exit the market from.
 
 Additional Information:
 
+- When observing the market, highlight temporary key areas. Remove them by the end of the day and plot again the next day.
+- When looking for an entry point, ***be flexible***. Always be able to trade in more than one way.
 - 
