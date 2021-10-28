@@ -47,3 +47,14 @@ Economic events can be downloaded for the current day only. It is divided into:
 ## Strategy
 
 **NOTE**: This is only based on a personal opinion after trading, understanding, learning, and researching on how market prices work in general. DO NOT take it as a **get-rich quick idea**. Do try to read on how other traders trade or how their approaches are.
+
+Inspiration from [Rayner Teo's MAEE](https://www.tradingwithrayner.com/the-maee-formula/) and [The Moving Average](https://www.youtube.com/c/TheMovingAverage):
+
+- **M**arket: Observe the market chart on the 4 Hour time-frame
+- **A**rea: Check if the price is on an area of value (Moving Average, Static/Resistance)
+- **E**ntry: Check if there are any reasons to enter the market (Candlestick patterns, price rejection, etc)
+- **E**xit: Identify the area where you will exit the market from
+
+Additional Information:
+
+- 
