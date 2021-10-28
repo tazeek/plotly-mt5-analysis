@@ -52,11 +52,14 @@ Inspiration from [Rayner Teo's MAEE](https://www.tradingwithrayner.com/the-maee-
 
 - **M**arket (4H): Observe the market chart. The result is either *trending* or *ranging*.
 - **A**rea (1H): Check if the price is on an area of value (Moving Average, Static/Resistance).
-- **E**ntry ($H, 1H or 15M): Check if there are any signals to enter the market (Candlestick patterns, price rejection, etc). In addition, **observe** the full picture of the trend and decide what needs to be done.
+- **E**ntry ($H, 1H or 15M): Check if there are any reasons to enter the market (Candlestick patterns, price rejection, etc). In addition, **observe** the full picture of the trend and decide what needs to be done.
 - **E**xit (4H or 1H): Identify the area where you will exit the market from.
 
 Additional Information:
 
 - When observing the market, highlight temporary key areas. Remove them by the end of the day and plot again the next day.
 - When looking for an entry point, ***be flexible***. Always be able to trade in more than one way.
-- 
+- **Exit** when you are wrong. That is when your entire trade set up becomes invalid. Set up your stop-loss at this area.
+- **Adjust** your stop-loss every time you cross a profit level. For example: if you cross 100 points of profit, adjust your stop-loss to that level. It is better to **lock your profits and exit** than to **hope** that the price continues going in the intended direction.
+- The **ideal** entry position is when the stop-loss is not too far away. Worst-case scenario: a wider-stop loss and the market reverses completely.
+- **RECOMMENDED**: Do not keep re-adjusting your stop-loss. If it is invalid, walk away.
