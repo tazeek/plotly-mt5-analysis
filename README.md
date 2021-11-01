@@ -63,3 +63,4 @@ Additional Information:
 - **Adjust** your stop-loss every time you cross a profit level. For example: if you cross 100 points of profit, adjust your stop-loss to that level. It is better to **lock your profits and exit** than to **hope** that the price continues going in the intended direction.
 - The **ideal** entry position is when the stop-loss is not too far away. Worst-case scenario: a wider-stop loss and the market reverses completely.
 - **RECOMMENDED**: Do not keep re-adjusting your stop-loss. If it is invalid, walk away.
+- **RECOMMENDED**: Have patience. Let the price come to the area of value. Never enter a trade unknowingly
