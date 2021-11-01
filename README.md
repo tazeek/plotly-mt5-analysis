@@ -51,8 +51,8 @@ Economic events can be downloaded for the current day only. It is divided into:
 Inspiration from [Rayner Teo's MAEE](https://www.tradingwithrayner.com/the-maee-formula/) and [The Moving Average](https://www.youtube.com/c/TheMovingAverage):
 
 - **M**arket (4H): Observe the market chart. The result is either *trending* or *ranging*.
-- **A**rea (1H): Check if the price is on an area of value (Moving Average, Static/Resistance).
-- **E**ntry ($H, 1H or 15M): Check if there are any reasons to enter the market (Candlestick patterns, price rejection, etc). In addition, **observe** the full picture of the trend and decide what needs to be done.
+- **A**rea (4H or 1H): Check if the price is on an area of value (Moving Average, Static/Resistance).
+- **E**ntry (1H, 1H or 15M): Check if there are any reasons to enter the market (Candlestick patterns, price rejection, etc). In addition, **observe** the full picture of the trend and decide what needs to be done.
 - **E**xit (4H or 1H): Identify the area where you will exit the market from.
 
 Additional Information:
@@ -64,3 +64,4 @@ Additional Information:
 - The **ideal** entry position is when the stop-loss is not too far away. Worst-case scenario: a wider-stop loss and the market reverses completely.
 - **RECOMMENDED**: Do not keep re-adjusting your stop-loss. If it is invalid, walk away.
 - **RECOMMENDED**: Have patience. Let the price come to the area of value. Never enter a trade unknowingly
+- **Scalping**: Going against the trend (ex. Retracing) when the price has not reached the area of value. Good for quick profits but highly risky.
