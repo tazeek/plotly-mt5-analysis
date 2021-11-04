@@ -65,6 +65,7 @@ Additional Information:
 - **RECOMMENDED**: Do not keep re-adjusting your stop-loss. If it is invalid, walk away.
 - **RECOMMENDED**: Have patience. Let the price come to the area of value. Never enter a trade unknowingly
 - **Scalping**: Going against the trend (ex. Retracing) when the price has not reached the area of value. Good for quick profits but highly risky.
+- RSI does not work well when the market is in consolidation
 
 References:
 
