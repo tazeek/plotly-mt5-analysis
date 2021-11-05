@@ -69,9 +69,12 @@ Additional Information:
 
 References:
 
-If you wish to learn about forex trading, I highly recommend the following:
+If you wish to learn about forex trading and the concepts related to it, I highly recommend the following:
 
-- [Rayner Teo](https://www.tradingwithrayner.com/):
-- [The Moving Average](https://www.youtube.com/channel/UCYFQzaZyTUzY-Tiytyv3HhA): 
-- [Babypips](https://www.babypips.com/):
-- [Technical Analysis Of The Financial Markets](https://cdn.preterhuman.net/texts/unsorted2/Stock%20books%20029/John%20J%20Murphy%20-%20Technical%20Analysis%20Of%20The%20Financial%20Markets.pdf?fbclid=IwAR0CZjfQf2Mj_ObvDlkTbSf-5SS7WTfvu5hZzKtwDcRRO3-co1X386Is_9M):
+- [Rayner Teo](https://www.tradingwithrayner.com/): Contains a lot of information and examples regarding a lot of information related to pricing and area of value (I learned MAEE from here).
+
+- [The Moving Average](https://www.youtube.com/channel/UCYFQzaZyTUzY-Tiytyv3HhA): Good information and visual explanation on how different concepts of indicators works (I love the re-test explanation here, as well as the importance of patience).
+
+- [Babypips](https://www.babypips.com/): A lot of humerous explanations on the different trading concepts.
+
+- [Technical Analysis Of The Financial Markets](https://cdn.preterhuman.net/texts/unsorted2/Stock%20books%20029/John%20J%20Murphy%20-%20Technical%20Analysis%20Of%20The%20Financial%20Markets.pdf?fbclid=IwAR0CZjfQf2Mj_ObvDlkTbSf-5SS7WTfvu5hZzKtwDcRRO3-co1X386Is_9M): A good book that explains the logic on why the price behaves as it is and detailed information on the indicators.
