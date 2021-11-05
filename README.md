@@ -71,7 +71,7 @@ References:
 
 If you wish to learn about forex trading, I highly recommend the following:
 
-- Rayner Teo: [Link](https://www.tradingwithrayner.com/)
-- The Moving Average: [Link](https://www.youtube.com/channel/UCYFQzaZyTUzY-Tiytyv3HhA)
-- Babypips: [Link](https://www.babypips.com/)
-- Reading book: [Technical Analysis Of The Financial Markets](https://cdn.preterhuman.net/texts/unsorted2/Stock%20books%20029/John%20J%20Murphy%20-%20Technical%20Analysis%20Of%20The%20Financial%20Markets.pdf?fbclid=IwAR0CZjfQf2Mj_ObvDlkTbSf-5SS7WTfvu5hZzKtwDcRRO3-co1X386Is_9M)
+- [Rayner Teo](https://www.tradingwithrayner.com/):
+- [The Moving Average](https://www.youtube.com/channel/UCYFQzaZyTUzY-Tiytyv3HhA): 
+- [Babypips](https://www.babypips.com/):
+- [Technical Analysis Of The Financial Markets](https://cdn.preterhuman.net/texts/unsorted2/Stock%20books%20029/John%20J%20Murphy%20-%20Technical%20Analysis%20Of%20The%20Financial%20Markets.pdf?fbclid=IwAR0CZjfQf2Mj_ObvDlkTbSf-5SS7WTfvu5hZzKtwDcRRO3-co1X386Is_9M):
