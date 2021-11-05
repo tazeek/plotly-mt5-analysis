@@ -67,7 +67,7 @@ Additional Information:
 - **Scalping**: Going against the trend (ex. Retracing) when the price has not reached the area of value. Good for quick profits but highly risky.
 - RSI does not work well when the market is in consolidation
 
-References:
+## References
 
 If you wish to learn about forex trading and the concepts related to it, I highly recommend the following:
 
@@ -78,3 +78,5 @@ If you wish to learn about forex trading and the concepts related to it, I highl
 - [Babypips](https://www.babypips.com/): A lot of humerous explanations on the different trading concepts.
 
 - [Technical Analysis Of The Financial Markets](https://cdn.preterhuman.net/texts/unsorted2/Stock%20books%20029/John%20J%20Murphy%20-%20Technical%20Analysis%20Of%20The%20Financial%20Markets.pdf?fbclid=IwAR0CZjfQf2Mj_ObvDlkTbSf-5SS7WTfvu5hZzKtwDcRRO3-co1X386Is_9M): A good book that explains the logic on why the price behaves as it is and detailed information on the indicators.
+
+**NOTE**: These are just the resources that I learned from mainly. There are tons of research, blogs, and videos available on the internet that explains price action as well. Hence, do take it with an open mind :)
