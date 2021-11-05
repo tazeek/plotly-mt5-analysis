@@ -51,8 +51,8 @@ Economic events can be downloaded for the current day only. It is divided into:
 Inspiration from [Rayner Teo's MAEE](https://www.tradingwithrayner.com/the-maee-formula/) and [The Moving Average](https://www.youtube.com/c/TheMovingAverage):
 
 - **M**arket (4H): Observe the market chart. The result is either *trending* or *ranging*.
-- **A**rea (1H): Check if the price is on an area of value (Moving Average, Static/Resistance).
-- **E**ntry ($H, 1H or 15M): Check if there are any reasons to enter the market (Candlestick patterns, price rejection, etc). In addition, **observe** the full picture of the trend and decide what needs to be done.
+- **A**rea (4H or 1H): Check if the price is on an area of value (Moving Average, Static/Resistance).
+- **E**ntry (1H, 1H or 15M): Check if there are any reasons to enter the market (Candlestick patterns, price rejection, etc). In addition, **observe** the full picture of the trend and decide what needs to be done.
 - **E**xit (4H or 1H): Identify the area where you will exit the market from.
 
 Additional Information:
@@ -63,3 +63,20 @@ Additional Information:
 - **Adjust** your stop-loss every time you cross a profit level. For example: if you cross 100 points of profit, adjust your stop-loss to that level. It is better to **lock your profits and exit** than to **hope** that the price continues going in the intended direction.
 - The **ideal** entry position is when the stop-loss is not too far away. Worst-case scenario: a wider-stop loss and the market reverses completely.
 - **RECOMMENDED**: Do not keep re-adjusting your stop-loss. If it is invalid, walk away.
+- **RECOMMENDED**: Have patience. Let the price come to the area of value. Never enter a trade unknowingly
+- **Scalping**: Going against the trend (ex. Retracing) when the price has not reached the area of value. Good for quick profits but highly risky.
+- RSI does not work well when the market is in consolidation
+
+## References
+
+If you wish to learn about forex trading and the concepts related to it, I highly recommend the following:
+
+- [Rayner Teo](https://www.tradingwithrayner.com/): Contains a lot of information and examples regarding a lot of information related to pricing and area of value (I learned MAEE from here).
+
+- [The Moving Average](https://www.youtube.com/channel/UCYFQzaZyTUzY-Tiytyv3HhA): Good information and visual explanation on how different concepts of indicators works (I love the re-test explanation here, as well as the importance of patience).
+
+- [Babypips](https://www.babypips.com/): A lot of humerous explanations on the different trading concepts.
+
+- [Technical Analysis Of The Financial Markets](https://cdn.preterhuman.net/texts/unsorted2/Stock%20books%20029/John%20J%20Murphy%20-%20Technical%20Analysis%20Of%20The%20Financial%20Markets.pdf?fbclid=IwAR0CZjfQf2Mj_ObvDlkTbSf-5SS7WTfvu5hZzKtwDcRRO3-co1X386Is_9M): A good book that explains the logic on why the price behaves as it is and detailed information on the indicators.
+
+**NOTE**: These are just the resources that I learned from mainly. There are tons of research, blogs, and videos available on the internet that explains price action as well. Hence, do take it with an open mind :)
