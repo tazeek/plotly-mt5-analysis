@@ -97,24 +97,8 @@ class ForexAnalyzer:
             'value': talib.RSI(day_stats["close"], timeperiod=14)
         }
 
-        adx = {
-            'time': day_stats['time'],
-            'value': talib.ADX(
-                day_stats['high'],
-                day_stats['low'],
-                day_stats['close'],
-                timeperiod=timeperiod
-            )
-        }
-
-        pd.DataFrame({
-            'time': day_stats['time'],
-            'value': talib.RSI(day_stats["close"], timeperiod=timeperiod)
-        })
-
         self._lagging_indicators[timeframe] = {
-            'rsi': rsi_stats,
-            'adx': adx
+            'rsi': rsi_stats
         }
 
         return None

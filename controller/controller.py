@@ -106,7 +106,6 @@ def register_callbacks(app):
             - list: the list of areas to update in layout
         
         """
-        
         stats_1H = forex_analyzer.get_daily_stats('1H',600)
         stats_4H = forex_analyzer.get_daily_stats('4H',600)
 

@@ -31,19 +31,6 @@ class Graphs:
 
         return break_dates
 
-    def _add_sma_graphs(self, fig, data, color, col_name):
-        
-        fig.add_trace(
-            go.Scatter(
-                x=data['time'], 
-                y=data[col_name],
-                line=dict(color=color, width=1),
-                name=col_name.upper()
-            )
-        )
-
-        return None
-
     def _draw_hline(self, fig, y_val, line_dash, line_col, annotation=None):
 
         fig.add_hline(
@@ -112,12 +99,6 @@ class Graphs:
                 )
             ]
         )
-
-        self._add_sma_graphs(candlesticks_minute_fig, indicators_df, 'black', 'sma_50')
-
-        if timeframe == '15M':
-            self._add_sma_graphs(candlesticks_minute_fig, indicators_df, 'blue','sma_21')
-            self._add_sma_graphs(candlesticks_minute_fig, indicators_df, 'red','sma_200')
 
         legend_config=dict(
             orientation="h",
