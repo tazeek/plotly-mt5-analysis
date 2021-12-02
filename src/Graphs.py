@@ -11,7 +11,6 @@ class Graphs:
     def __init__(self):
         self._symbol = None
         self._digits_precision = None
-        self._missing_dates = {}
 
     def update_symbol(self, symbol, digits):
         self._symbol = symbol
@@ -21,33 +20,16 @@ class Graphs:
 
     def _filter_missing_dates(self, data, timeframe):
 
-        if timeframe not in self._missing_dates:
+        # build complete timeline from start date to end date
+        all_dates = pd.date_range(start=data['time'].iat[0],end=data['time'].iat[-1])
 
-            # build complete timeline from start date to end date
-            all_dates = pd.date_range(start=data['time'].iat[0],end=data['time'].iat[-1])
+        # retrieve the dates that ARE in the original datset
+        original_dates = [d.strftime("%Y-%m-%d") for d in data['time']]
 
-            # retrieve the dates that ARE in the original datset
-            original_dates = [d.strftime("%Y-%m-%d") for d in data['time']]
+        # define dates with missing values
+        break_dates = [d for d in all_dates.strftime("%Y-%m-%d").tolist() if not d in original_dates]
 
-            # define dates with missing values
-            break_dates = [d for d in all_dates.strftime("%Y-%m-%d").tolist() if not d in original_dates]
-
-            self._missing_dates[timeframe] = break_dates
-
-        return self._missing_dates[timeframe]
-
-    def _add_sma_graphs(self, fig, data, color, col_name):
-        
-        fig.add_trace(
-            go.Scatter(
-                x=data['time'], 
-                y=data[col_name],
-                line=dict(color=color, width=1),
-                name=col_name.upper()
-            )
-        )
-
-        return None
+        return break_dates
 
     def _draw_hline(self, fig, y_val, line_dash, line_col, annotation=None):
 
@@ -118,12 +100,6 @@ class Graphs:
             ]
         )
 
-        self._add_sma_graphs(candlesticks_minute_fig, indicators_df, 'black', 'sma_50')
-
-        if timeframe == '15M':
-            self._add_sma_graphs(candlesticks_minute_fig, indicators_df, 'blue','sma_21')
-            self._add_sma_graphs(candlesticks_minute_fig, indicators_df, 'red','sma_200')
-
         legend_config=dict(
             orientation="h",
             yanchor="bottom",
@@ -169,31 +145,6 @@ class Graphs:
         self._fill_missing_dates(rsi_fig, rsi_today, '15M')
 
         return rsi_fig
-
-    def plot_adx_figure(self, adx_df):
-
-        adx_fig = go.Figure([
-            go.Scatter(
-                x=adx_df['time'], 
-                y=adx_df['value'],
-                mode="lines"
-            )
-        ])
-
-        adx_fig.update_layout(
-            xaxis_title="Time",
-            yaxis_title="ADX value",
-            title=f"ADX of {self._symbol}",
-            hovermode='x',
-            yaxis_tickformat='.2f'
-        )
-
-        self._fill_missing_dates(adx_fig, adx_df, '15M')
-
-        for num in [25,50,75,100]:
-            self._draw_hline(adx_fig, num, 'dash', 'black')
-
-        return adx_fig
 
     def plot_pip_target(self, data):
         

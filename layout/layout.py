@@ -246,13 +246,8 @@ def generate_layout():
                     ]),
 
                     dcc.Tab(label='Heiken Ashi (1H)',value='medium-timeframe-heiken', children=[
-                        _loading_figure_layout('candlesticks-1H-heiken', draw_config),
-                        _loading_figure_layout('adx-graph-1H'),
-                        _loading_figure_layout('atr-graph-1H')
-                    ]),
-
-                    dcc.Tab(label='Point counts today (1H)',value='point-counts-today', children=[
                         _loading_figure_layout('point-counts-1H'),
+                        _loading_figure_layout('atr-graph-1H')
                     ])
                 ])
             ])
