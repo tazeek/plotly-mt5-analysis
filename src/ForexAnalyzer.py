@@ -129,15 +129,7 @@ class ForexAnalyzer:
         )
 
         indicators = Indicators(day_stats)
-        indicators.smma(period=50, column_name='sma_50', apply_to='Close')
         indicators.atr(period=50, column_name='atr')
-
-        indicators.bollinger_bands(
-            period=20, deviation=2, 
-            column_name_top='upper_bound', 
-            column_name_mid='sma_bollinger', 
-            column_name_bottom='lower_bound'
-        )
 
         self._indicators_stats_df[timeframe] = indicators.df
 
@@ -185,22 +177,6 @@ class ForexAnalyzer:
         """
 
         return 10 ** -self.get_digits(symbol)
-
-    def find_ask_bid(self):
-        """Find the ask and bid price for the given symbol
-
-        Parameters:
-            None
-        
-        Returns:
-            - str: the ask price of the symbol
-            - str: the bid price of the symbol 
-        
-        """
-        
-        last_tick_info = self._get_symbol_info_tick(self._symbol)
-        print(last_tick_info)
-        return last_tick_info.ask, last_tick_info.bid
 
 
     def update_symbol(self, symbol):
