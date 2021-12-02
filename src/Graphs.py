@@ -146,31 +146,6 @@ class Graphs:
 
         return rsi_fig
 
-    def plot_adx_figure(self, adx_df):
-
-        adx_fig = go.Figure([
-            go.Scatter(
-                x=adx_df['time'], 
-                y=adx_df['value'],
-                mode="lines"
-            )
-        ])
-
-        adx_fig.update_layout(
-            xaxis_title="Time",
-            yaxis_title="ADX value",
-            title=f"ADX of {self._symbol}",
-            hovermode='x',
-            yaxis_tickformat='.2f'
-        )
-
-        self._fill_missing_dates(adx_fig, adx_df, '15M')
-
-        for num in [25,50,75,100]:
-            self._draw_hline(adx_fig, num, 'dash', 'black')
-
-        return adx_fig
-
     def plot_pip_target(self, data):
         
         x_axis_val = list(data.keys())
