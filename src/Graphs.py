@@ -11,7 +11,6 @@ class Graphs:
     def __init__(self):
         self._symbol = None
         self._digits_precision = None
-        self._missing_dates = {}
 
     def update_symbol(self, symbol, digits):
         self._symbol = symbol
@@ -21,20 +20,16 @@ class Graphs:
 
     def _filter_missing_dates(self, data, timeframe):
 
-        if timeframe not in self._missing_dates:
+        # build complete timeline from start date to end date
+        all_dates = pd.date_range(start=data['time'].iat[0],end=data['time'].iat[-1])
 
-            # build complete timeline from start date to end date
-            all_dates = pd.date_range(start=data['time'].iat[0],end=data['time'].iat[-1])
+        # retrieve the dates that ARE in the original datset
+        original_dates = [d.strftime("%Y-%m-%d") for d in data['time']]
 
-            # retrieve the dates that ARE in the original datset
-            original_dates = [d.strftime("%Y-%m-%d") for d in data['time']]
+        # define dates with missing values
+        break_dates = [d for d in all_dates.strftime("%Y-%m-%d").tolist() if not d in original_dates]
 
-            # define dates with missing values
-            break_dates = [d for d in all_dates.strftime("%Y-%m-%d").tolist() if not d in original_dates]
-
-            self._missing_dates[timeframe] = break_dates
-
-        return self._missing_dates[timeframe]
+        return break_dates
 
     def _add_sma_graphs(self, fig, data, color, col_name):
         
