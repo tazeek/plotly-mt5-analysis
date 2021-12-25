@@ -108,7 +108,6 @@ def register_callbacks(app):
         
         """
         stats_1H = forex_analyzer.get_daily_stats('1H',600)
-        print(stats_1H)
         stats_4H = forex_analyzer.get_daily_stats('4H',600)
 
         return [

@@ -399,13 +399,13 @@ class Graphs:
         current_date_time = self._find_earlier_hour_today(data)
         data_day = data[data['time'] >= current_date_time]
 
-        x_val = [x for x in range(0, len(data_day) + 1)]
+        x_val = [x for x in range(0, len(data_day))]
 
         fig = go.Figure(
             [
                 go.Scatter(
                     x=x_val, 
-                    y=data['tick_volume']
+                    y=data_day['tick_volume']
                 )
             ]
         )
