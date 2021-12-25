@@ -88,7 +88,8 @@ def register_callbacks(app):
             Output("candlestick-4H-fig","figure"),
             Output("rsi-4H-fig","figure"),
             Output("point-counts-1H", "figure"),
-            Output("atr-graph-1H", "figure")
+            Output("atr-graph-1H", "figure"),
+            Output("volume-graph-1H", "figure")
         ],
         [
             Input("current-currency", "data"),
@@ -107,6 +108,7 @@ def register_callbacks(app):
         
         """
         stats_1H = forex_analyzer.get_daily_stats('1H',600)
+        print(stats_1H)
         stats_4H = forex_analyzer.get_daily_stats('4H',600)
 
         return [
@@ -114,6 +116,7 @@ def register_callbacks(app):
             graph_generator.plot_rsi_figure(forex_analyzer.get_lagging_indicator('4H', 'rsi')),
             graph_generator.plot_pip_range_counts(stats_1H, forex_analyzer.get_multiplier()),
             graph_generator.plot_atr(forex_analyzer.get_trend_indicators('1H'), stats_1H, '1H'),
+            graph_generator.plot_volume_graph(stats_1H)
         ]
 
     @app.callback(
