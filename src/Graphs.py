@@ -411,6 +411,7 @@ class Graphs:
         )
 
         fig.update_layout(
+            template='simple_white',
             title=f"Ticks Volume",
             xaxis_title="Hour",
             yaxis_title=f"Tick count",
