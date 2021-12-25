@@ -18,6 +18,14 @@ class Graphs:
 
         return None
 
+    def _find_earlier_hour_today(self, data_day):
+
+        # Find the earliest point in the day
+        current_date_time = datetime.strptime(str(data_day['time'].iat[-1]), "%Y-%m-%d %H:%M:%S")
+        current_date_time = datetime.combine(current_date_time, datetime.min.time())
+
+        return current_date_time
+
     def _filter_missing_dates(self, data, timeframe):
 
         # build complete timeline from start date to end date
@@ -320,8 +328,7 @@ class Graphs:
             return round((close_price - open_price) / multiplier)
 
         # Find the earliest point in the day
-        current_date_time = datetime.strptime(str(data_day['time'].iat[-1]), "%Y-%m-%d %H:%M:%S")
-        current_date_time = datetime.combine(current_date_time, datetime.min.time())
+        current_date_time = self._find_earlier_hour_today(data_day)
 
         data_day = data_day[data_day['time'] >= current_date_time]
 
@@ -388,6 +395,9 @@ class Graphs:
         return fig
 
     def plot_volume_graph(self, data):
+
+        current_date_time = self._find_earlier_hour_today(data)
+
         fig = go.Figure(
             [
                 go.Scatter(
