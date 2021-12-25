@@ -397,15 +397,15 @@ class Graphs:
     def plot_volume_graph(self, data):
 
         current_date_time = self._find_earlier_hour_today(data)
-        data_day = data[data['time'] >= current_date_time]
+        data = data[data['time'] >= current_date_time]
 
-        x_val = [x for x in range(0, len(data_day))]
+        x_val = [x for x in range(0, len(data))]
 
         fig = go.Figure(
             [
                 go.Scatter(
                     x=x_val, 
-                    y=data_day['tick_volume']
+                    y=data['tick_volume']
                 )
             ]
         )
