@@ -386,3 +386,6 @@ class Graphs:
         )
 
         return fig
+
+    def plot_volume_graph(self, data):
+        ...
