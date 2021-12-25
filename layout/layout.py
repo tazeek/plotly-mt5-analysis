@@ -247,6 +247,7 @@ def generate_layout():
 
                     dcc.Tab(label='Heiken Ashi (1H)',value='medium-timeframe-heiken', children=[
                         _loading_figure_layout('point-counts-1H'),
+                        _loading_figure_layout('volume-graph-1H'),
                         _loading_figure_layout('atr-graph-1H')
                     ])
                 ])
