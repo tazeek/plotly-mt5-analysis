@@ -388,4 +388,20 @@ class Graphs:
         return fig
 
     def plot_volume_graph(self, data):
-        ...
+        fig = go.Figure(
+            [
+                go.Scatter(
+                    x=x, 
+                    y=data['tick_volume']
+                )
+            ]
+        )
+
+        fig.update_layout(
+            title=f"Ticks Volume",
+            xaxis_title="Hour",
+            yaxis_title=f"Tick count",
+            hovermode='x'
+        )
+
+        return fig
