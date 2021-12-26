@@ -144,7 +144,7 @@ class Graphs:
             yaxis_title="RSI Value",
             yaxis_range=[0,100],
             yaxis_dtick=10,
-            title=f"RSI of {self._symbol}",
+            title=f"RSI of {self._symbol} - Period: 14",
             hovermode='x',
             yaxis_tickformat='.2f'
         )
