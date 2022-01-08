@@ -359,5 +359,19 @@ class ForexAnalyzer:
         
         return symbols_only
 
-    def calculate_margin():
-        return 0.00
+    def calculate_margin(self, action_type, lot_size, symbol):
+
+        # Find the MT5 action for Buy/Sell
+        mt5_action = None
+        price = None
+
+        symbol_data = self._get_symbol_info_tick(symbol)
+
+        if action_type == 'buy':
+            mt5_action = mt5.ORDER_TYPE_BUY
+            price = symbol_data.ask
+        else:
+            mt5_action = mt5.ORDER_TYPE_SELL
+            price = symbol_data.bid
+
+        return self._get_margin_calculation(self, lot_size, mt5_action, symbol, price)
