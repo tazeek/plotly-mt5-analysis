@@ -137,7 +137,26 @@ def _generate_dropdown(forex_list):
     ])
 
 def _generate_inputs_margin_calc():
-    ...
+
+    options = [
+        {'label': 'Buy', 'value': 'buy'},
+        {'label': 'Sell', 'value': 'sell'}
+    ]
+
+    return html.Div([
+
+        html.Div([
+            dcc.Dropdown(
+                id='action_type',
+                options=options,
+                value='buy',
+                clearable=False
+            )
+        ],
+            style={"width": "10%", "margin-top": 10}
+        
+        )
+    ])
 
 def _generate_points_percentage_graph():
     return html.Div(
@@ -198,7 +217,9 @@ def generate_layout():
                 _loading_figure_layout('bar-average-pip-fig',None,hide_display),
                 html.Hr(),
                 _generate_points_percentage_graph(),
-                _loading_figure_layout('points-fig',None,hide_display)
+                _loading_figure_layout('points-fig',None,hide_display),
+                html.Hr(),
+                _generate_inputs_margin_calc()
             ]),
 
             dcc.Tab(label='Currency Analysis', value='currency-strength-tab', children=[
