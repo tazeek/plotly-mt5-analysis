@@ -377,4 +377,4 @@ class ForexAnalyzer:
         price = float(price)
         lot_size = float(lot_size)
 
-        return self._get_margin_calculation(float(lot_size), mt5_action, symbol, float(price))
+        return self._get_margin_calculation(float(lot_size), mt5_action, symbol, price)
