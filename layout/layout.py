@@ -180,7 +180,7 @@ def _generate_inputs_margin_calc():
 
         html.Div(
             id='margin-required',
-            children='Margin Required: 0.00',
+            children='Margin required: 0.00',
             style={'margin-top': 10}
         ),
     ])

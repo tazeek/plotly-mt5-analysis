@@ -307,5 +307,5 @@ def register_callbacks(app):
         margin_required = forex_analyzer.calculate_margin(action_type, lot_size, symbol)
 
         return [
-            f"Margin required: 0.00"
+            f"Margin required: {margin_required:.2f}"
         ]
