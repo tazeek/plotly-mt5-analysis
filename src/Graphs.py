@@ -154,43 +154,6 @@ class Graphs:
 
         return rsi_fig
 
-    def plot_pip_target(self, data):
-        
-        x_axis_val = list(data.keys())
-
-        profit_targets = [target['profit'] for target in data.values()]
-        loss_targets = [target['loss'] for target in data.values()]
-
-        bar_fig = go.Figure(
-            [
-                go.Bar(
-                    x=x_axis_val, 
-                    y=profit_targets,
-                    marker_color='green',
-                    name='Profit',
-                    opacity=0.5
-                ),
-                go.Bar(
-                    x=x_axis_val,
-                    y=loss_targets,
-                    marker_color='indianred',
-                    name='Loss',
-                    opacity=0.5
-                )
-            ]
-        )
-
-        bar_fig.update_layout(
-            template='simple_white',
-            xaxis_title="Payout Currency",
-            yaxis_title="Points",
-            title=f"Average points target",
-            hovermode='x unified',
-            height=700
-        )
-
-        return bar_fig
-
     def display_symbol_strength(self, data):
 
         roc_values = list(data.values())
@@ -220,35 +183,6 @@ class Graphs:
         )
 
         return bar_fig
-
-    def plot_profit_target(self, data_dict, definer):
-
-        x_val = list(data_dict.keys())
-        y_val = list(data_dict.values())
-
-        fig = go.Figure(
-            [
-                go.Scatter(
-                    x=x_val, 
-                    y=y_val,
-                    mode="lines"
-                )
-            ]
-        )
-
-        fig.update_layout(
-            title=f"{definer} percentage target",
-            xaxis_title="Percentage",
-            yaxis_title=f"{definer}",
-            hovermode='x',
-            xaxis=dict(
-                tickmode='linear',
-                tick0 = 0,
-                dtick = 10
-            )
-        )
-
-        return fig
 
     def plot_heiken_ashi(self, data, indicator_df):
 

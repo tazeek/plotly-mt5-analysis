@@ -15,30 +15,6 @@ def _loading_figure_layout(fig_id, config=None, style=None):
         ])
     )
 
-def _generate_profit_percentage_graph():
-
-    return html.Div([
-        html.H1(
-            children="Profit aim (percentage)"
-        ),
-
-        html.Div([
-            dcc.Input(
-                id=f"input_profit_target",
-                type="text",
-                placeholder="Enter profit target",
-                style={"margin-right": "15px"}
-            )
-        ]),
-
-        html.Button(
-                'Display', 
-                id='show-graph-profit',
-                style={"margin-top": "15px", "margin-bottom": "15px"}
-            )
-
-    ])
-
 def _generate_currency_correlation_input():
 
     return html.Div([
@@ -62,67 +38,6 @@ def _generate_currency_correlation_input():
         )
 
     ]) 
-
-def _generate_profit_pip_calculator():
-
-    profit_loss_rm_dict = {
-        'balance': 0.00,
-        'percentage_target': 30,
-        'percentage_loss': 20
-    }
-
-    leverage_trade_dict = {
-        'leverage': 0.01,
-        'trade_count': 1
-    }
-
-    return html.Div(
-        [
-            html.H1(
-                children="Risk Management Calculator"
-            ),
-
-            html.Div([
-                dcc.Input(
-                    id=f"input_{field}",
-                    type="text",
-                    placeholder=f"{field}",
-                    value=f"{value}",
-                    style={"margin-right": "15px"}
-                ) for field,value in profit_loss_rm_dict.items()
-            ]),
-
-            html.Div([
-                dcc.Input(
-                    id=f"input_{field}",
-                    type="text",
-                    placeholder=f"{field}",
-                    value=f"{value}",
-                    style={"margin-right": "15px"}
-                ) for field,value in leverage_trade_dict.items()
-            ],
-                style={'margin-top': 10}
-            ),
-
-            html.Button(
-                'Calculate', 
-                id='start-profit-calculation', 
-                style={'margin-top': 10}
-            ),
-
-            html.Div(
-                id='profit-target',
-                children='Target balance (0% increase): 0',
-                style={'margin-top': 10}
-            ),
-
-            html.Div(
-                id='loss-bound',
-                children='Minimum balance (0% loss tolerance): 0',
-                style={'margin-top': 10}
-            )
-        ]
-    )
 
 def _generate_dropdown(forex_list):
 
@@ -157,6 +72,55 @@ def _generate_dropdown(forex_list):
             'Refresh Page', 
             id='refresh-stats',
             style={"margin-top": "15px", "margin-bottom": "15px"}
+        ),
+    ])
+
+def _generate_inputs_margin_calc():
+
+    options = [
+        {'label': 'Buy', 'value': 'buy'},
+        {'label': 'Sell', 'value': 'sell'}
+    ]
+
+    margin_items = {
+        'lot_size': 0.01,
+        'symbol': ''
+    }
+
+    return html.Div([
+
+        html.Div([
+            dcc.Dropdown(
+                id='action_type',
+                options=options,
+                value='buy',
+                clearable=False
+            )
+        ],
+            style={"width": "10%", "margin-top": 10}
+        
+        ),
+
+        html.Div([
+            dcc.Input(
+                id=f"input_{field}",
+                type="text",
+                placeholder=f"{field}",
+                value=f"{value}",
+                style={"margin-right": "15px", "margin-top": 10}
+            ) for field,value in margin_items.items()
+        ]),
+
+        html.Button(
+            'Calculate Margin', 
+            id='calculate-margin',
+            style={"margin-top": "15px", "margin-bottom": "15px"}
+        ),
+
+        html.Div(
+            id='margin-required',
+            children='Margin required: 0.00',
+            style={'margin-top': 10}
         ),
     ])
 
@@ -215,14 +179,10 @@ def generate_layout():
         dcc.Tabs(id='analysis-tabs', value='risk-management-tab', children=[
             
             dcc.Tab(label='Risk Management', value='risk-management-tab', children=[
-                _generate_profit_pip_calculator(),
-                _loading_figure_layout('bar-average-pip-fig',None,hide_display),
-                html.Hr(),
-                _generate_profit_percentage_graph(),
-                _loading_figure_layout('profit-percentage-fig',None,hide_display),
-                html.Hr(),
                 _generate_points_percentage_graph(),
-                _loading_figure_layout('points-fig',None,hide_display)
+                _loading_figure_layout('points-fig',None,hide_display),
+                html.Hr(),
+                _generate_inputs_margin_calc()
             ]),
 
             dcc.Tab(label='Currency Analysis', value='currency-strength-tab', children=[

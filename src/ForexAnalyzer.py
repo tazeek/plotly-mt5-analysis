@@ -105,6 +105,9 @@ class ForexAnalyzer:
 
     def _get_symbol_info_tick(self, symbol):
         return mt5.symbol_info_tick(symbol)
+
+    def _get_margin_calculation(self, lot, action, symbol, ask):
+        return mt5.order_calc_margin(action,symbol,lot,ask)
     
     def _create_trend_indicators(self, day_stats, timeframe):
         """Create the trend indicators and store in object attribute (self._indicator_stats_df)
@@ -355,3 +358,23 @@ class ForexAnalyzer:
                 symbols_only.append(symbol_info['symbol'])
         
         return symbols_only
+
+    def calculate_margin(self, action_type, lot_size, symbol):
+
+        # Find the MT5 action for Buy/Sell
+        mt5_action = None
+        price = None
+
+        symbol_data = self._get_symbol_info_tick(symbol)
+
+        if action_type == 'buy':
+            mt5_action = mt5.ORDER_TYPE_BUY
+            price = symbol_data.ask
+        else:
+            mt5_action = mt5.ORDER_TYPE_SELL
+            price = symbol_data.bid
+
+        price = float(price)
+        lot_size = float(lot_size)
+
+        return self._get_margin_calculation(float(lot_size), mt5_action, symbol, price)

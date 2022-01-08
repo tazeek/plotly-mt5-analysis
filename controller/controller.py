@@ -120,111 +120,6 @@ def register_callbacks(app):
 
     @app.callback(
         [
-            Output('profit-target', 'children'),
-            Output('loss-bound', 'children'),
-            Output('bar-average-pip-fig','figure'),
-            Output('bar-average-pip-fig','style')
-        ],
-        [
-            Input('start-profit-calculation','n_clicks')
-        ],
-        [
-            State('input_balance','value'),
-            State('input_percentage_target','value'),
-            State('input_percentage_loss','value'),
-            State('input_leverage','value'),
-            State('input_trade_count','value')
-        ],
-        prevent_initial_call=True
-    )
-    def perform_profit_calculation(click_count, bal, pct_tar, pct_loss, lev, min_trade):
-        """Callback for performing risk management, on different currencies
-
-        Parameters:
-            - click(int): dummy click whenever the button is clicked
-            - bal(float): the balance in the account
-            - pct_tar(float): how much percentage of profit
-            - pct_loss(float): how much percentage of loss
-            - lev(float): the leverage input
-            - min_trade(int): the number of trades to use
-        
-        Returns:
-            - list: the list of areas to update in layout
-        
-        """
-        
-        bal = float(bal)
-
-        amount_target = 0
-        amount_loss = 0
-
-        lev = float(lev)
-        pct_tar = int(pct_tar)
-        pct_loss = int(pct_loss)
-        min_trade = float(min_trade)
-        avg_pip_list = {}
-
-        if bal > 0 and lev > 0 and min_trade > 0:
-
-            amount_target = bal * (pct_tar / 100)
-            amount_loss = bal * (pct_loss / 100)
-            divisor = min_trade * lev
-
-            for currency, cur_rate in settlement_conversion.items():
-                avg_pip_profit = math.ceil((amount_target / divisor)/cur_rate)
-                avg_pip_loss = math.ceil((amount_loss / divisor)/cur_rate)
-
-                avg_pip_list[currency] = {
-                    'profit': avg_pip_profit,
-                    'loss': avg_pip_loss
-                }
-
-        return [
-            f"Target balance ({pct_tar}% increase): {(bal + amount_target):.2f} (+{amount_target:.2f})",
-            f"Minimum balance ({pct_loss}% loss tolerance): {(bal - amount_loss):.2f} (-{amount_loss:.2f})",
-            graph_generator.plot_pip_target(avg_pip_list),
-            {'display':'block'}
-        ]
-
-    @app.callback(
-        [
-            Output('profit-percentage-fig','figure'),
-            Output('profit-percentage-fig','style')
-        ],
-        [
-            Input('show-graph-profit','n_clicks')
-        ],
-        [
-            State('input_profit_target','value')
-        ],
-        prevent_initial_call=True
-    )
-    def calculate_point_percentage(click, profit_target):
-        """Callback for finding the percentage, of a profit target
-
-        Parameters:
-            - click(int): dummy click whenever the button is clicked
-            - profit_target(int): the profit target, broken down
-        
-        Returns:
-            - list: the list of areas to update in layout
-        
-        """
- 
-        percentage_target = {0: 0}
-        profit_target = float(profit_target)
-
-        for i in range(1, 11):
-            perc = i * 10
-            percentage_target[perc] = round((profit_target * (perc/100)),2)
-
-        return [
-            graph_generator.plot_profit_target(percentage_target, 'Profit'),
-            {'display':'block'}
-        ]
-
-    @app.callback(
-        [
             Output('currency-correlation-fig', 'figure'),
             Output('currency-correlation-fig','style')
         ],
@@ -323,4 +218,26 @@ def register_callbacks(app):
         
         return [
             dict(content=economic_obj.get_today_events(), filename="today_economic_events.txt")
+        ]
+
+    @app.callback(
+        [
+            Output("margin-required","children")
+        ],
+        [
+            Input("calculate-margin","n_clicks")
+        ],
+        [
+            State("action_type","value"),
+            State("input_lot_size","value"),
+            State("input_symbol","value")
+        ],
+        prevent_initial_call=True,
+    )
+    def calculate_margin(clicks_count, action_type, lot_size, symbol):
+        
+        margin_required = forex_analyzer.calculate_margin(action_type, lot_size, symbol)
+
+        return [
+            f"Margin required: {margin_required:.2f}"
         ]
