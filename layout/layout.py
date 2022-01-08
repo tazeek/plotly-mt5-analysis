@@ -155,7 +155,13 @@ def _generate_inputs_margin_calc():
         ],
             style={"width": "10%", "margin-top": 10}
         
-        )
+        ),
+
+        html.Button(
+            'Calculate Margin', 
+            id='calculate-margin',
+            style={"margin-top": "15px", "margin-bottom": "15px"}
+        ),
     ])
 
 def _generate_points_percentage_graph():
