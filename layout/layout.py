@@ -143,6 +143,11 @@ def _generate_inputs_margin_calc():
         {'label': 'Sell', 'value': 'sell'}
     ]
 
+    margin_items = {
+        'lot_size': 0.01,
+        'symbol': ''
+    }
+
     return html.Div([
 
         html.Div([
@@ -156,6 +161,16 @@ def _generate_inputs_margin_calc():
             style={"width": "10%", "margin-top": 10}
         
         ),
+
+        html.Div([
+            dcc.Input(
+                id=f"input_{field}",
+                type="text",
+                placeholder=f"{field}",
+                value=f"{value}",
+                style={"margin-right": "15px", "margin-top": 10}
+            ) for field,value in margin_items.items()
+        ]),
 
         html.Button(
             'Calculate Margin', 
