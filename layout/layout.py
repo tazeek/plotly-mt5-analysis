@@ -89,6 +89,10 @@ def _generate_inputs_margin_calc():
 
     return html.Div([
 
+        html.H1(
+            children="Margin Calculation"
+        ),
+
         html.Div([
             dcc.Dropdown(
                 id='action_type',
