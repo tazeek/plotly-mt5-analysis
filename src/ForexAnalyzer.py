@@ -358,3 +358,6 @@ class ForexAnalyzer:
                 symbols_only.append(symbol_info['symbol'])
         
         return symbols_only
+
+    def calculate_margin():
+        return 0.00
