@@ -105,6 +105,9 @@ class ForexAnalyzer:
 
     def _get_symbol_info_tick(self, symbol):
         return mt5.symbol_info_tick(symbol)
+
+    def _get_margin_calculation(self, lot, action, symbol, ask):
+        return mt5.order_calc_margin(action,symbol,lot,ask)
     
     def _create_trend_indicators(self, day_stats, timeframe):
         """Create the trend indicators and store in object attribute (self._indicator_stats_df)
