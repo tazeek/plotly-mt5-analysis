@@ -221,35 +221,6 @@ class Graphs:
 
         return bar_fig
 
-    def plot_profit_target(self, data_dict, definer):
-
-        x_val = list(data_dict.keys())
-        y_val = list(data_dict.values())
-
-        fig = go.Figure(
-            [
-                go.Scatter(
-                    x=x_val, 
-                    y=y_val,
-                    mode="lines"
-                )
-            ]
-        )
-
-        fig.update_layout(
-            title=f"{definer} percentage target",
-            xaxis_title="Percentage",
-            yaxis_title=f"{definer}",
-            hovermode='x',
-            xaxis=dict(
-                tickmode='linear',
-                tick0 = 0,
-                dtick = 10
-            )
-        )
-
-        return fig
-
     def plot_heiken_ashi(self, data, indicator_df):
 
         candlesticks_fig = go.Figure(
