@@ -287,3 +287,26 @@ def register_callbacks(app):
         return [
             dict(content=economic_obj.get_today_events(), filename="today_economic_events.txt")
         ]
+
+    @app.callback(
+        [
+            Output("margin-required","children")
+        ],
+        [
+            Input("calculate-margin","n_clicks")
+        ],
+        [
+            State("action_type","value"),
+            State("input_lot_size","value"),
+            State("input_symbol","value")
+        ],
+        prevent_initial_call=True,
+    )
+    def calculate_margin(clicks_count, action_type, lot_size, symbol):
+        print(action_type)
+        print(lot_size)
+        print(symbol)
+
+        return [
+            f"Margin required: 0.00"
+        ]
