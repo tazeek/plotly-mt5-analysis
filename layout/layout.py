@@ -136,6 +136,9 @@ def _generate_dropdown(forex_list):
         ),
     ])
 
+def _generate_inputs_margin_calc():
+    ...
+
 def _generate_points_percentage_graph():
     return html.Div(
         [
