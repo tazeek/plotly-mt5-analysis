@@ -177,6 +177,12 @@ def _generate_inputs_margin_calc():
             id='calculate-margin',
             style={"margin-top": "15px", "margin-bottom": "15px"}
         ),
+
+        html.Div(
+            id='margin-required',
+            children='Margin Required: 0.00',
+            style={'margin-top': 10}
+        ),
     ])
 
 def _generate_points_percentage_graph():
