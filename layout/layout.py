@@ -190,10 +190,10 @@ def generate_layout():
         dcc.Tabs(id='analysis-tabs', value='risk-management-tab', children=[
             
             dcc.Tab(label='Risk Management', value='risk-management-tab', children=[
+                _generate_inputs_margin_calc(),
+                html.Hr(),
                 _generate_points_percentage_graph(),
                 _loading_figure_layout('points-fig',None,hide_display),
-                html.Hr(),
-                _generate_inputs_margin_calc()
             ]),
 
             dcc.Tab(label='Currency Analysis', value='currency-strength-tab', children=[
