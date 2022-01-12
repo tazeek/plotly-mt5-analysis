@@ -149,7 +149,6 @@ class Graphs:
             yaxis_tickformat='.2f'
         )
 
-        self._draw_hline(rsi_fig, 50, "solid", "black")
         self._fill_missing_dates(rsi_fig, rsi_today, '15M')
 
         return rsi_fig

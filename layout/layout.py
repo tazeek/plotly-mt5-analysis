@@ -84,7 +84,8 @@ def _generate_inputs_margin_calc():
 
     margin_items = {
         'lot_size': 0.01,
-        'symbol': ''
+        'symbol': '',
+        'balance': ''
     }
 
     return html.Div([
@@ -126,6 +127,12 @@ def _generate_inputs_margin_calc():
             children='Margin required: 0.00',
             style={'margin-top': 10}
         ),
+
+        html.Div(
+            id='maximum-loss-tolerated',
+            children='Maximum loss possible (20% stop-out): 0.00',
+            style={'margin-top': 10}
+        )
     ])
 
 def _generate_points_percentage_graph():
@@ -183,10 +190,10 @@ def generate_layout():
         dcc.Tabs(id='analysis-tabs', value='risk-management-tab', children=[
             
             dcc.Tab(label='Risk Management', value='risk-management-tab', children=[
+                _generate_inputs_margin_calc(),
+                html.Hr(),
                 _generate_points_percentage_graph(),
                 _loading_figure_layout('points-fig',None,hide_display),
-                html.Hr(),
-                _generate_inputs_margin_calc()
             ]),
 
             dcc.Tab(label='Currency Analysis', value='currency-strength-tab', children=[
