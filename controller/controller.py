@@ -230,13 +230,16 @@ def register_callbacks(app):
         [
             State("action_type","value"),
             State("input_lot_size","value"),
-            State("input_symbol","value")
+            State("input_symbol","value"),
+            State("input_balance","value")
         ],
         prevent_initial_call=True,
     )
-    def calculate_margin(clicks_count, action_type, lot_size, symbol):
+    def calculate_margin(clicks_count, action_type, lot_size, symbol, balance):
         
         margin_required = forex_analyzer.calculate_margin(action_type, lot_size, symbol)
+        maximum_loss_allowed = float(balance) - (0.20 - margin_required)
+        print(maximum_loss_allowed)
 
         return [
             f"Margin required: {margin_required:.2f}"
