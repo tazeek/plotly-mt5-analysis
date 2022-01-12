@@ -85,7 +85,7 @@ def _generate_inputs_margin_calc():
     margin_items = {
         'lot_size': 0.01,
         'symbol': '',
-        'balance': 0.00
+        'balance': ''
     }
 
     return html.Div([
