@@ -139,12 +139,14 @@ class Graphs:
             )
         ])
 
+        current_rsi = rsi_today['value'].iloc[-1]
+
         rsi_fig.update_layout(
             xaxis_title="Time",
-            yaxis_title="RSI Value",
+            yaxis_title=f"RSI Value",
             yaxis_range=[0,100],
             yaxis_dtick=10,
-            title=f"RSI of {self._symbol} - Period: 14",
+            title=f"RSI of {self._symbol} - Period: 14 (Current: {current_rsi:.2f})",
             hovermode='x',
             yaxis_tickformat='.2f'
         )
