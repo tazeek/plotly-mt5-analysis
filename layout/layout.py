@@ -126,6 +126,12 @@ def _generate_inputs_margin_calc():
             children='Margin required: 0.00',
             style={'margin-top': 10}
         ),
+
+        html.Div(
+            id='maximum-loss-tolerated',
+            children='Maximum loss possible (20% stop-out): 0.00',
+            style={'margin-top': 10}
+        )
     ])
 
 def _generate_points_percentage_graph():
