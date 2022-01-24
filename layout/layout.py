@@ -154,7 +154,7 @@ def _generate_points_percentage_graph():
             html.Button(
                 'Display', 
                 id='show-graph-points',
-                style={"margin-top": "15px", "margin-bottom": "15px"}
+                className='button-placement'
             )
         ]
     )
@@ -165,14 +165,13 @@ def _generate_download_button():
             html.Button(
                 "Download volume data", 
                 id="download-volume-data", 
-                style={"margin-top": "15px", "margin-bottom": "15px"}
+                className='button-placement'
             ), 
             dcc.Download(id="download-volume-begin"),
 
             html.Button(
                 "Download today economic events", 
-                id="download-today-economic", 
-                style={"margin-top": "15px", "margin-bottom": "15px", "margin-left": "15px"}
+                id="download-today-economic"
             ), 
             dcc.Download(id="download-economic-begin")
         ]
