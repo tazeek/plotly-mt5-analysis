@@ -4,6 +4,11 @@
     margin-left: 15px;
 }
 
+#input_currencies_list {
+    margin-right: 15px; 
+    width: 30%;
+}
+
 .button-placement{
     margin-top: 15px; 
     margin-bottom: 15px;

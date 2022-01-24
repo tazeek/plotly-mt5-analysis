@@ -24,10 +24,9 @@ def _generate_currency_correlation_input():
 
         html.Div([
             dcc.Input(
-                id=f"input_currencies_list",
+                id="input_currencies_list",
                 type="text",
-                placeholder="Symbols (seperated by ,)",
-                style={"margin-right": "15px", "width": "30%"}
+                placeholder="Symbols (seperated by ,)"
             )
         ]),
 
