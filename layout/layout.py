@@ -59,12 +59,12 @@ def _generate_dropdown(forex_list):
                     id='currency-dropdown',
                     options=dropdown_options,
                     clearable=False,
+                    className='dropdown-field',
                     value=current_forex
                 ),
                 dcc.Store(id='current-currency',data=current_forex),
                 dcc.Store(id='candlesticks-width', data=forex_list)
-            ],
-                style={"width": "10%", "margin-top": 10}
+            ]
         ),
 
         html.Button(
@@ -98,10 +98,10 @@ def _generate_inputs_margin_calc():
                 id='action_type',
                 options=options,
                 value='buy',
+                className='dropdown-field',
                 clearable=False
             )
-        ],
-            style={"width": "10%", "margin-top": 10}
+        ]
         
         ),
 
