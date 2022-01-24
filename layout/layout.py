@@ -34,7 +34,7 @@ def _generate_currency_correlation_input():
         html.Button(
             'Calculate', 
             id='show-correlation-heatmap',
-            style={"margin-top": "15px", "margin-bottom": "15px"}
+            className='button-placement'
         )
 
     ]) 
@@ -71,7 +71,7 @@ def _generate_dropdown(forex_list):
         html.Button(
             'Refresh Page', 
             id='refresh-stats',
-            style={"margin-top": "15px", "margin-bottom": "15px"}
+            className='button-placement'
         ),
     ])
 
@@ -119,7 +119,7 @@ def _generate_inputs_margin_calc():
         html.Button(
             'Calculate Margin', 
             id='calculate-margin',
-            style={"margin-top": "15px", "margin-bottom": "15px"}
+            className='button-placement'
         ),
 
         html.Div(
