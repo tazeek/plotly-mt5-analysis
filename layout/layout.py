@@ -112,7 +112,7 @@ def _generate_inputs_margin_calc():
                 type="text",
                 placeholder=f"{field}",
                 value=f"{value}",
-                style={"margin-right": "15px", "margin-top": 10}
+                className='input-fields'
             ) for field,value in margin_items.items()
         ]),
 
@@ -147,7 +147,7 @@ def _generate_points_percentage_graph():
                     id=f"input_{field}",
                     type="text",
                     placeholder=f"Enter {field}",
-                    style={"margin-right": "15px"}
+                    className='input-fields'
                 ) for field in ['amount', 'volume']
             ]),
 
