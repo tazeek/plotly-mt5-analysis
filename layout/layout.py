@@ -170,7 +170,8 @@ def _generate_download_button():
 
             html.Button(
                 "Download today economic events", 
-                id="download-today-economic"
+                id="download-today-economic",
+                className="button-placement"
             ), 
             dcc.Download(id="download-economic-begin")
         ]
